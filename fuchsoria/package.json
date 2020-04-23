@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "rimraf dist&webpack-dev-server --mode development",
-    "build": "webpack --mode production"
+    "dev": "rimraf dist/bundles&webpack-dev-server --mode development",
+    "build": "webpack --mode production",
+    "deploy": "npm run build&now --prod"
   },
   "author": "German",
   "license": "ISC",
@@ -36,6 +37,6 @@
     "normalize.css": "8.0.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "uuid": "^7.0.3"
+    "uuid": "7.0.3"
   }
 }
