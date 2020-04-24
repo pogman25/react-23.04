@@ -5,9 +5,7 @@ class HelloMessage extends React.Component {
   constructor() {
     super()
 
-    this.state = {
-      messages: []
-    }
+    this.state = { messages: [] }
 
     this.addMessage = this.addMessage.bind(this)
   }
