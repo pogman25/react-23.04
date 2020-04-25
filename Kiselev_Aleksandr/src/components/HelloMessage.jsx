@@ -6,14 +6,14 @@ class HelloMessage extends React.Component {
     super(props);
 
     this.state = {
-      messages: ["Нормально"],
+      messages: [],
     };
 
     this.addMessage = this.addMessage.bind(this);
   }
 
   addMessage() {
-    this.setState((prev) => ({ messages: [...prev.messages, "add"] }));
+    this.setState((prev) => ({ messages: [...prev.messages, "«Нормально»"] }));
   }
 
   render() {
@@ -22,6 +22,9 @@ class HelloMessage extends React.Component {
       <div>
         <h2>Привет, {this.props.name}</h2>
         <Example />
+        {messages.map((i) => (
+          <p>{i}</p>
+        ))}
         <button onClick={this.addMessage}>Click</button>
       </div>
     );
