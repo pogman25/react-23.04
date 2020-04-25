@@ -2,11 +2,11 @@ import React from "react";
 import Example from "./Example";
 
 class HelloMessage extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
-      messages: ["zxzxz"],
+      messages: ["Нормально"],
     };
 
     this.addMessage = this.addMessage.bind(this);
@@ -22,7 +22,7 @@ class HelloMessage extends React.Component {
       <div>
         <h2>Привет, {this.props.name}</h2>
         <Example />
-        <button>Click</button>
+        <button onClick={this.addMessage}>Click</button>
       </div>
     );
   }
