@@ -5,7 +5,7 @@ module.exports = {
   entry: "./src/index.jsx",
   output: {
     path: path.resolve(__dirname, "build"),
-    filename: "[name].[contenthash].js",
+    filename: "[name].js",
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -19,7 +19,6 @@ module.exports = {
           loader: "babel-loader",
           options: {
             presets: ["@babel/preset-env", "@babel/preset-react"],
-            plugins: ["@babel/plugin-proposal-class-properties"],
           },
         },
       },

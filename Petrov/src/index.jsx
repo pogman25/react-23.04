@@ -3,6 +3,6 @@ import ReactDOM from "react-dom";
 import HelloMessage from "./components/HelloMessage";
 
 ReactDOM.render(
-  <HelloMessage name="Саша!!!" />,
+  <HelloMessage name="Alex" />,
   document.getElementById("hello-example")
 );
