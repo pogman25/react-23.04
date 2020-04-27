@@ -1,7 +1,14 @@
-import React from "react";
+import React, { memo } from "react";
+import PropTypes from "prop-types";
 
-function Example() {
-  return <h3>I'm example</h3>;
+function Example({ name }) {
+
+  console.log("render");
+  return <p>Привет! Я пример</p>;
 }
 
-export default Example;
+Example.propTypes = {
+  name: PropTypes.string,
+};
+
+export default memo(Example);
