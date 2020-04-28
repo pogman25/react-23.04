@@ -1,0 +1,22 @@
+.message-container {
+  padding-bottom: 70px;
+  max-width: 800px;
+  height: 450px;
+  overflow: auto;
+}
+
+.message-container::-webkit-scrollbar {
+  width: 8px;
+  height: 2px;
+}
+ 
+.message-container::-webkit-scrollbar-thumb {
+  background: #666;
+  border-radius: 10px;
+  
+}
+
+.message-container::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 15px;
+}

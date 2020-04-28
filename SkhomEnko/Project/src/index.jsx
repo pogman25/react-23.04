@@ -1,8 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import HelloMessage from "./components/HelloMessage"
+import App from "./components/App"
 
 ReactDOM.render(
-  <HelloMessage name="Алексей" />,
-  document.getElementById("hello-example")
-)
+  <App username="Алексей" />,
+  document.getElementById("App")
+);
