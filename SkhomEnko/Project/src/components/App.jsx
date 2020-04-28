@@ -54,8 +54,8 @@ class App extends Component {
 
   componentDidUpdate() {
     const { messages } = this.state
-    if (messages[messages.length-1].author !== this.props.botname && Math.random() > 0.4) { // разбавим ответы боты молчанием.
-      let mock = Math.random() > 0.5 // в некоторых случаях бот будет передразнивать юзера
+    if (messages[messages.length-1].author !== this.props.botname && Math.random() > 0.3) { // разбавим ответы боты молчанием.
+      let mock = Math.random() > 0.7 // в некоторых случаях бот будет передразнивать юзера
       setTimeout(() => {
         this.addMessage({
           id: messages.length+1, 
