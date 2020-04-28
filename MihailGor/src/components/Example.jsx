@@ -1,7 +1,9 @@
 import React from "react";
 
 function Example() {
-  return <h3>I'm example</h3>;
+  return <div>
+    <h3>Как твои дела?</h3>
+    </div>;
 }
 
 export default Example;

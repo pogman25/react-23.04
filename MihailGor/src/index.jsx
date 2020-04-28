@@ -1,15 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import HelloMessage from "./components/HelloMessage";
-import Button from "./components/Button";
 
-<App>
-  <HelloMessage name="Саша" />
-  <p/>
-  <Button />
-</App>,
+function Output(){
+return (
+    <div>
+      <HelloMessage name="незнакомец" />
+    </div>
+  )
+};
 
 ReactDOM.render(
-  <HelloMessage name="Саша" />,
+  <Output />,
   document.getElementById("hello-example")
 );
