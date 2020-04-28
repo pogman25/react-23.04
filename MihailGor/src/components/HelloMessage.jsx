@@ -18,16 +18,15 @@ class HelloMessage extends React.Component {
 
   render() {
     const { messages } = this.state;
-    let id = 1;
 
     return (
       <div>
         <h2>Привет, {this.props.name}</h2>
         <Example />
-        {messages.map((i) => (
-          <p key = {id++}>{i}</p>
+        {messages.map((message, index) => (
+          <p key = {index}>{message}</p>
         ))}
-        <button onClick={this.addMessage}>Ответить {id}-й раз</button>
+        <button onClick={this.addMessage}>Ответить</button>
       </div>
     );
   }
