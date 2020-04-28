@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import Moment from 'moment'
 import './Message.css'
 
-function Message(data) {
+function Message(props) {
     const {
       id,
       author,
@@ -11,7 +11,7 @@ function Message(data) {
       showTimestamp,
       timestamp,
       isMine
-    } = data.data
+    } = props.data
 
     const fromTimestamp = Moment(timestamp).fromNow()
     const formatedTimestamp = Moment(timestamp).format('llll')
