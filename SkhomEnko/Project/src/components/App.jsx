@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import MessageField from "./MessageField"
 import FormMessage from "./FormMessage"
-//import Counter from "./Counter"
 
 const botAnswers = [
   'Талант — это способность верить в успех.',
@@ -38,10 +37,6 @@ class App extends Component {
         timestamp: new Date().getTime()+10000 // через 10 секунд
       }
     ]
-  }
-
-  toggle = () => {
-    this.setState(({ isVisible }) => ({ isVisible: !isVisible }))
   }
 
   addMessage = (msg) => {
