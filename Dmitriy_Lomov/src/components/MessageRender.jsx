@@ -8,18 +8,18 @@ class MessageRender extends React.Component {
     addMessage = () => {
       this.setState((prev) => ({ messages: [...prev.messages, "Нормально"] }));
     }
-    
+
     render() {
       const { messages } = this.state;
       return (
-        <div>
-          {messages.map((item, i) => (
-            <p key={i}>
-              {`${item}`}
-            </p>
-          ))}
-          <button onClick = {this.addMessage} >Click</button>
-        </div>
+          <div>
+            {messages.map((item, i) => (
+              <p key={i}>
+                {`${item}`}
+              </p>
+            ))}
+            <button onClick = {this.addMessage} >Click</button>
+          </div>
       )
     }
   }
