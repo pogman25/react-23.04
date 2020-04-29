@@ -37,7 +37,7 @@ class FormMessage extends Component {
   render() {
     const { text, showEmojis, emojis } = this.state
     return (
-      <form className="panel" onSubmit={this.onSubmit}>
+      <form className="input-panel" onSubmit={this.onSubmit}>
         <textarea 
           name="text" 
           onChange={this.onChange} 
