@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from "prop-types"
-import Moment from 'moment'
+import moment from 'moment'
 import './Message.css'
 
 function Message(props) {
@@ -13,8 +13,8 @@ function Message(props) {
       isMine
     } = props.data
 
-    const fromTimestamp = Moment(timestamp).fromNow()
-    const formatedTimestamp = Moment(timestamp).format('llll')
+    const fromTimestamp = moment(timestamp).fromNow()
+    const formatedTimestamp = moment(timestamp).format('llll')
 
 
     return (   

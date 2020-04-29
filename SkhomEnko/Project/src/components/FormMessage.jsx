@@ -18,7 +18,7 @@ class FormMessage extends Component {
     e.preventDefault()
     const { addMessage, uname } = this.props
     const { text } = this.state
-    this.setState(({ text }) => ({ text: "" }))
+    this.setState(() => ({ text: "" }))
     addMessage({id: 5, author: uname, message: (text === "" ? "Пустое сообщение" : text), timestamp: new Date().getTime()})
   }
 

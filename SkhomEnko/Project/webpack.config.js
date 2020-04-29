@@ -53,7 +53,7 @@ module.exports = {
     new minCss ({
       filename: 'css/[name].css',
       chunkFilename: '[id].css',
-      ignoreOrder: false, 
+      ignoreOrder: false,
     })
   ]
 }

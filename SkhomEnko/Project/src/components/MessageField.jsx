@@ -2,9 +2,9 @@ import React from "react"
 import PropTypes from "prop-types"
 import Message from "./Message"
 import './MessageField.css'
-import Moment from 'moment'
+import moment from 'moment'
 
-Moment.locale(window.navigator.userLanguage || window.navigator.language) // меняем локаль moment на русскую).
+moment.locale(window.navigator.userLanguage || window.navigator.language) // меняем локаль moment на русскую).
 
 class MessageField extends React.PureComponent {
     componentDidMount() {

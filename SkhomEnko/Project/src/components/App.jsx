@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import MessageField from "./MessageField"
 import FormMessage from "./FormMessage"
-//import Counter from "./Counter"
 
 const botAnswers = [
   'Талант — это способность верить в успех.',
@@ -80,12 +79,10 @@ class App extends Component {
 }
 
 App.propTypes = {
-  username: PropTypes.string.isRequired,
-  lastname: PropTypes.string
+  username: PropTypes.string.isRequired
 }
 
 App.defaultProps = {
-  lastname: "Схоменко",
   botname: "Бот-мыслитель",
   showUsername: false // настройка отображать username который определяется в пропе index.jsx или "Я"
 }
