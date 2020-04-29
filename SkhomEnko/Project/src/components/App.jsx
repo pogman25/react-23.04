@@ -39,10 +39,6 @@ class App extends Component {
     ]
   }
 
-  toggle = () => {
-    this.setState(({ isVisible }) => ({ isVisible: !isVisible }))
-  }
-
   addMessage = (msg) => {
     const {author, message, timestamp} = msg
     this.setState(({ messages }) => ({
