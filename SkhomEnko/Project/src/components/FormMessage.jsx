@@ -28,7 +28,7 @@ class FormMessage extends Component {
   }
 
   onEmojiSelect = (e) => {
-    const emojik = e.target.innerHtml
+    const emojik = e.target.innerText
     e.preventDefault()
     this.setState(({ showEmojis, text }) => ({ showEmojis: !showEmojis, text: text+emojik }))
     console.log("selected emoji:", emojik)
