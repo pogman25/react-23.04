@@ -2,9 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 import Message from "./Message"
 import './MessageField.css'
-import moment from 'moment'
+import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import ru from 'dayjs/locale/ru'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
 
-moment.locale(window.navigator.userLanguage || window.navigator.language) // меняем локаль moment на русскую).
+dayjs.extend(relativeTime)
+dayjs.extend(localizedFormat)
+dayjs.locale((window.navigator.userLanguage === 'ru-RU' || window.navigator.language === "ru-RU") ? ru : "en") // меняем локаль moment на русскую).
 
 class MessageField extends React.PureComponent {
     componentDidMount() {

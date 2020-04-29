@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from "prop-types"
-import moment from 'moment'
+import dayjs from 'dayjs'
 import './Message.css'
 
 function Message(props) {
@@ -13,9 +13,8 @@ function Message(props) {
       isMine
     } = props.data
 
-    const fromTimestamp = moment(timestamp).fromNow()
-    const formatedTimestamp = moment(timestamp).format('llll')
-
+    const fromTimestamp = dayjs(timestamp).fromNow()
+    const formatedTimestamp = dayjs(timestamp).format('llll')
 
     return (   
       <div className={`message${isMine ? ' mine' : ''}`} key={id}>
