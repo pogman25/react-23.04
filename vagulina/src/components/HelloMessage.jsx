@@ -11,16 +11,16 @@ class HelloMessage extends React.Component {
   }
 
   addMessage() {
-    this.setState((prevState) => ({messages: [...prevState.messages, "add"]}));
+    this.setState((prevState) => ({messages: [...prevState.messages, " clicked"]}));
   }
 
   render() {
     const {messages} = this.state;
     return (
       <div>
-        Привет, {this.props.name}
+        <h1>Привет, {this.props.name}</h1>
         <button onClick={this.addMessage}>click me!</button>
-        {messages.map(i => <span key={i}>{i}</span>)}
+        {messages.map((val, i) => <span key={i}>{val}{i}</span>)}
       </div>
     );
   }
