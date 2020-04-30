@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from "prop-types"
 import dayjs from 'dayjs'
 import './Message.css'
+import clsx from 'clsx'
 
 function Message(props) {
     const {
@@ -17,7 +18,7 @@ function Message(props) {
     const formatedTimestamp = dayjs(timestamp).format('llll')
 
     return (   
-      <div className={`message${isMine ? ' mine' : ''}`} key={id}>
+      <div className={clsx('message', {'mine': isMine})}>
         {
           showTimestamp &&
             <div className="timestamp">
