@@ -1,38 +1,20 @@
-import React from 'react';
-import './style.css'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-class Message extends React.Component {
-  constructor() {
-    super();
-
-    this.state = {
-      messages: [],
-    };
-  }
-
-  addMessage() {
-    const { messages } = this.state;
-
-    this.setState({
-      messages: [...messages, 'hello']
-    })
-  }
-
+export default class Message extends Component {
   render() {
-    const { messages } = this.state;
-    return (
-      <div>
-        <button onClick={() => this.addMessage()} className='btn-send'>Отправить запрос</button>
-        <div>
-          {messages.map((item, i) => (
-            <p key={i} className='message'>
-              {item + ' ' + i}
-            </p>
-          ))}
-        </div>
-      </div>
-    )
+    const { text, author } = this.props;
+
+  return <div>{`${author}: ${text}`}</div>
   }
 }
 
-export default Message;
+Message.defaultProps = {
+  text: "Всегда существую!",
+  author: "Создатель"
+};
+
+Message.propTypes = {
+  text: PropTypes.string.isRequired,
+  author: PropTypes.string,
+};

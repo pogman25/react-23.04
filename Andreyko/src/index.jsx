@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import HelloMessage from './components/HelloMessage/HelloMessage';
-import Message from './components/Message/Message';
+import MessageField from './components/MessageField/MessageField';
 
 ReactDOM.render(
-  <React.Fragment>
-    <HelloMessage name='Саша' />
-    <Message />
-  </React.Fragment>,
+  <>
+    <MessageField />
+  </>,
   document.getElementById('hello')
 );
