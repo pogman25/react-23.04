@@ -1,9 +1,18 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import HelloMessage from "./components/HelloMessage";
-import "./index.css";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import HelloMessage from './components/HelloMessage';
+import './index.css';
+
+const theme = {
+  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+};
 
 ReactDOM.render(
-  <HelloMessage name="Саша!!!" />,
-  document.getElementById("hello-example")
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <HelloMessage name="Саша!!!" />
+  </ThemeProvider>,
+  document.getElementById('hello-example'),
 );

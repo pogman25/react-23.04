@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import cx from "classnames";
-import styles from "./index.css";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import styles from './index.css';
+import MessageItem from '../../MessageItem/MessageItem';
 
 const listStyles = {
-  border: "1px solid #333",
+  border: '1px solid #333',
   borderRadius: 3,
   minHeight: 300,
 };
@@ -16,15 +16,7 @@ class Messages extends Component {
     return (
       <ul className={styles.list} style={listStyles}>
         {messages.map(({ text, author }, index) => (
-          <li
-            key={index}
-            className={cx(styles.list, {
-              [styles.right]: author === "Bot",
-              [styles.left]: author !== "Bot",
-            })}
-          >
-            <p>{`${author}: ${text}`}</p>
-          </li>
+          <MessageItem key={index} text={text} author={author} />
         ))}
       </ul>
     );
@@ -36,7 +28,7 @@ Messages.propTypes = {
     PropTypes.shape({
       text: PropTypes.string,
       author: PropTypes.string,
-    })
+    }),
   ).isRequired,
 };
 

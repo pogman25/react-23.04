@@ -1,18 +1,18 @@
-import React, { Component } from "react";
-import styles from "./index.css";
+import React, { Component } from 'react';
+import styles from './index.css';
 
 class FormMessage extends Component {
   state = {
-    text: "",
-    author: "",
+    text: '',
+    author: '',
   };
 
-  onChange = (event) => {
+  onChange = event => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
   };
 
-  onSubmit = (e) => {
+  onSubmit = e => {
     e.preventDefault();
     const { addNewMessage } = this.props;
     const { text, author } = this.state;
@@ -25,12 +25,7 @@ class FormMessage extends Component {
 
     return (
       <form className={styles.container} onSubmit={this.onSubmit}>
-        <input
-          type="text"
-          name="author"
-          onChange={this.onChange}
-          value={author}
-        />
+        <input type="text" name="author" onChange={this.onChange} value={author} />
         <textarea name="text" onChange={this.onChange} value={text} />
         <button type="submit">Add message</button>
       </form>
