@@ -1,6 +1,7 @@
 const MiniCssExtractPlugin = require ('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const path = require("path")
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   entry: "./src/index.jsx",
@@ -36,6 +37,13 @@ module.exports = {
             },
             'css-loader'
         ]
+      },
+      {
+        test: /\.(woff|ttf|otf|eot|woff2|svg)$/i,
+        loader: "file-loader",
+        options: {
+          name: 'static/media/[name].[hash:4].[ext]'
+        }
       }
     ]
   },
@@ -45,6 +53,7 @@ module.exports = {
     port: 9000
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "src/index.html",
