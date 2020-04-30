@@ -6,14 +6,14 @@ class HelloMessage extends React.Component {
     super();
 
     this.state = {
-      messages: [],
+      messages: ["привет", "как дела?"],
     };
 
     this.addMessage = this.addMessage.bind(this);
   }
 
   addMessage() {
-    this.setState((prev) => ({ messages: [...prev.messages, "add"] }));
+    this.setState((prev) => ({ messages: [...prev.messages, "нормально"] }));
   }
 
   render() {
@@ -21,8 +21,10 @@ class HelloMessage extends React.Component {
     return (
       <div>
         <h2>Привет, {this.props.name}</h2>
-        <Example />
-        <button>Click</button>
+        {messages.map((message, index) => (
+          <p key={index}>{message}</p>
+        ))}
+        <button onClick={this.addMessage}>Click</button>
       </div>
     );
   }
