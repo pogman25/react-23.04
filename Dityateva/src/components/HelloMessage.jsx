@@ -1,36 +1,72 @@
-import React from 'react';
-//import Example from './Example';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import Counter from "./Counter";
+import FormMessage from "./FormMessage";
 
-class HelloMessage extends React.Component {
-    constructor() {
-        super();
+class HelloMessage extends Component {
+  state = {
+    messages: [],
+    isVisible: false,
+  };
 
-        this.state = {
-            messages: [],
-        };
+  toggle = () => {
+    this.setState(({ isVisible }) => ({ isVisible: !isVisible }));
+  };
 
-        this.addMessage = this.addMessage.bind(this);
+  addMessage = () => {
+    this.setState(({ messages }) => ({
+      messages: [...messages, { text: "Привет", author: "Lena Di" }],
+    }));
+  };
+
+  componentDidUpdate() {
+    const { messages } = this.state;
+    if (messages[messages.length - 1].author !== "Бот") {
+      setTimeout(() => {
+        this.setState(({ messages }) => ({
+          messages: [...messages, { text: "Привет, я БОТ", author: "Бот" }],
+        }));
+      }, 1000);
     }
-    
-    addMessage() {
-        this.setState((prev) => ({ messages: [...prev.messages, " Нормально"] }));  //всё, что в стэйте this.state нужно обновлять только через setState()
-    }                                                                       
-        
-    render() {
-        const { messages } = this.state;
-        return (
-            <div>
-                <h2>Home work {this.props.num}</h2> 
-                {/* <Example /> */}
-                
-                <button onClick = {() => this.addMessage()}>Click</button>
-                { messages.map((val,key) => (
-                    <p key={key.toString()}>{ val }</p>            
-                ))}
+  }
 
-            </div>
-        );
-    }
+  addNewMessage = (msg, author) => {
+    this.setState(({ messages }) => ({
+      messages: [...messages, { text: msg, author: author }],
+    }));
+  };
+
+  render() {
+    const { name, lastname } = this.props;
+    const { messages, isVisible } = this.state;
+
+    return (
+      <div>
+        <h2>{`Привет, ${name} ${lastname}`}</h2>
+        <ul>
+          {messages.map(({ text, author }, index) => (
+            <li key={index}>
+              <p>{`${author}: ${text}`}</p>
+            </li>
+          ))}
+        </ul>
+        <FormMessage addNewMessage={this.addNewMessage} />
+        <button onClick={this.addMessage}>Say Hello</button>
+        {/* <button onClick={this.toggle}>Visible</button> */}
+        {isVisible && <Counter styles={{ height: 100 }} />}
+      </div>
+    );
+  }
 }
+
+HelloMessage.defaultProps = {
+  lastname: "Di",
+  name: "Lena",
+};
+
+HelloMessage.propTypes = {
+  name: PropTypes.string.isRequired,
+  lastname: PropTypes.string,
+};
 
 export default HelloMessage;
