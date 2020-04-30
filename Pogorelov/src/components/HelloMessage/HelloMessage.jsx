@@ -33,12 +33,6 @@ class HelloMessage extends Component {
     }
   }
 
-  addMessage = () => {
-    this.setState(({ messages }) => ({
-      messages: [...messages, { text: 'привет', author: 'Pog' }],
-    }));
-  };
-
   addNewMessage = data => {
     this.setState(({ messages }) => ({ messages: [...messages, data] }));
   };
@@ -52,12 +46,6 @@ class HelloMessage extends Component {
         <h2 className="title">{`Привет, ${name} ${lastname}`}</h2>
         <Messages messages={messages} />
         <FormMessage addNewMessage={this.addNewMessage} />
-        <button type="button" onClick={this.addMessage}>
-          Click
-        </button>
-        <button type="button" onClick={this.toggle}>
-          Visible
-        </button>
       </div>
     );
   }

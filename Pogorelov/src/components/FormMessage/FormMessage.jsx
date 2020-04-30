@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { TextField, Button } from '@material-ui/core';
 import styles from './index.css';
 
 class FormMessage extends Component {
@@ -25,9 +26,22 @@ class FormMessage extends Component {
 
     return (
       <form className={styles.container} onSubmit={this.onSubmit}>
-        <input type="text" name="author" onChange={this.onChange} value={author} />
-        <textarea name="text" onChange={this.onChange} value={text} />
-        <button type="submit">Add message</button>
+        <TextField
+          id="standard-basic"
+          label="Автор"
+          name="author"
+          onChange={this.onChange}
+          value={author}
+        />
+        <TextField
+          id="standard-multiline-flexible"
+          label="Текст сообщения"
+          multiline
+          rowsMax={4}
+          onChange={this.onChange}
+          value={text}
+        />
+        <Button type="submit">Add message</Button>
       </form>
     );
   }
