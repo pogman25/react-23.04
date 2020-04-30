@@ -1,16 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Counter from "./Counter";
-import FormMessage from "./FormMessage";
+import FormMessage from "../FormMessage";
+import Messages from "../Messages/Messages";
+import styles from "./index.css";
 
 class HelloMessage extends Component {
   state = {
     messages: [],
-    isVisible: true,
-  };
-
-  toggle = () => {
-    this.setState(({ isVisible }) => ({ isVisible: !isVisible }));
   };
 
   addMessage = () => {
@@ -21,38 +17,31 @@ class HelloMessage extends Component {
 
   componentDidUpdate() {
     const { messages } = this.state;
-    if (messages[messages.length - 1].author !== "Бот") {
+
+    if (messages[messages.length - 1].author !== "Bot") {
       setTimeout(() => {
         this.setState(({ messages }) => ({
-          messages: [...messages, { text: "привет, я бОТ", author: "Бот" }],
+          messages: [...messages, { text: "привет, я бОТ", author: "Bot" }],
         }));
       }, 1000);
     }
   }
 
-  addNewMessage = (e) => {
-    e.preventDefault();
-    console.log(e);
+  addNewMessage = (data) => {
+    this.setState(({ messages }) => ({ messages: [...messages, data] }));
   };
 
   render() {
     const { name, lastname } = this.props;
-    const { messages, isVisible } = this.state;
+    const { messages } = this.state;
 
     return (
-      <div>
-        <h2>{`Привет, ${name} ${lastname}`}</h2>
-        <ul>
-          {messages.map(({ text, author }, index) => (
-            <li key={index}>
-              <p>{`${author}: ${text}`}</p>
-            </li>
-          ))}
-        </ul>
+      <div className={styles.container}>
+        <h2 className="title">{`Привет, ${name} ${lastname}`}</h2>
+        <Messages messages={messages} />
         <FormMessage addNewMessage={this.addNewMessage} />
         <button onClick={this.addMessage}>Click</button>
         <button onClick={this.toggle}>Visible</button>
-        {isVisible && <Counter styles={{ height: 100 }} />}
       </div>
     );
   }

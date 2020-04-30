@@ -27,43 +27,12 @@ module.exports = {
 
       {
         test: /\.css$/i,
-        use: [
-          "style-loader",
-          {
-            loader: "css-loader",
-            options: {
-              modules: {
-                localIdentName: "[path][name]__[local]--[hash:base64:5]",
-              },
-            },
-          },
-        ],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
     ],
   },
   optimization: {
-    splitChunks: {
-      chunks: "all",
-      cacheGroups: {
-        default: false,
-        commons: {
-          test: /node_modules/,
-          name: "js/vendor",
-          chunks: "initial",
-        },
-        styles: {
-          name: "styles",
-          test: /\.css$/,
-          chunks: "all",
-          enforce: true,
-        },
-      },
-    },
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "build"),
-    compress: true,
-    port: 9000,
+    minimize: false,
   },
   plugins: [
     new HtmlWebpackPlugin({

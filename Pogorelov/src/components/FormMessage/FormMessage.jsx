@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import styles from "./index.css";
 
 class FormMessage extends Component {
   state = {
@@ -12,14 +13,18 @@ class FormMessage extends Component {
   };
 
   onSubmit = (e) => {
+    e.preventDefault();
     const { addNewMessage } = this.props;
+    const { text, author } = this.state;
+
+    addNewMessage({ author, text });
   };
 
   render() {
     const { text, author } = this.state;
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form className={styles.container} onSubmit={this.onSubmit}>
         <input
           type="text"
           name="author"
