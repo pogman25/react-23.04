@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { TextField, Button } from '@material-ui/core';
 import styles from './index.css';
 
@@ -13,12 +14,25 @@ class FormMessage extends Component {
     this.setState({ [name]: value });
   };
 
-  onSubmit = e => {
-    e.preventDefault();
+  sendMessage = () => {
     const { addNewMessage } = this.props;
     const { text, author } = this.state;
 
     addNewMessage({ author, text });
+    this.setState({
+      text: '',
+    });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    this.sendMessage();
+  };
+
+  onKeyDown = e => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+      this.sendMessage();
+    }
   };
 
   render() {
@@ -36,9 +50,11 @@ class FormMessage extends Component {
         <TextField
           id="standard-multiline-flexible"
           label="Текст сообщения"
+          name="text"
           multiline
           rowsMax={4}
           onChange={this.onChange}
+          onKeyDown={this.onKeyDown}
           value={text}
         />
         <Button type="submit">Add message</Button>
@@ -46,5 +62,9 @@ class FormMessage extends Component {
     );
   }
 }
+
+FormMessage.propTypes = {
+  addNewMessage: PropTypes.func.isRequired,
+};
 
 export default FormMessage;

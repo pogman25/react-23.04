@@ -26,9 +26,7 @@ class HelloMessage extends Component {
 
     if (messages[messages.length - 1].author !== 'Bot') {
       setTimeout(() => {
-        this.setState(({ messages }) => ({
-          messages: [...messages, { text: 'привет, я бОТ', author: 'Bot' }],
-        }));
+        this.setState({ messages: [...messages, { text: 'привет, я бОТ', author: 'Bot' }] });
       }, 1000);
     }
   }
@@ -53,11 +51,13 @@ class HelloMessage extends Component {
 
 HelloMessage.defaultProps = {
   lastname: 'Погорелов',
+  classes: {},
 };
 
 HelloMessage.propTypes = {
   name: PropTypes.string.isRequired,
   lastname: PropTypes.string,
+  classes: PropTypes.shape(PropTypes.any),
 };
 
 export default withStyles(muiStyles)(HelloMessage);
