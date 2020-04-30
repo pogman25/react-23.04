@@ -1,8 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "./components/App"
+import App_layout from "./components/Layout"
 
 ReactDOM.render(
-  <App username="Алексей" />,
+  <App_layout username="Алексей" />,
   document.getElementById("App")
 );
