@@ -1,4 +1,4 @@
-const minCss = require ('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require ('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const path = require("path")
 
@@ -28,7 +28,7 @@ module.exports = {
         test: /\.css$/,
         use: [
             {
-                loader: minCss.loader,
+                loader: MiniCssExtractPlugin.loader,
                 options: {
                     publicPath: '../',
                     hmr: process.env.NODE_ENV
@@ -50,7 +50,7 @@ module.exports = {
       template: "src/index.html",
       favicon: "./src/favicon.ico"
     }),
-    new minCss ({
+    new MiniCssExtractPlugin ({
       filename: 'css/[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: false,
