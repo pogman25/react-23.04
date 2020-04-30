@@ -1,32 +1,37 @@
-import React from 'react';
-import Example from './Example';
+import React from "react";
+import Example from "./Example";
+
+const initialState = {
+    messages: ["Привет!", "Как дела?"],
+    name: 'Samon'
+}
 
 class HelloMessage extends React.Component {
-    constructor() {
-        super();
+    state = initialState;
 
-        this.state = {
-            messages: ['Привет!', 'Как дела?'],
-        };
-
-        this.addMessage = this.addMessage.bind(this);
+    addMessage = () => {
+        const { messages } = this.state;
+        this.setState({ messages: [...messages, "Нормально"], name: 'Peter' });
     }
 
-    addMessage() {
-        this.setState({ messages: [...this.state.messages, 'Нормально']});
-    }
+    reset = () => {
+        this.setState(initialState)
+     }
 
     render() {
-        const { messages } = this.state;
+        const { messages, name } = this.state;
         return (
-        <div>
-            <h2>Hello {this.props.name}</h2>
-            <Example />
-            { messages.map((message, idx) => <div key={idx}>{ message }</div>) }
-            <button onClick={ this.addMessage }>Ckick!</button>
-        </div>
-      );
+            <div>
+                <h2>Hello {name}</h2>
+                <Example />
+                {messages.map((message, idx) => (
+                    <div key={idx}>{message}</div>
+                ))}
+                <button onClick={this.addMessage}>Ckick</button>
+                <button onClick={this.reset}>Reset</button>
+            </div>
+        );
     }
 }
 
-export default  HelloMessage;
+export default HelloMessage;
