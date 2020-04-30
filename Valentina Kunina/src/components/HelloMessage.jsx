@@ -6,22 +6,24 @@ class HelloMessage extends React.Component {
         super();
 
         this.state = {
-            messages: [],
+            messages: ['Привет!', 'Как дела?'],
         };
 
         this.addMessage = this.addMessage.bind(this);
     }
 
     addMessage() {
-        this.setState();
+        this.setState({ messages: [...this.state.messages, 'Нормально']});
     }
 
     render() {
-      return (
+        const { messages } = this.state;
+        return (
         <div>
-            Hello <h2>{this.props.name}</h2>
+            <h2>Hello {this.props.name}</h2>
             <Example />
-            <button onClick={ this.addMessage }></button>
+            { messages.map((message, idx) => <div key={idx}>{ message }</div>) }
+            <button onClick={ this.addMessage }>Ckick!</button>
         </div>
       );
     }
