@@ -1,10 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import MessageRender from './components/MessageRender';
-
+import React from "react";
+import ReactDOM from "react-dom";
+import MessageRender from "./components/MessageRender";
+import ChatBot from "./components/ChatBot";
 
 ReactDOM.render(
-    <MessageRender />,
-    document.getElementById("app")
+  <div>
+    <MessageRender />
+    <hr />
+    <ChatBot name="Dmitriy" />
+  </div>,
+
+  document.getElementById("app")
 );
-    
