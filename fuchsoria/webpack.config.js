@@ -5,6 +5,10 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
+const isAnalyze = process.env.NODE_ENV === 'analyze';
+
+console.log(isAnalyze);
+
 const babelLoader = {
   loader: 'babel-loader',
   options: {
@@ -81,13 +85,20 @@ module.exports = {
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'bundles/[name].[contenthash].css',
-    }),
-    new HtmlWebpackPlugin({ template: './index.html' }),
-    new BundleAnalyzerPlugin(),
-  ],
+  plugins: isAnalyze
+    ? [
+        new MiniCssExtractPlugin({
+          filename: 'bundles/[name].[contenthash].css',
+        }),
+        new HtmlWebpackPlugin({ template: './index.html' }),
+        new BundleAnalyzerPlugin(),
+      ]
+    : [
+        new MiniCssExtractPlugin({
+          filename: 'bundles/[name].[contenthash].css',
+        }),
+        new HtmlWebpackPlugin({ template: './index.html' }),
+      ],
   resolve: {
     extensions: ['.ts', '.tsx', '.jsx', '.js'],
   },
