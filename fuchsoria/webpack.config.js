@@ -7,8 +7,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 const isAnalyze = process.env.NODE_ENV === 'analyze';
 
-console.log(isAnalyze);
-
 const babelLoader = {
   loader: 'babel-loader',
   options: {
@@ -84,6 +82,26 @@ module.exports = {
   },
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    splitChunks: {
+      chunks: 'all',
+      minSize: 300000,
+      maxSize: 100000,
+      minChunks: 1,
+      maxAsyncRequests: 6,
+      maxInitialRequests: 4,
+      automaticNameDelimiter: '-',
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
   },
   plugins: isAnalyze
     ? [
