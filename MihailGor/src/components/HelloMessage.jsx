@@ -1,35 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import Example from "./Example";
+import Counter from './Counter'
 
-class HelloMessage extends React.Component {
-  constructor() {
-    super();
 
-    this.state = {
-      messages: [],
-    };
+const HelloMessage = () => {
+  const[messages, setMessages] = useState(["Привет", "Как дела?"]);
 
-    this.addMessage = this.addMessage.bind(this);
+  const addMessage = () => {
+    setMessages((prev) => [...prev, "Нормально"]);
   }
 
-  addMessage() {
-    this.setState((prev) => ({ messages: [...prev.messages, "Нормально"] }));
-  }
-
-  render() {
-    const { messages } = this.state;
-
-    return (
-      <div>
-        <h2>Привет, {this.props.name}</h2>
-        <Example />
+  return (
+    <div>
+      <h2>Привет, {name}</h2>
+      {/* '<Example /> */}
+      <ul>
         {messages.map((message, index) => (
-          <p key = {index}>{message}</p>
+          <li key={index}>
+            <p>{message}</p>
+          </li>
         ))}
-        <button onClick={this.addMessage}>Ответить</button>
-      </div>
-    );
-  }
+      </ul>
+      <button onClick={addMessage}>Ответить</button>
+      <Counter />
+    </div>
+  );
 }
 
 export default HelloMessage;
