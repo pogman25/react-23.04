@@ -70,7 +70,7 @@ class App extends Component {
     const { messages } = this.state
     const uname = this.props.showUsername ? this.props.username : 'Я'
     return (
-      <Container disablePadding>
+      <Container>
         <Header />
         <Grid container>
           <Grid item xs sm={3}>
