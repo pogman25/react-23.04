@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const babelLoader = {
   loader: 'babel-loader',
@@ -85,6 +86,7 @@ module.exports = {
       filename: 'bundles/[name].[contenthash].css',
     }),
     new HtmlWebpackPlugin({ template: './index.html' }),
+    new BundleAnalyzerPlugin(),
   ],
   resolve: {
     extensions: ['.ts', '.tsx', '.jsx', '.js'],
