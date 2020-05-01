@@ -2,6 +2,10 @@ import React, { Component } from "react"
 import PropTypes from "prop-types"
 import MessageField from "./MessageField"
 import FormMessage from "./FormMessage"
+import Header from "./Header"
+import ChatList from "./ChatList"
+import { Container } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 
 const botAnswers = [
   'Талант — это способность верить в успех.',
@@ -66,10 +70,18 @@ class App extends Component {
     const { messages } = this.state
     const uname = this.props.showUsername ? this.props.username : 'Я'
     return (
-      <div>
-        <MessageField messages={messages} uname={uname} ref="test" />
-        <FormMessage addMessage={this.addMessage} uname={uname} />
-      </div>
+      <Container disablePadding>
+        <Header />
+        <Grid container>
+          <Grid item xs sm={3}>
+            <ChatList />
+          </Grid>
+          <Grid item xs>
+            <MessageField messages={messages} uname={uname} ref="test" />
+            <FormMessage addMessage={this.addMessage} uname={uname} />
+          </Grid>
+        </Grid>
+      </Container>
     )
   }
 }

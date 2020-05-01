@@ -50,7 +50,10 @@ module.exports = {
   devServer: {
     contentBase: path.join(__dirname, "build"),
     compress: true,
-    port: 9000
+    port: 9000,
+    // headers: {
+    //   'Access-Control-Allow-Origin': '*' // enabling CORS
+    // }
   },
   plugins: [
     new CleanWebpackPlugin(),

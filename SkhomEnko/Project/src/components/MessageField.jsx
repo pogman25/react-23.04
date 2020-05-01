@@ -1,11 +1,18 @@
 import React from "react"
 import PropTypes from "prop-types"
-import Message from "./Message"
-import './MessageField.css'
+// dayjs
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import ru from 'dayjs/locale/ru'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
+// material design
+import Icon from '@material-ui/core/Icon/'
+import AdbIcon from '@material-ui/icons/DeleteOutlined'
+// my imports
+import Message from "./Message"
+// style
+import './MessageField.css'
+
 
 dayjs.extend(relativeTime)
 dayjs.extend(localizedFormat)
@@ -28,7 +35,7 @@ class MessageField extends React.PureComponent {
     componentWillUnmount() {
         clearInterval(this.interval)
     }
-
+    // <Icon component={AdbIcon}></Icon>
     render () {
         const { messages, uname } = this.props
         return (

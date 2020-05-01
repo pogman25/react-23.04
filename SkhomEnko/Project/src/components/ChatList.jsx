@@ -1,0 +1,35 @@
+import React from 'react'
+import { makeStyles } from '@material-ui/core/styles'
+import { List, ListItem, ListItemText, ListItemAvatar, Avatar } from '@material-ui/core/'
+import dayjs from 'dayjs'
+
+// http://randomuser.ru/api.json?results=8
+const FAKE_USERS = [{"user":{"gender":"male","name":{"first":"Федор","last":"Семёнов","middle":"Игоревич"},"location":{"building":3,"street":"Комсомольская","city":"Пенза","state":"Республика Карелия","zip":51895},"username":"angryorange","email":"angryorange39@example.com","password":"PLiLn42lTpQ","salt":"SbDUNsHCezQ","md5":"04b486084e2675dcf663a56bee9d1a68","sha1":"99df4e8b0bcc6608148f56870e009a33581930b4","sha256":"d04f6d6cd71aaede62a1627bbd16ba89133b01de5dcd5f6a2aea01ce2850240c","registered":208945354,"dob":60036083,"phone":"7-495-625-57-20","cell":"7-916-272-58-24","picture":{"large":"http://randomuser.ru/images/men/39.jpg","medium":"http://randomuser.ru/images/men/med/39.jpg","thumbnail":"http://randomuser.ru/images/men/thumb/39.jpg"}}},{"user":{"gender":"female","name":{"first":"Алина","last":"Лебедева","middle":"Константиновна"},"location":{"building":100,"street":"Лесная","city":"Екатеринбург","state":"Калиниградская область","zip":26467},"username":"purplebear","email":"purplebear90@example.com","password":"o4esEhKsxKY","salt":"TUSUWQA5xL4","md5":"521a39adcccab78eb7507842420ca96f","sha1":"5eb49f88895b6da9c4df3b0e9f13c163abcb3fc7","sha256":"0d3958a7ca1cdbfd0e71300855be8c5bd5ca4707b8dac6575e004640e91484f8","registered":459490494,"dob":351315044,"phone":"7-495-315-75-91","cell":"7-926-135-50-17","picture":{"large":"http://randomuser.ru/images/women/2.jpg","medium":"http://randomuser.ru/images/women/med/2.jpg","thumbnail":"http://randomuser.ru/images/women/thumb/2.jpg"}}},{"user":{"gender":"female","name":{"first":"Яна","last":"Фомина","middle":"Леонидовна"},"location":{"building":17,"street":"Победы","city":"Оренбург","state":"Томская область","zip":39904},"username":"goldenuser","email":"goldenuser84@example.com","password":"NxYui_B3AvQ","salt":"fWbrZ54k-ws","md5":"64ac64dc1e0ba9c6ab6a4f676e6cef54","sha1":"3dfaa7c049fa2f4abae9d29f21fada9f23074ace","sha256":"a3f54c3ad18765fbb99d287107b5490b541e21c66c50d1e1fa58d02f82e05a72","registered":502360892,"dob":44423448,"phone":"7-495-958-37-81","cell":"7-903-387-13-79","picture":{"large":"http://randomuser.ru/images/women/40.jpg","medium":"http://randomuser.ru/images/women/med/40.jpg","thumbnail":"http://randomuser.ru/images/women/thumb/40.jpg"}}},{"user":{"gender":"female","name":{"first":"Марина","last":"Белоусова","middle":"Артёмовна"},"location":{"building":7,"street":"Московская","city":"Красноярск","state":"Волгоградская область","zip":96901},"username":"colddog","email":"colddog77@example.com","password":"Z92JjInfYOA","salt":"U0X6mPmHgC4","md5":"f4190c566b7ff79af79678726f6eed18","sha1":"bcbae4069df3efc272ea302c042fbaa98265dc19","sha256":"a33fc434381468389d7c92fd18609aff19e1884306d55ae198cb8dc8e19336f9","registered":383993162,"dob":99226582,"phone":"7-495-296-43-23","cell":"7-916-722-75-14","picture":{"large":"http://randomuser.ru/images/women/55.jpg","medium":"http://randomuser.ru/images/women/med/55.jpg","thumbnail":"http://randomuser.ru/images/women/thumb/55.jpg"}}},{"user":{"gender":"male","name":{"first":"Никита","last":"Бобров","middle":"Аркадьевич"},"location":{"building":52,"street":"Заречная","city":"Хабаровск","state":"Удмуртская Республика","zip":35427},"username":"newdog","email":"newdog42@example.com","password":"SmD8MKo6GWQ","salt":"uy_bgIWI9pU","md5":"eebf4737adbfcf7de87337242efb6b55","sha1":"9de70fc603b5eca23a5df39f6cf2c48124ffd7bf","sha256":"de10eea528510851d60aac5d76e76e94374e63abd6426e0f7810252698bc1105","registered":141602719,"dob":243205218,"phone":"7-495-961-82-32","cell":"7-903-198-32-93","picture":{"large":"http://randomuser.ru/images/men/2.jpg","medium":"http://randomuser.ru/images/men/med/2.jpg","thumbnail":"http://randomuser.ru/images/men/thumb/2.jpg"}}},{"user":{"gender":"male","name":{"first":"Федор","last":"Большаков","middle":"Сергеевич"},"location":{"building":86,"street":"Комарова","city":"Тверь","state":"Рязанская область","zip":35743},"username":"greenvoid","email":"greenvoid23@example.com","password":"h6epMCK_RAk","salt":"cUopn_BWFPk","md5":"c2a6234da6fcbc6e4f10e298b0b158bd","sha1":"9311cbb339d8c4693af3b015f6ba84e31d31f6cd","sha256":"ef0d097c530b6034b0ff4e3c3296cf126543b366f1d3c61fcc16efae96832125","registered":193425748,"dob":240274283,"phone":"7-495-951-61-88","cell":"7-910-254-82-67","picture":{"large":"http://randomuser.ru/images/men/25.jpg","medium":"http://randomuser.ru/images/men/med/25.jpg","thumbnail":"http://randomuser.ru/images/men/thumb/25.jpg"}}},{"user":{"gender":"female","name":{"first":"Елизавета","last":"Васильева","middle":"Ильинична"},"location":{"building":8,"street":"Чкалова","city":"Нижний","state":"Республика Карелия","zip":11514},"username":"yellowkoala","email":"yellowkoala47@example.com","password":"lrgILCyHufE","salt":"q6ynGiFn0NU","md5":"89b449d07502a81b9a4999313ed453dd","sha1":"6f698dcf18dd019430cbcfa1054199a38ecb4654","sha256":"e3bc1bb892620b425c9575b3e2e9cbada7d4df401bb43e8da48eea64cf3f4416","registered":137546199,"dob":122841705,"phone":"7-495-229-60-31","cell":"7-915-302-92-12","picture":{"large":"http://randomuser.ru/images/women/16.jpg","medium":"http://randomuser.ru/images/women/med/16.jpg","thumbnail":"http://randomuser.ru/images/women/thumb/16.jpg"}}},{"user":{"gender":"male","name":{"first":"Георгий","last":"Дмитриев","middle":"Денисович"},"location":{"building":36,"street":"Шевченко","city":"Нижний","state":"Самарская область","zip":70760},"username":"silverbird","email":"silverbird69@example.com","password":"0VZ6F5q4eWU","salt":"JoCg1i0JDis","md5":"52a23dbcda898d1644ce78a887b79fd8","sha1":"8c15459179058dba3cf76f4f07d9eb6e04496a9b","sha256":"365a1963677600ea89ab34b2f72d83a8e97abd59500f9f8dfd4550c3852bccf9","registered":432447200,"dob":452825984,"phone":"7-495-451-34-10","cell":"7-906-400-21-58","picture":{"large":"http://randomuser.ru/images/men/79.jpg","medium":"http://randomuser.ru/images/men/med/79.jpg","thumbnail":"http://randomuser.ru/images/men/thumb/79.jpg"}}}]
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    maxWidth: 360,
+    backgroundColor: theme.palette.background.paper
+  }
+}))
+
+export default function ChatList() {
+    const classes = useStyles()
+    const chats_data = [...FAKE_USERS]
+
+    return (
+        <List className={classes.root} disablePadding>
+            {chats_data.map(({user}, index) => (
+                <ListItem alignItems="flex-start" key={`id-${index}`} selected={index === 0}>
+                    <ListItemAvatar>
+                        <Avatar>
+                            <img src={user.picture.thumbnail} alt={`${user.name.last} ${user.name.first}`} />
+                        </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText primary={`${user.name.last} ${user.name.first}`} secondary={dayjs.unix(user.registered).fromNow()} />
+                </ListItem>
+            ))}
+        </List>
+    )
+}
