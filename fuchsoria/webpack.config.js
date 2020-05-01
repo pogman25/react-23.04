@@ -1,6 +1,19 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
+const babelLoader = {
+  loader: 'babel-loader',
+  options: {
+    presets: ['@babel/env', '@babel/react'],
+    plugins: [
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['import', { libraryName: 'antd', style: 'css' }],
+    ],
+  },
+};
 
 module.exports = {
   entry: { index: './index.tsx' },
@@ -15,6 +28,7 @@ module.exports = {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
         use: [
+          babelLoader,
           {
             loader: 'ts-loader',
           },
@@ -23,29 +37,19 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: path.resolve(__dirname, 'src'),
-        loader: 'babel-loader',
-        exclude: '/node_modules/',
-        options: {
-          presets: ['@babel/env', '@babel/react'],
-          plugins: [
-            [
-              '@babel/plugin-proposal-class-properties',
-              {
-                loose: true,
-              },
-            ],
-          ],
-        },
+        use: [babelLoader],
       },
       {
-        test: /\.[sac]*ss$/i,
+        test: /\.[sca]{2}ss$/,
         exclude: '/node_modules/',
         loader: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
-              modules: true,
+              modules: {
+                localIdentName: '[hash:base64:7]',
+              },
               sourceMap: false,
               localsConvention: 'camelCaseOnly',
             },
@@ -58,7 +62,23 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.css$/,
+        exclude: '/node_modules/',
+        loader: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: false,
+            },
+          },
+        ],
+      },
     ],
+  },
+  optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
   },
   plugins: [
     new MiniCssExtractPlugin({
