@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Example from './Example';
 import MessageField from "./MessageField"
 
@@ -33,9 +34,10 @@ class HelloMessage extends React.Component {
 
     render() {
         const messages = this.state.messages;
+        const {name, lastname} = this.props;
         return (
         <div>
-            Привет, {this.props.name}
+            Привет, {name} {lastname}
             <Example />
             <button onClick={this.addMessage}>Click</button>
             <MessageField addNewMessage={this.addNewMessage} />
@@ -45,6 +47,15 @@ class HelloMessage extends React.Component {
         </div>
         );
     }
+}
+
+HelloMessage.defaultProps = {
+    lastname: 'Ivanov'
+}
+
+HelloMessage.propTypes = {
+    name: PropTypes.string.isRequired,
+    lastname: PropTypes.string,
 }
 
 export default HelloMessage;

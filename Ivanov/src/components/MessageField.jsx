@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 
 class MessageField extends Component {
     state = {
@@ -12,10 +13,10 @@ class MessageField extends Component {
       };
     
     onSubmit = (e) => {
-        const { addNewMessage } = this.props;
         e.preventDefault();
+        const { addNewMessage } = this.props;
         const {text, author} = this.state;
-        addNewMessage(text, author);
+        addNewMessage({text, author});
     };
 
     render() {
@@ -38,6 +39,10 @@ class MessageField extends Component {
             </form>
         );
     }
+}
+
+MessageField.propTypes = {
+    addNewMessage: PropTypes.func.isRequired,
 }
 
 export default MessageField;
