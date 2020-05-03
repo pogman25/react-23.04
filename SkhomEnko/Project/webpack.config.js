@@ -1,3 +1,4 @@
+const minCss = require ('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const path = require("path")
 
@@ -18,9 +19,23 @@ module.exports = {
         use: {
           loader: "babel-loader",
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"]
+            presets: ["@babel/preset-env", "@babel/preset-react"],
+            plugins: ["@babel/plugin-proposal-class-properties"]
           }
         }
+      },
+      {
+        test: /\.css$/,
+        use: [
+            {
+                loader: minCss.loader,
+                options: {
+                    publicPath: '../',
+                    hmr: process.env.NODE_ENV
+                },
+            },
+            'css-loader'
+        ]
       }
     ]
   },
@@ -33,6 +48,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "src/index.html",
+      favicon: "./src/favicon.ico"
+    }),
+    new minCss ({
+      filename: 'css/[name].css',
+      chunkFilename: '[id].css',
+      ignoreOrder: false,
     })
   ]
 }
