@@ -10,30 +10,27 @@ export default class MessageField extends Component {
     ],
   };
 
-  updateState = (text, author) => {
-    this.setState(({ messages }) => ({
-      messages: [...messages, { text: text, author: author }],
-    }));
-  };
-
   componentDidMount() {
-    console.log("messagefield did mount");
+    console.log("MessageField did mount");
   }
 
   componentDidUpdate() {
-    console.log("messagefiled did update");
-    if (this.state.messages[this.state.messages.length-1].author !== "Robot") {
-      this.updateState("This is bot...", "Robot");
+    console.log("MessageField did update");
+    if (
+      this.state.messages[this.state.messages.length - 1].author !== "Robot"
+    ) {
+      this.addNewMessage({ text: "This is bot...", author: "Robot" });
     }
   }
 
   addNewMessage = (message) => {
-    const { text, author } = message;
-    this.updateState(text, author);
+    this.setState(({ messages }) => ({
+      messages: [...messages, message],
+    }));
   };
 
   render() {
-    console.log("messagefield render");
+    console.log("MessageField render");
     const { messages } = this.state;
     const messageElements = messages.map((message, id) => (
       <Message key={id} text={message.text} author={message.author} />
