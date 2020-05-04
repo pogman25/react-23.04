@@ -1,32 +1,48 @@
-import React from 'react';
-import Message from './Message';
+import React, { Component } from "react";
+import Message from "./Message";
+import MessageForm from "./MessageForm";
 
-export default class MessageField extends React.Component {
-    state = {
-        messages: [{text: 'Hello!', author: 'Computer'}, {text: 'How do you do?', author: 'Computer'}],
-    };
+export default class MessageField extends Component {
+  state = {
+    messages: [
+      { text: "Hello!", author: "Computer" },
+      { text: "How do you do?", author: "Computer" },
+    ],
+  };
 
-    updateState = (text, author) => {
-        this.setState((prevState) => ({messages: [...prevState.messages, {text: text, author: author}]}));
+  updateState = (text, author) => {
+    this.setState(({ messages }) => ({
+      messages: [...messages, { text: text, author: author }],
+    }));
+  };
+
+  componentDidMount() {
+    console.log("messagefield did mount");
+  }
+
+  componentDidUpdate() {
+    console.log("messagefiled did update");
+    if (this.state.messages[this.state.messages.length-1].author !== "Robot") {
+      this.updateState("This is bot...", "Robot");
     }
+  }
 
-    handleClick = () => {
-        this.updateState('I\'m OK', 'User');
-    }
+  addNewMessage = (message) => {
+    const { text, author } = message;
+    this.updateState(text, author);
+  };
 
-    componentDidUpdate() {
-        if (this.state.messages.length % 2 === 1) {
-            setTimeout(() => this.updateState('This is bot...', 'Robot'), 1000);
-        }
-    }
-
-    render() {
-        const messageElements = this.state.messages.map((message, id) => (
-            <Message key={id} text={message.text} author={message.author} />
-        ));
-        return <div>
-            {messageElements}
-            <button onClick={this.handleClick}>Send message</button>
-        </div>;
-    }
+  render() {
+    console.log("messagefield render");
+    const { messages } = this.state;
+    const messageElements = messages.map((message, id) => (
+      <Message key={id} text={message.text} author={message.author} />
+    ));
+    return (
+      <div>
+        {messageElements}
+        <MessageForm addNewMessage={this.addNewMessage} />
+      </div>
+    );
+  }
 }

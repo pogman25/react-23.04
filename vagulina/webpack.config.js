@@ -5,7 +5,7 @@ module.exports={
     entry: './src/index.jsx',
     output: {
         path: path.resolve(__dirname, "build"),
-        filename: "index.js"
+        filename: "index[hash].js"
     },
     resolve: {
         extensions: [".js", ".jsx"]
