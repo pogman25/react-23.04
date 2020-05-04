@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import FormMessage from '../FormMessage';
 import Messages from '../Messages';
+import styles from './index.css';
 
-class ChatBot extends Component {
+class MessageField extends Component {
   state = {
     messages: [
       { text: 'Привет!', author: 'Bot' },
@@ -13,6 +14,7 @@ class ChatBot extends Component {
 
   componentDidUpdate() {
     const { messages } = this.state;
+    
     if (messages[messages.length - 1].author !== 'Bot') {
       setTimeout(() => {
         this.setState(({ messages }) => ({
@@ -22,17 +24,15 @@ class ChatBot extends Component {
     }
   }
 
-  addNewMessage = ({ text, author }) => {
-    this.setState(({ messages }) => ({
-      messages: [...messages, { text, author }],
-    }));
+  addNewMessage = (data) => {
+    this.setState(({ messages }) => ({ messages: [...messages, data] }));
   };
 
   render() {
     const { messages } = this.state;
 
     return (
-      <div>
+      <div className={styles.wrapper}>
         <Messages messages={messages} />
         <FormMessage addNewMessage={this.addNewMessage} />
       </div>
@@ -40,9 +40,9 @@ class ChatBot extends Component {
   }
 }
 
-ChatBot.propTypes = {
+MessageField.propTypes = {
   author: PropTypes.string,
   text: PropTypes.string,
 };
 
-export default ChatBot;
+export default MessageField;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { TextField, Button } from '@material-ui/core';
+import SendRoundedIcon from '@material-ui/icons/SendRounded';
 import styles from './index.css';
 
 class FormMessage extends Component {
@@ -9,17 +10,14 @@ class FormMessage extends Component {
     author: '',
   };
 
-  onChange = event => {
-    const { value, name } = event.target;
+  onChange = (e) => {
+    const { value, name } = e.target;
     this.setState({ [name]: value });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
-
-    const { addNewMessage } = this.props;
-
-    addNewMessage(this.state);
+    this.sendMessage()
   };
 
   sendMessage = () => {
@@ -32,7 +30,7 @@ class FormMessage extends Component {
     });
   };
 
-  onKeyUp = e => {
+  onKeyUp = (e) => {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
       this.sendMessage();
     }
@@ -49,6 +47,7 @@ class FormMessage extends Component {
           name="author"
           onChange={this.onChange}
           value={author}
+          required
         />
         <TextField
           id="standard-multiline-flexible"
@@ -59,8 +58,14 @@ class FormMessage extends Component {
           onChange={this.onChange}
           onKeyUp={this.onKeyUp}
           value={text}
+          required
         />
-        <Button type="submit">Add message</Button>
+        <Button
+        type="submit"
+        endIcon={<SendRoundedIcon />}
+        >
+          Отправить
+        </Button>
       </form>
     );
   }

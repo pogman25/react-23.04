@@ -6,21 +6,32 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(theme => {
   return {
     item: {
+      display: 'flex',
+      flexDirection: 'column',
+      minWidth: 120,
+      minHeight: 48,
       border: 0,
       borderRadius: 10,
       boxShadow: theme.shadows[5],
-      color: 'white',
-      height: 48,
-      padding: '0 30px',
+      padding: '10px 20px',
+      marginTop: 10
     },
     left: {
-      background: 'darkcyan',
+      background: 'lightblue',
       alignSelf: 'flex-start',
     },
     right: {
-      background: 'lightblue',
+      background: '#fff',
       alignSelf: 'flex-end',
     },
+    text: {
+      color: '#000',
+      fontSize: '1em'
+    },
+    author: {
+      fontSize: '0.8em',
+      color: '#aaa'
+    }
   };
 });
 
@@ -29,11 +40,12 @@ const MessageItem = ({ author, text }) => {
   return (
     <li
       className={cx(classes.item, {
-        [classes.left]: author !== 'Bot',
-        [classes.right]: author === 'Bot',
+        [classes.left]: author === 'Bot',
+        [classes.right]: author !== 'Bot',
       })}
     >
-      <p>{`${author}: ${text}`}</p>
+      <span className={cx(classes.text)}>{text}</span>
+      <span className={cx(classes.author)}>{author}</span>
     </li>
   );
 };
