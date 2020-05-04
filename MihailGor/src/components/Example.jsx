@@ -1,9 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 
 function Example() {
-  return <div>
-    <h3></h3>
-    </div>;
+  console.log("render");
+  return <p>Привет, я пример</p>;
 }
 
-export default Example;
+export default memo(Example);

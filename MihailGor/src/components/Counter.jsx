@@ -1,6 +1,27 @@
-import React, { Component } from "react";
-class Counter extends Component {
+import React, { PureComponent } from "react";
+import CountTitle from "./CountTitle";
+import Example from "./Example";
+
+let interval = null;
+
+class Counter extends PureComponent {
   state = { count: 0 };
+
+  componentDidMount() {
+    console.log("component counter did mount");
+    interval = setInterval(() => {
+      console.log("I'm from interval");
+    }, 1000);
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log('Did Update', prevState);
+  }
+
+  componentWillUnmount() {
+    console.log('Component Will Unmount');
+    clearInterval(interval);
+  }
 
   changeCount = (e) => {
     const isDecrement = e.target.dataset.count === "dec";
@@ -14,7 +35,8 @@ class Counter extends Component {
     const {count} = this.state;
     return (
       <div>
-        <p>{count}</p>
+        <Example />
+        <CountTitle count ={count} />
         <span>
           <button data-count= "inc" onClick={this.changeCount}>-</button>
           <button data-count= "dec" onClick={this.changeCount}>+</button>

@@ -1,36 +1,36 @@
 import React, { useState } from "react";
 import Example from "./Example";
-import Counter from './Counter'
+import Counter from './Counter';
 
 
-const HelloMessage = () => {
+const HelloMessage = ({name, lastname}) => {
   const[messages, setMessages] = useState(["Привет", "Как дела?"]);
+  const [isVisible, setVisibility] = useState(true);
+
+  const toggle = () => {
+    setVisibility((prev) => !prev);
+  };
 
   const addMessage = () => {
     setMessages((prev) => [...prev, "Нормально"]);
-  }
+  };
 
-  addMessage() {
-    this.setState((prev) => ({ messages: [...prev.messages, "Нормально"] }));
-  }
 
-  render() {
-    const { messages } = this.state;
-    return (
-      <div>
-        <h2>Привет, {this.props.name}</h2>
-        <Example />
+  return (
+    <div>
+      <h2>Привет, {`${name} ${lastname}`}</h2>
+      <ul>
         {messages.map((message, index) => (
-        <ul>
           <li key={index}>
             <p>{message}</p>
           </li>
-        </ul>
         ))}
+      </ul>
       <button onClick={addMessage}>Ответить</button>
-      <Counter />
+      <button onClick={toggle}>Visible</button>
+      {isVisible && <Counter />}
     </div>
   );
-}
+};
 
 export default HelloMessage;
