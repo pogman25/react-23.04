@@ -8,9 +8,13 @@
     "dev": "webpack-dev-server --open",
     "build": "webpack --mode=production"
   },
+  "eslintConfig": {
+    "extends": ["plugin:react-hooks/recommended"]
+  },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
@@ -20,6 +24,7 @@
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-react": "^7.9.4",
     "babel-loader": "^8.1.0",
+    "eslint-plugin-react-hooks": "^4.0.0",
     "html-webpack-plugin": "^4.2.0",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
