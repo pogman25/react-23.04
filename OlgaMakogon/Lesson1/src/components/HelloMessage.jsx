@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import Example from "./Example";
+import FormMessage from "./FormMessage";
  
 
 class HelloMessage extends React.Component {
@@ -15,7 +16,7 @@ class HelloMessage extends React.Component {
   }
 
   addMessage() {
-    this.setState(({messages}) => ({ messages: [...messages, {text:"привет", author: "Author"}] }));
+    this.setState(({messages}) => ({ messages: [...messages, {text:"привет", author: "User"}] }));
   };
 
   componentDidUpdate() {
@@ -28,6 +29,10 @@ class HelloMessage extends React.Component {
   
   }
 
+  // addNewMessage = (e) => {
+  //   e.preventDefault();
+  //   console.log(e);
+  // };
 
   render() {
     const { messages } = this.state;
@@ -42,7 +47,7 @@ class HelloMessage extends React.Component {
             </li>
           ))}          
         </ul>       
-        {/* <FormMessage addNewMessage={this.addNewMessage} /> */}
+        <FormMessage addNewMessage={this.addNewMessage} />
         <button onClick={this.addMessage}>Click</button>
       </div>
     );
