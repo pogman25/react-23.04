@@ -11,11 +11,15 @@ class FormMessage extends Component {
   };
 
   onSubmit = (e) => {
+    e.preventDefault();
     const { addNewMessage } = this.props;
+    const { text, author } = this.state;
+    addNewMessage({author, text})
   };
 
   render() {
     const { text, author } = this.state;
+    
 
     return (
       <form onSubmit={this.onSubmit}>

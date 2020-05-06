@@ -4,35 +4,35 @@ import Example from "./Example";
 import FormMessage from "./FormMessage";
  
 
-class HelloMessage extends React.Component {
-  constructor() {
-    super();
+class HelloMessage extends Component {
+  
 
-    this.state = {
-      messages: ['Привет', 'Как дела?'],
+    state = {
+      messages: [], 
     };
 
-    this.addMessage = this.addMessage.bind(this);
-  }
 
-  addMessage() {
-    this.setState(({messages}) => ({ messages: [...messages, {text:"привет", author: "User"}] }));
-  };
 
-  componentDidUpdate() {
-    const { messages} = this.state;
-      if (messages [messages.length - 1].author !== "Bot") {
-        setTimeout (() => {
-          this.setState(({messages}) => ({ messages: [...messages, {text: "Привет, я bot", author: "Bot"}] }));
+    addMessage = () => {
+      this.setState(({ messages }) => ({
+        messages: [...messages, { text: "привет", author: "User" }],
+      }));
+    };
+
+    componentDidUpdate() {
+      const { messages } = this.state;
+      if (messages[messages.length - 1].author !== "Бот") {
+        setTimeout(() => {
+          this.setState(({ messages }) => ({
+            messages: [...messages, { text: "привет, я бОТ", author: "Бот" }],
+          }));
         }, 1000);
       }
-  
-  }
+    }
 
-  // addNewMessage = (e) => {
-  //   e.preventDefault();
-  //   console.log(e);
-  // };
+    addNewMessage = (data) => {
+      this.setState(({messages}) => ({messages: [...messages, data]}))
+    };
 
   render() {
     const { messages } = this.state;
