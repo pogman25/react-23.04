@@ -1,0 +1,10 @@
+.container {
+    width: 1024px;
+    background-color: darkgray;
+    margin: 0 auto;
+}
+
+.wrapper {
+    display: flex;
+    
+}
