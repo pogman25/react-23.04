@@ -9,13 +9,13 @@ import styles from './index.css';
 class Layout extends Component {
   render() {
     return (
-        <Container maxWidth="md" component="div">
-          <Header />
-          <div className={styles.bottomContainer}>
-            <ChatList />
-            <MessageField />
-          </div>
-        </Container>
+      <Container maxWidth="md" component="div">
+        <Header />
+        <div className={styles.bottomContainer}>
+          <ChatList />
+          <MessageField />
+        </div>
+      </Container>
     );
   }
 }

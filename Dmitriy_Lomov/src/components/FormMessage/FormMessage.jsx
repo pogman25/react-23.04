@@ -10,14 +10,21 @@ class FormMessage extends Component {
     author: '',
   };
 
-  onChange = (e) => {
-    const { value, name } = e.target;
-    this.setState({ [name]: value });
+  checkChange = () => {
+    const { checkInputChange } = this.props;
+
+    if (this.onChange) checkInputChange(true);
   };
 
-  onSubmit = (e) => {
+  onChange = e => {
+    const { value, name } = e.target;
+    this.setState({ [name]: value });
+    this.checkChange();
+  };
+
+  onSubmit = e => {
     e.preventDefault();
-    this.sendMessage()
+    this.sendMessage();
   };
 
   sendMessage = () => {
@@ -30,7 +37,7 @@ class FormMessage extends Component {
     });
   };
 
-  onKeyUp = (e) => {
+  onKeyUp = e => {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
       this.sendMessage();
     }
@@ -60,10 +67,7 @@ class FormMessage extends Component {
           value={text}
           required
         />
-        <Button
-        type="submit"
-        endIcon={<SendRoundedIcon />}
-        >
+        <Button type="submit" endIcon={<SendRoundedIcon />}>
           Отправить
         </Button>
       </form>

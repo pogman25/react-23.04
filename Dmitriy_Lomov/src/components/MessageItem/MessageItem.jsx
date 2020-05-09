@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => {
       borderRadius: 10,
       boxShadow: theme.shadows[5],
       padding: '10px 20px',
-      marginTop: 10
+      marginTop: 10,
     },
     left: {
       background: 'lightblue',
@@ -26,12 +26,12 @@ const useStyles = makeStyles(theme => {
     },
     text: {
       color: '#000',
-      fontSize: '1em'
+      fontSize: '1em',
     },
     author: {
       fontSize: '0.8em',
-      color: '#aaa'
-    }
+      color: '#aaa',
+    },
   };
 });
 

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FormMessage from '../FormMessage';
 import Messages from '../Messages';
@@ -11,12 +11,17 @@ class MessageField extends Component {
       { text: 'Как дела?', author: 'Bot' },
     ],
   };
+  timer = null;
+
+  checkInputChange = boolean => {
+    if (boolean) clearTimeout(this.timer);
+  };
 
   componentDidUpdate() {
     const { messages } = this.state;
-    
+
     if (messages[messages.length - 1].author !== 'Bot') {
-      setTimeout(() => {
+      this.timer = setTimeout(() => {
         this.setState(({ messages }) => ({
           messages: [...messages, { text: 'Не приставай ко мне, я робот!', author: 'Bot' }],
         }));
@@ -24,7 +29,7 @@ class MessageField extends Component {
     }
   }
 
-  addNewMessage = (data) => {
+  addNewMessage = data => {
     this.setState(({ messages }) => ({ messages: [...messages, data] }));
   };
 
@@ -34,7 +39,10 @@ class MessageField extends Component {
     return (
       <div className={styles.wrapper}>
         <Messages messages={messages} />
-        <FormMessage addNewMessage={this.addNewMessage} />
+        <FormMessage
+          addNewMessage={this.addNewMessage}
+          checkInputChange={this.checkInputChange}
+        />
       </div>
     );
   }
