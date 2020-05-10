@@ -7,7 +7,7 @@ class Message extends Component {
   };
 
   render() {
-    return <div>{this.props.text}</div>;
+  return <div>{this.props.name}: {this.props.text}</div>;
   }
 }
 
