@@ -3,10 +3,22 @@ export interface IMessage {
   author: string;
   text: string;
   authorAccess?: string;
+  isBot?: boolean;
+}
+
+export interface IChatListItem {
+  id: number | string;
+  title: string;
+  description: string;
+}
+
+export interface IChatListProps {
+  items: IChatListItem[];
 }
 
 export interface IChatContainerState {
   messages: IMessage[];
+  chatList: IChatListItem[];
 }
 
 export interface IMessageListProps {
