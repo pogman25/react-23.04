@@ -3,15 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>React</title>
+    <title>Messenger</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <style>
-        input, textarea {padding: 5px; height: 25px; box-sizing: border-box; float: left;}
-        form {float: left;}
-        button {padding: 5px; border-radius: 25px; margin-left: 10px;}
+        #chat > li:nth-child(1) { padding-top: 15px; }
+        #chat > li:last-child { padding-bottom: 15px; }
     </style>
 </head>
 <body>
-    <h1>React</h1>
-    <div id="hello-react"></div>
+    <h1 style="text-align: center;">Messenger on React.js</h1>
+    <div id="messenger"></div>
+    
+    <script>
+        document.getElementById('chat').scrollTo(0, document.getElementById('chat').scrollHeight);
+    </script>
 </body>
 </html>
