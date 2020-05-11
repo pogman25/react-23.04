@@ -4,6 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const isAnalyze = process.env.NODE_ENV === 'analyze';
 
@@ -84,8 +85,8 @@ module.exports = {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
     splitChunks: {
       chunks: 'all',
-      minSize: 300000,
-      maxSize: 100000,
+      minSize: 100000,
+      maxSize: 300000,
       minChunks: 1,
       maxAsyncRequests: 6,
       maxInitialRequests: 4,
@@ -116,6 +117,7 @@ module.exports = {
           filename: 'bundles/[name].[contenthash].css',
         }),
         new HtmlWebpackPlugin({ template: './index.html' }),
+        new CompressionPlugin(),
       ],
   resolve: {
     extensions: ['.ts', '.tsx', '.jsx', '.js'],

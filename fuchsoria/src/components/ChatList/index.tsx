@@ -12,7 +12,7 @@ export default function ChatList({ items }: IChatListProps) {
       renderItem={(item) => (
         <List.Item className={styles.chatListItem}>
           <List.Item.Meta
-            avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
+            avatar={<Avatar src="https://source.unsplash.com/random/300x300" />}
             title={item.title}
             description={item.description}
           />

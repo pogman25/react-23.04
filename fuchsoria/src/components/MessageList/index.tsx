@@ -7,7 +7,7 @@ export default function MessageList({ messages }: IMessageListProps) {
   const listRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (listRef.current?.lastElementChild) {
+    if (typeof listRef.current?.lastElementChild?.scrollIntoView === 'function') {
       listRef.current.lastElementChild.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
   });
