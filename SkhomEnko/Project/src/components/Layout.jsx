@@ -1,7 +1,10 @@
 import React, { Component } from "react"
 import PropTypes from "prop-types"
-import MessageField from "./MessageField"
-import FormMessage from "./FormMessage"
+import MessageField from "./MessageField/"
+import FormMessage from "./FormMessage/"
+import Header from "./Header"
+import ChatList from "./ChatList"
+import { Container, Grid } from '@material-ui/core'
 
 const botAnswers = [
   'Талант — это способность верить в успех.',
@@ -36,7 +39,8 @@ class App extends Component {
         message: `Сообщение из будущего`,
         timestamp: new Date().getTime()+10000 // через 10 секунд
       }
-    ]
+    ],
+    timeout: null // for debounce input
   }
 
   addMessage = (msg) => {
@@ -44,21 +48,22 @@ class App extends Component {
     this.setState(({ messages }) => ({
       messages: [...messages, { id: messages.length+1, author, message, timestamp}]
     }))
-    this.refs.test.scrollToBottom() // Скроллимся вниз, так как появилось новое сообщение.
+    this.refs.mf.scrollToBottom() // Скроллимся вниз, так как появилось новое сообщение.
   }
 
   componentDidUpdate() {
     const { messages } = this.state
-    if (messages[messages.length-1].author !== this.props.botname && Math.random() > 0.3) { // разбавим ответы боты молчанием.
+    if (messages[messages.length-1].author !== this.props.botname) { // Теперь бот будет отвечать всегда.
+      clearTimeout(this.state.timeout) // для дебаунса пользовательского ввода
       let mock = Math.random() > 0.7 // в некоторых случаях бот будет передразнивать юзера
-      setTimeout(() => {
+      this.state.timeout = setTimeout(() => {
         this.addMessage({
           id: messages.length+1, 
           message: (mock ? messages[messages.length-1].message : botAnswers[Math.floor(Math.random() * botAnswers.length)]), 
           author: this.props.botname, 
           timestamp: new Date().getTime()
         })
-      }, Math.random() * 2000) // случайная задержка ответов бота
+      }, Math.random() * 1000 + 1000) // случайная задержка ответов бота
     }
   }
 
@@ -66,10 +71,18 @@ class App extends Component {
     const { messages } = this.state
     const uname = this.props.showUsername ? this.props.username : 'Я'
     return (
-      <div>
-        <MessageField messages={messages} uname={uname} ref="test" />
-        <FormMessage addMessage={this.addMessage} uname={uname} />
-      </div>
+      <Container>
+        <Header />
+        <Grid container>
+          <Grid item xs sm={3}>
+            <ChatList />
+          </Grid>
+          <Grid item xs>
+            <MessageField messages={messages} uname={uname} ref="mf" />
+            <FormMessage addMessage={this.addMessage} uname={uname} />
+          </Grid>
+        </Grid>
+      </Container>
     )
   }
 }

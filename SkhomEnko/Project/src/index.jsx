@@ -1,8 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import App from "./components/App"
+import App_layout from "./components/Layout"
+import 'typeface-roboto'
+import './index.css' // body style
 
 ReactDOM.render(
-  <App username="Алексей" />,
+  <App_layout username="Алексей" />,
   document.getElementById("App")
-);
+)

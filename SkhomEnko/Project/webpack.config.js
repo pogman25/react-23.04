@@ -1,6 +1,7 @@
-const minCss = require ('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require ('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const path = require("path")
+const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
 module.exports = {
   entry: "./src/index.jsx",
@@ -28,7 +29,7 @@ module.exports = {
         test: /\.css$/,
         use: [
             {
-                loader: minCss.loader,
+                loader: MiniCssExtractPlugin.loader,
                 options: {
                     publicPath: '../',
                     hmr: process.env.NODE_ENV
@@ -36,21 +37,32 @@ module.exports = {
             },
             'css-loader'
         ]
+      },
+      {
+        test: /\.(woff|ttf|otf|eot|woff2|svg)$/i,
+        loader: "file-loader",
+        options: {
+          name: 'static/media/[name].[hash:4].[ext]'
+        }
       }
     ]
   },
   devServer: {
     contentBase: path.join(__dirname, "build"),
     compress: true,
-    port: 9000
+    port: 9000,
+    // headers: {
+    //   'Access-Control-Allow-Origin': '*' // enabling CORS
+    // }
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       filename: "index.html",
       template: "src/index.html",
       favicon: "./src/favicon.ico"
     }),
-    new minCss ({
+    new MiniCssExtractPlugin ({
       filename: 'css/[name].css',
       chunkFilename: '[id].css',
       ignoreOrder: false,
