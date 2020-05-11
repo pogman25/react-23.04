@@ -1,5 +1,7 @@
 import React, { Component } from "react"
+import PropTypes from "prop-types"
 import './FormMessage.css'
+import SendIcon from '@material-ui/icons/Send'
 
 class FormMessage extends Component {
   state = {
@@ -53,10 +55,14 @@ class FormMessage extends Component {
           </div>
           <button className="emoji-list-toggle" onClick={this.onEmojiListToggle}></button>
         </div>
-        <button type="submit">✈️ SEND</button>
+        <button type="submit"><SendIcon />SEND</button>
       </form>
     )
   }
+}
+
+FormMessage.propTypes = {
+  addMessage: PropTypes.func.isRequired
 }
 
 export default FormMessage

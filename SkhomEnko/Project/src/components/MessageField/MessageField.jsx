@@ -6,7 +6,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import ru from 'dayjs/locale/ru'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 // my imports
-import Message from "./Message"
+import Message from "../Message"
 // style
 import './MessageField.css'
 
@@ -24,13 +24,16 @@ class MessageField extends React.PureComponent {
         return (
             <div className="message-field">
                 <div className="message-container">
+                    {!messages.length && <center><br />Нет сообщений для отображения. Напишите что-нибудь.</center>}
                     {messages.map((msg, index) => (
-                        <Message key={msg.id} data={{
-                            ...msg, 
-                            showTimestamp: ((index === 0 || msg.timestamp-messages[index-1].timestamp > 1800000 ) ? true : false),
-                            isMine: (msg.author === uname)
-                        }} />
-                    ))}
+                                <Message key={`id-${msg.id}`} data={{
+                                    ...msg, 
+                                    showTimestamp: ((index === 0 || msg.timestamp-messages[index-1].timestamp > 1800000 ) ? true : false),
+                                    isMine: (msg.author === uname)
+                                }} />
+                            ))
+                    }
+
                     <div style={{ float:"left", clear: "both" }}
                         ref={(el) => { this.messagesEnd = el }}>
                     </div>
@@ -41,11 +44,17 @@ class MessageField extends React.PureComponent {
 }
 
 MessageField.defaultProps = {
-    messages: [{Empty: true}]
+    messages: [{isEmpty: true}]
 }
 
 MessageField.propTypes = {
-    messages: PropTypes.array
+    messages: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        author: PropTypes.string,
+        message: PropTypes.string,
+        timestamp: PropTypes.number
+    })).isRequired,
+    uname: PropTypes.string.isRequired
 }
 
 export default MessageField

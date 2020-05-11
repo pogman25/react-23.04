@@ -3,11 +3,10 @@ import PropTypes from "prop-types"
 import dayjs from 'dayjs'
 import './Message.css'
 import clsx from 'clsx'
-import useInterval from './hooks/useInterval'
+import useInterval from '../hooks/useInterval'
 
 function Message(props) {
     const {
-      id,
       author,
       message,
       showTimestamp,
@@ -42,7 +41,15 @@ function Message(props) {
 }
 
 Message.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.shape({
+    // id прилетает, но в самом (данном) компоненте он не задействован, используется только снаружи для итерирования
+    // id: PropTypes.number,
+    author: PropTypes.string,
+    message: PropTypes.string,
+    showTimestamp: PropTypes.bool,
+    timestamp: PropTypes.number,
+    isMine: PropTypes.bool
+  }).isRequired
 }
 
 export default React.memo(Message)
