@@ -1,9 +1,24 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import MessageButton from "./MessageButton"
-import Counter from "./Counter";
+import MessageButton from "../MessageButton/MessageButton"
+import Counter from "../Counter/Counter";
 import PropTypes from "prop-types";
-import MessageForm from "./MessageForm";
+import MessageForm from "../MessageForm/MessageForm";
+import Messages from "../Messages/Messages";
+import styles from "./index.css";
+import { withStyles } from '@material-ui/core/styles';
+
+const muiStyles = theme => {
+    console.log(theme);
+    return {
+        paper: {
+            marginTop: theme.spacing(7),
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+        },
+    };
+};
 
 class FirstMessage extends React.Component {
 
@@ -49,20 +64,17 @@ class FirstMessage extends React.Component {
     render() {
         //TODO:Замечание Замечание 1.1 (Исправлено) . переменные из this.state и this.props лучше объявлять перед return,
         // так код будет элегантнее смотреться и форматирование по приятнее будет
-        const {messages} = this.state;
-        const {name} = this.props;
-        const {isVisible} = this.state;
+        const {messages,isVisible} = this.state;
+        const {name, classes} = this.props;
 
-        return <div>Hello from FirstMessage Component: {name}
-            {messages.map(({text,author},index) =>(
-                <p key={index}>{`${author}:${text}`}</p>
-            ))}
-            {/*TODO:Мои доработки 1.1. Переделал передачу в виде стрелочной функции*/}
+        return (<div className={classes.paper} /*className={styles.container}*/>
+            <h2 className="title">Hello from FirstMessage Component: {name}</h2>
+            <Messages messages={messages}/>
         <MessageForm addMessage={this.addMessage}/>
         <MessageButton run={this.addMessage_Deprecated}/>
         <button onClick={this.toggle}>Visible</button>
             {isVisible && <Counter/>}
-        </div>;
+        </div>);
     }
 
 
@@ -73,4 +85,5 @@ FirstMessage.propTypes = {
 
 FirstMessage.defaultProps={}
 
-export default FirstMessage;
+//Note: Обертывание компонента стилями, которые полетят через Props
+export default withStyles(muiStyles)(FirstMessage);

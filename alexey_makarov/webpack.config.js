@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: {
@@ -27,6 +28,26 @@ module.exports = {
                     },
                 },
             },
+            // TODO: Так работает CSS
+            {
+                test:/\.css$/i,
+                use:[MiniCssExtractPlugin.loader,"css-loader"],
+            },
+
+            // TODO: Так не работает CSS
+            // {
+            //     test:/\.css$/i,
+            //     use:[MiniCssExtractPlugin.loader,
+            //         {
+            //             loader: "css-loader",
+            //             options: {
+            //                 modules:{
+            //                     localIdentName: '[path][name]__[local]--[hash:base64:5]',
+            //                 }
+            //             }
+            //         }
+            //     ],
+            // },
         ],
     },
     devServer: {
@@ -38,5 +59,7 @@ module.exports = {
         title: "Alf",
         filename: "index.html",
         template: "index.html"
-    })],
+    }),
+    new MiniCssExtractPlugin(),
+    ]
 };

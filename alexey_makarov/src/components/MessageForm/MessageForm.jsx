@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import PropTypes from "prop-types";
+import styles from './index.css';
 
 class MessageForm extends Component{
     state={
@@ -23,7 +24,7 @@ class MessageForm extends Component{
     render(){
         const {text,author} = this.state;
         return(
-        <form onSubmit={this.onSubmit}>
+        <form className={styles.container} onSubmit={this.onSubmit}>
             <input type="text" name="author" onChange={this.onChange} value={author} placeholder="Author" />
             <textarea name="text" value={text} onChange={this.onChange} placeholder="Message"/>
             <button type="submit">Add message</button>
