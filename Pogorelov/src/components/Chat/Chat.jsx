@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
 import FormMessage from '../FormMessage';
 import Messages from '../Messages/Messages';
 
 const muiStyles = theme => {
-  console.log(theme);
   return {
     paper: {
       marginTop: theme.spacing(7),
@@ -16,16 +15,22 @@ const muiStyles = theme => {
   };
 };
 
-class HelloMessage extends Component {
+class Chat extends Component {
   state = {
-    messages: [],
+    messages: [
+      { text: 'привет, я бОТ', author: 'Bot' },
+      { text: 'привет, я Человек', author: 'Pog' },
+    ],
   };
+
+  timer;
 
   componentDidUpdate() {
     const { messages } = this.state;
+    clearTimeout(this.timer);
 
     if (messages[messages.length - 1].author !== 'Bot') {
-      setTimeout(() => {
+      this.timer = setTimeout(() => {
         this.setState({ messages: [...messages, { text: 'привет, я бОТ', author: 'Bot' }] });
       }, 1000);
     }
@@ -36,28 +41,15 @@ class HelloMessage extends Component {
   };
 
   render() {
-    const { name, lastname, classes } = this.props;
     const { messages } = this.state;
 
     return (
-      <div className={classes.paper}>
-        <h2 className="title">{`Привет, ${name} ${lastname}`}</h2>
+      <Box p={3} mt={2} flexGrow={1}>
         <Messages messages={messages} />
         <FormMessage addNewMessage={this.addNewMessage} />
-      </div>
+      </Box>
     );
   }
 }
 
-HelloMessage.defaultProps = {
-  lastname: 'Погорелов',
-  classes: {},
-};
-
-HelloMessage.propTypes = {
-  name: PropTypes.string.isRequired,
-  lastname: PropTypes.string,
-  classes: PropTypes.shape(PropTypes.any),
-};
-
-export default withStyles(muiStyles)(HelloMessage);
+export default withStyles(muiStyles)(Chat);

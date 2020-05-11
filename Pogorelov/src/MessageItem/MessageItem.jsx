@@ -2,38 +2,53 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
+import { ListItem, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => {
+  console.log(theme);
   return {
-    item: {
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    item: {},
+    message: {
+      maxWidth: '75%',
       border: 0,
-      borderRadius: 3,
+      borderRadius: 12,
       boxShadow: theme.shadows[5],
       color: 'white',
-      height: 48,
-      padding: '0 30px',
+      padding: theme.spacing(1, 2),
+      backgroundColor: theme.palette.info.main,
     },
     left: {
-      alignSelf: 'flex-start',
+      justifyContent: 'flex-start',
     },
     right: {
-      alignSelf: 'flex-end',
+      justifyContent: 'flex-end',
     },
   };
 });
 
 const MessageItem = ({ author, text }) => {
   const classes = useStyles();
+
   return (
-    <li
+    <ListItem
+      color="primary"
       className={cx(classes.item, {
         [classes.left]: author !== 'Bot',
         [classes.right]: author === 'Bot',
       })}
     >
-      <p>{`${author}: ${text}`}</p>
-    </li>
+      <Typography
+        component="p"
+        variant="body1"
+        color="textPrimary"
+        className={classes.message}
+      >
+        {text}
+        <Typography variant="caption" display="block">
+          {author}
+        </Typography>
+      </Typography>
+    </ListItem>
   );
 };
 

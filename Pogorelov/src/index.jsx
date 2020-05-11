@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import HelloMessage from './components/HelloMessage';
+import Layout from './components/Layout';
 import './index.css';
 
 const theme = createMuiTheme({
@@ -12,7 +12,7 @@ const theme = createMuiTheme({
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <HelloMessage name="Саша!!!" />
+    <Layout />
   </ThemeProvider>,
   document.getElementById('hello-example'),
 );

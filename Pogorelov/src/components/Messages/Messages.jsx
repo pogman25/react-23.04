@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container } from '@material-ui/core';
-import styles from './index.css';
+import { Container, List } from '@material-ui/core';
 import MessageItem from '../../MessageItem/MessageItem';
 
 const listStyles = {
@@ -12,10 +11,12 @@ const listStyles = {
 
 const Messages = ({ messages }) => {
   return (
-    <Container maxWidth="sm" component="ul" className={styles.list} style={listStyles}>
-      {messages.map(({ text, author }, index) => (
-        <MessageItem key={index} text={text} author={author} />
-      ))}
+    <Container maxWidth="sm" style={listStyles}>
+      <List>
+        {messages.map(({ text, author }, index) => (
+          <MessageItem key={index} text={text} author={author} />
+        ))}
+      </List>
     </Container>
   );
 };
