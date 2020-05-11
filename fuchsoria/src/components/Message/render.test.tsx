@@ -10,17 +10,50 @@ const mockData: IMessage = {
   authorAccess: 'user',
 };
 
+const mockDataBot: IMessage = {
+  id: 'w7i3hgf48trg4',
+  author: 'Robot',
+  text: 'Bot example message',
+  authorAccess: 'bot',
+};
+
+const message = document.createElement('div');
+const messageBot = document.createElement('div');
+
 describe('<Message />', () => {
   it('Component should render', async () => {
-    const { container } = render(
+    render(
       <Message
         key={mockData.id}
         author={mockData.author}
         text={mockData.text}
         isBot={mockData.authorAccess === 'bot'}
-      />
+      />,
+      { container: document.body.appendChild(message) }
     );
 
-    expect(container).toMatchSnapshot();
+    render(
+      <Message
+        key={mockDataBot.id}
+        author={mockDataBot.author}
+        text={mockDataBot.text}
+        isBot={mockDataBot.authorAccess === 'bot'}
+      />,
+      { container: document.body.appendChild(messageBot) }
+    );
+
+    expect(document.body).toMatchSnapshot();
+  });
+
+  it('Check rendered user message', () => {
+    expect(message.querySelector('.messageAuthor')?.textContent).toBe(mockData.author);
+    expect(message.querySelector('.message')?.lastChild?.textContent).toBe(mockData.text);
+    expect(message.querySelector('.message')?.classList.contains('messageBot')).toBeFalsy();
+  });
+
+  it('Check rendered bot message', () => {
+    expect(messageBot.querySelector('.messageAuthor')?.textContent).toBe(mockDataBot.author);
+    expect(messageBot.querySelector('.message')?.lastChild?.textContent).toBe(mockDataBot.text);
+    expect(messageBot.querySelector('.message')?.classList.contains('messageBot')).toBeTruthy();
   });
 });
