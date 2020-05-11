@@ -5,7 +5,7 @@ import HelloMessage from "./components/HelloMessage";
 function Output(){
 return (
     <div>
-      <HelloMessage name="незнакомец" lastname ="или еще кто" />
+      <HelloMessage name="незнакомец" />
     </div>
   )
 };

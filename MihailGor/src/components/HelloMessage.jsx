@@ -1,36 +1,74 @@
-import React, { useState } from "react";
-import Example from "./Example";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Counter from './Counter';
+import FormMessage from "./FormMessage";
 
 
-const HelloMessage = ({name, lastname}) => {
-  const[messages, setMessages] = useState(["Привет", "Как дела?"]);
-  const [isVisible, setVisibility] = useState(true);
-
-  const toggle = () => {
-    setVisibility((prev) => !prev);
+class HelloMessage extends Component {
+  state = {
+    messages: [],
+    isVisible: true,
   };
 
-  const addMessage = () => {
-    setMessages((prev) => [...prev, "Нормально"]);
+  toggle = (e) => {
+    this.setState(({ isVisible }) => ({ 
+      isVisible: !isVisible
+    }));
   };
 
+  addMessage = () => {
+    this.setState(({ messages }) => ({ 
+      messages: [...messages,  {text: "привет", author: "Pog"}],
+    }));
+  };
 
-  return (
-    <div>
-      <h2>Привет, {`${name} ${lastname}`}</h2>
-      <ul>
-        {messages.map((message, index) => (
-          <li key={index}>
-            <p>{message}</p>
-          </li>
-        ))}
-      </ul>
-      <button onClick={addMessage}>Ответить</button>
-      <button onClick={toggle}>Visible</button>
-      {isVisible && <Counter />}
-    </div>
-  );
+  componentDidUpdate() {
+    const { messages } = this.state;
+
+    if (messages[messages.length - 1].author !== "Бот") {
+      setTimeout(() => {
+        this.setState(({ messages }) => ({
+          messages: [...messages,  {text: "привет, я Бот", author: "Бот"}],
+        }));
+      }, 1000);
+    }
+  }
+
+  addNewMessage = (data) => {
+    this.setState(({ messages }) => ({ messages: [...messages, data ] }));
+  }
+
+  render() {
+    const {name, lastname} = this.props;
+    const { messages, isVisible } = this.state;
+
+    return (
+      <div>
+        <h2>{`Привет, ${name} ${lastname}`}</h2>
+        <ul>
+          {messages.map(({text, author}, index) => (
+            <li key={index}>
+              <p>{`${author}: ${text}`}</p>
+            </li>
+          ))}
+        </ul>
+        <FormMessage addNewMessage={this.addNewMessage}/>
+        <button onClick={this.addMessage}>Click</button>
+        <button onClick={this.toggle}>Visible</button>
+        {isVisible && <Counter styles={{ height:100 }} />}
+      </div>
+    );
+  }
+}
+
+HelloMessage.defaultProps = {
+  lastname: "дефолтный",
 };
+
+HelloMessage.propTypes = {
+  name: PropTypes.string.isRequired,
+  lastname: PropTypes.string.isRequired,
+};
+
 
 export default HelloMessage;

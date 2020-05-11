@@ -9,9 +9,6 @@ class Counter extends PureComponent {
 
   componentDidMount() {
     console.log("component counter did mount");
-    interval = setInterval(() => {
-      console.log("I'm from interval");
-    }, 1000);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -20,7 +17,6 @@ class Counter extends PureComponent {
 
   componentWillUnmount() {
     console.log('Component Will Unmount');
-    clearInterval(interval);
   }
 
   changeCount = (e) => {
