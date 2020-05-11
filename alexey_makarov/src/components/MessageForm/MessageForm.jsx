@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
 import styles from './index.css';
 
 class MessageForm extends Component{
@@ -25,9 +27,9 @@ class MessageForm extends Component{
         const {text,author} = this.state;
         return(
         <form className={styles.container} onSubmit={this.onSubmit}>
-            <input type="text" name="author" onChange={this.onChange} value={author} placeholder="Author" />
-            <textarea name="text" value={text} onChange={this.onChange} placeholder="Message"/>
-            <button type="submit">Add message</button>
+            <TextField type="text" name="author" onChange={this.onChange} value={author} placeholder="Author" />
+            <TextField name="text" value={text} onChange={this.onChange} placeholder="Message"/>
+            <Button type="submit" variant="contained">Add message</Button>
         </form>
         )
     }
