@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import styles from "./index.css";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import Icon from '@material-ui/core/Icon';
+
 
 class FormMessage extends Component {
   state = {
@@ -22,15 +27,31 @@ class FormMessage extends Component {
     
 
     return (
-      <form onSubmit={this.onSubmit}>
-        <input
+      <form>
+        <TextField
           type="text"
+          label="Author"
           name="author"
           onChange={this.onChange}
           value={author}
+          variant="outlined"
         />
-        <textarea name="text" onChange={this.onChange} value={text} />
-        <button type="submit">Add message</button>
+        <TextField 
+        label="Text"
+        autoFocus
+        name="text"
+        multiline 
+        onChange={this.onChange} 
+        value={text}
+        placeholder="Введите сообщение"
+        variant="outlined" />
+        <Button
+        variant="contained"
+        color="primary"
+        onClick={this.onSubmit}
+        >
+        Send
+      </Button>
       </form>
     );
   }

@@ -1,14 +1,17 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import Example from "./Example";
-import FormMessage from "./FormMessage";
+import Example from "../Example";
+import FormMessage from "../FormMessage/FormMessage";
+import styles from "./index.css";
+import classname from 'classname';
  
 
 class HelloMessage extends Component {
   
 
     state = {
-      messages: [], 
+      messages: [{ text : "Привет!" , author : 'bot' } , { text : "Как дела?" ,
+      author : 'bot' }], 
     };
 
 
@@ -39,16 +42,16 @@ class HelloMessage extends Component {
     return (
       <div>
         <h2>Привет, {this.props.name}</h2>
-        <ul>
+        <ul className="MessageChat">
           
           {messages.map(({text, author}, index) => (
              <li key={index}> 
-              <p>{`${author}: ${text}`}</p>
+              <p className="Message">{`${author}: ${text}`}</p>
             </li>
           ))}          
         </ul>       
         <FormMessage addNewMessage={this.addNewMessage} />
-        <button onClick={this.addMessage}>Click</button>
+        {/* <button onClick={this.addMessage}>Click</button> */}
       </div>
     );
   }
