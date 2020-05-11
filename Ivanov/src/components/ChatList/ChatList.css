@@ -1,0 +1,9 @@
+.container {
+    background-color: gray;
+    border: 1px solid black;
+    flex-grow: 1;
+}
+
+.chatListTitle {
+    text-align: center;
+}
