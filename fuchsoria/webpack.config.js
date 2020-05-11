@@ -1,6 +1,22 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const TerserJSPlugin = require('terser-webpack-plugin');
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+const isAnalyze = process.env.NODE_ENV === 'analyze';
+
+const babelLoader = {
+  loader: 'babel-loader',
+  options: {
+    presets: ['@babel/env', '@babel/react'],
+    plugins: [
+      ['@babel/plugin-proposal-class-properties', { loose: true }],
+      ['import', { libraryName: 'antd', style: 'css' }],
+    ],
+  },
+};
 
 module.exports = {
   entry: { index: './index.tsx' },
@@ -15,6 +31,7 @@ module.exports = {
         test: /\.ts(x?)$/,
         exclude: /node_modules/,
         use: [
+          babelLoader,
           {
             loader: 'ts-loader',
           },
@@ -23,29 +40,19 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         include: path.resolve(__dirname, 'src'),
-        loader: 'babel-loader',
-        exclude: '/node_modules/',
-        options: {
-          presets: ['@babel/env', '@babel/react'],
-          plugins: [
-            [
-              '@babel/plugin-proposal-class-properties',
-              {
-                loose: true,
-              },
-            ],
-          ],
-        },
+        use: [babelLoader],
       },
       {
-        test: /\.[sac]*ss$/i,
+        test: /\.[sca]{2}ss$/,
         exclude: '/node_modules/',
         loader: [
           MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
-              modules: true,
+              modules: {
+                localIdentName: '[hash:base64:7]',
+              },
               sourceMap: false,
               localsConvention: 'camelCaseOnly',
             },
@@ -58,14 +65,58 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.css$/,
+        exclude: '/node_modules/',
+        loader: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              sourceMap: false,
+            },
+          },
+        ],
+      },
     ],
   },
-  plugins: [
-    new MiniCssExtractPlugin({
-      filename: 'bundles/[name].[contenthash].css',
-    }),
-    new HtmlWebpackPlugin({ template: './index.html' }),
-  ],
+  optimization: {
+    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    splitChunks: {
+      chunks: 'all',
+      minSize: 300000,
+      maxSize: 100000,
+      minChunks: 1,
+      maxAsyncRequests: 6,
+      maxInitialRequests: 4,
+      automaticNameDelimiter: '-',
+      cacheGroups: {
+        vendors: {
+          test: /[\\/]node_modules[\\/]/,
+          priority: -10,
+        },
+        default: {
+          minChunks: 2,
+          priority: -20,
+          reuseExistingChunk: true,
+        },
+      },
+    },
+  },
+  plugins: isAnalyze
+    ? [
+        new MiniCssExtractPlugin({
+          filename: 'bundles/[name].[contenthash].css',
+        }),
+        new HtmlWebpackPlugin({ template: './index.html' }),
+        new BundleAnalyzerPlugin(),
+      ]
+    : [
+        new MiniCssExtractPlugin({
+          filename: 'bundles/[name].[contenthash].css',
+        }),
+        new HtmlWebpackPlugin({ template: './index.html' }),
+      ],
   resolve: {
     extensions: ['.ts', '.tsx', '.jsx', '.js'],
   },

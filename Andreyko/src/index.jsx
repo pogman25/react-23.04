@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MessageField from './components/MessageField/MessageField';
+import Layout from './components/Layout/Layout';
 
 ReactDOM.render(
   <>
-    <MessageField />
+    <Layout />
   </>,
-  document.getElementById('hello')
+  document.getElementById('root')
 );
