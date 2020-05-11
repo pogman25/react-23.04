@@ -1,0 +1,29 @@
+.message {
+  width: 20%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 16px;
+  background-color: #188ac7;
+}
+
+.message-text {
+  margin-bottom: 4px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.message-author {
+  color: #fff;
+  font-size: 8px;
+}
+
+.my-message {
+  margin-left: auto;
+  border: 2px solid #188ac7;
+  background-color: transparent;
+}
+
+.my-message .message-author,
+.my-message .message-text {
+  color: #188ac7;
+}
