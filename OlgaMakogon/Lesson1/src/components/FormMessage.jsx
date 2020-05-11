@@ -1,10 +1,8 @@
-
 import React, { Component } from "react";
 
 class FormMessage extends Component {
   state = {
-    text: "",
-    author: "",
+    messages: [],
   };
 
   onChange = (event) => {
@@ -13,14 +11,15 @@ class FormMessage extends Component {
   };
 
   onSubmit = (e) => {
-      e.preventDefault();
-      const { addNewMessage } = this.props;
-      addNewMessage(this.state);
-      this.setState({ text: '', author: '' });
+    e.preventDefault();
+    const { addNewMessage } = this.props;
+    const { text, author } = this.state;
+    addNewMessage({author, text})
   };
 
   render() {
     const { text, author } = this.state;
+    
 
     return (
       <form onSubmit={this.onSubmit}>

@@ -1,11 +1,13 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin'); 
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require('path');
 
 module.exports = {
     entry: './src/index.jsx',         
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: '[name].js'                                   
+        filename: '[name].[contenthash].js'                                   
     },
     resolve: {
         extensions: ['.js', '.jsx']
@@ -18,9 +20,25 @@ module.exports = {
                 use: {                                      //какой лоадэр и опции использовать 
                     loader: 'babel-loader',
                     options: {
-                    presets: ['@babel/preset-env', '@babel/preset-react']
+                        presets: ['@babel/preset-env', '@babel/preset-react'],
+                        plugins: ['@babel/plugin-proposal-class-properties'] 
                     }
                 }
+            },
+            {
+                test: [/\.css$/i, /\.s[ac]ss$/i],
+                use: [
+                    "style-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: {
+                            localIdentName: "[path][name]__[local]--[hash:base64:5]",   //можно указать только "[hash:base64:5]"
+                            },
+                        },
+                    },
+                    "sass-loader",
+                ],
             }
         ],
     },
@@ -29,8 +47,12 @@ module.exports = {
         compress: true,
         port: 9000
     },
-    plugins: [new HtmlWebpackPlugin({
-        filename: 'index.html',
-        template: 'src/index.html'
-    })]
+    plugins: [
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: 'src/index.html'
+        }),
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin()
+    ]
 };

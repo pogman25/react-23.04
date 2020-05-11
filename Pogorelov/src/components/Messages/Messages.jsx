@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
+import { Container } from '@material-ui/core';
 import styles from './index.css';
 import MessageItem from '../../MessageItem/MessageItem';
 
@@ -9,19 +10,15 @@ const listStyles = {
   minHeight: 300,
 };
 
-class Messages extends Component {
-  render() {
-    const { messages } = this.props;
-
-    return (
-      <ul className={styles.list} style={listStyles}>
-        {messages.map(({ text, author }, index) => (
-          <MessageItem key={index} text={text} author={author} />
-        ))}
-      </ul>
-    );
-  }
-}
+const Messages = ({ messages }) => {
+  return (
+    <Container maxWidth="sm" component="ul" className={styles.list} style={listStyles}>
+      {messages.map(({ text, author }, index) => (
+        <MessageItem key={index} text={text} author={author} />
+      ))}
+    </Container>
+  );
+};
 
 Messages.propTypes = {
   messages: PropTypes.arrayOf(

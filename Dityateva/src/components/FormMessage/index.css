@@ -1,0 +1,9 @@
+.container {
+  display: flex;
+  width: 600px;
+}
+
+.input {
+  width: 90%;
+  padding: 5px;
+}

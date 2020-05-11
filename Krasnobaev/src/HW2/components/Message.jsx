@@ -1,20 +1,20 @@
 import React, { Component } from "react";
 
-class FormMessage extends Component {
+class Message extends Component {
     state = {
         text: "",
-        author: "Lena Di",
+        author: "Ivan K.",
     };
 
-    onChange = (event) => {
-        const { value, name } = event.target;
+    onChange = (e) => {
+        const { value, name } = e.target;
         this.setState({ [name]: value });
     };
 
     onSubmit = (e) => {
         const { addNewMessage } = this.props;
+        e.preventDefault();
         addNewMessage(this.state.text, this.state.author);
-        e.preventDefault(); 
         this.state.text = '';
     };
 
@@ -23,17 +23,15 @@ class FormMessage extends Component {
 
         return (
         <form onSubmit={this.onSubmit}>
-            <input
-            type="text"
-            name="author"
-            onChange={this.onChange}
-            value={author}
-            />
-            <textarea name="text" onChange={this.onChange} value={text} />
+            <label htmlFor="author">Author: </label>
+            <input id="author" type="text" name="author" onChange={this.onChange} value={author} />
+            <br/><br/>
+            <label htmlFor="text">Your message: </label>
+            <textarea id="text" name="text" onChange={this.onChange} value={text} />
             <button type="submit">Add message</button>
         </form>
         );
     }
 }
 
-export default FormMessage;
+export default Message;

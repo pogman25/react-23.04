@@ -1,30 +1,83 @@
-import React from 'react';
-import Example from './Example';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import Example from "./Example";
+import Counter from "./Counter";
+import FormMessage from "./FormMessage";
 
-class HelloMessage extends React.Component {
-    constructor() {
-        super();
+const initialState = {
+    messages: [
+        { text: "Привет!", author: "User" },
+        { text: "Как дела?", author: "User" },
+    ],
+    name: "Samon",
+    visible: true,
+};
 
-        this.state = {
-            messages: [],
-        };
+class HelloMessage extends PureComponent {
+    state = initialState;
 
-        this.addMessage = this.addMessage.bind(this);
+    addMessage = () => {
+        const { messages } = this.state;
+        this.setState({
+            messages: [...messages, { text: "Нормально", author: "User" }],
+            name: "Peter",
+        });
+    };
+
+    componentDidUpdate() {
+        const { messages } = this.state;
+        if (messages[messages.length - 1].author !== "Bot") {
+            setTimeout(() => {
+                this.setState({
+                    messages: [...messages, { text: "Привет, я Бот!", author: "Bot" }],
+                    name: "Bot",
+                });
+            }, 500);
+        }
     }
 
-    addMessage() {
-        this.setState();
-    }
+    reset = () => {
+        this.setState(initialState);
+    };
+
+    toggle = () => {
+        this.setState(({ visible }) => ({ visible: !visible }));
+    };
+
+    addNewMessage = (message) => {
+        const { messages } = this.state;
+        this.setState({ messages: [...messages, { text: message.text, author: message.author }] });
+    };
 
     render() {
-      return (
-        <div>
-            Hello <h2>{this.props.name}</h2>
-            <Example />
-            <button onClick={ this.addMessage }></button>
-        </div>
-      );
+        const { messages, name, visible } = this.state;
+        const { lastname } = this.props;
+
+        return (
+            <div>
+                {/* this.props.name - если прилетают внешние пропсы */}
+                <h2>{`Hello, ${name} ${lastname}`}</h2>
+                <Example />
+                {messages.map(({ text, author }, idx) => (
+                    <div key={idx}>{`${author}: ${text}`}</div>
+                ))}
+                <FormMessage addNewMessage={this.addNewMessage} />
+                <button onClick={this.addMessage}>Ckick</button>
+                <button onClick={this.reset}>Reset</button>
+                <button onClick={this.toggle}>Visible</button>
+                {visible && <Counter />}
+            </div>
+        );
     }
 }
 
-export default  HelloMessage;
+HelloMessage.defaultProps = {
+    lastname: "Ivanov",
+};
+
+HelloMessage.propTypes = {
+    name: PropTypes.string.isRequired,
+    lastname: PropTypes.string.isRequired,
+};
+
+export default HelloMessage;
