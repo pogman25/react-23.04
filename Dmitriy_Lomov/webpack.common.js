@@ -1,12 +1,13 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const path = require("path");
+const path = require('path');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: { app: "./src/index.jsx" },
-    output: {
-        path: path.resolve(__dirname, "build"),
-        filename: "[name].js",
-    },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new HtmlWebpackPlugin(),
+    ],
     resolve: {
         extensions: [".js", ".jsx"],
     },
@@ -21,12 +22,12 @@ module.exports = {
                     plugins: ["@babel/plugin-proposal-class-properties"]
                 },
             },
-        }, ],
+        },
+        ],
     },
-    devServer: {
-        contentBase: path.join(__dirname, "build"),
-        compress: true,
-        port: 9000,
+    output: {
+        filename: '[name][hash].js',
+        path: path.resolve(__dirname, 'build'),
     },
     plugins: [
         new HtmlWebpackPlugin({

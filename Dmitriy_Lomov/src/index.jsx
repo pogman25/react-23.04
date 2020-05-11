@@ -1,14 +1,16 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import MessageRender from "./components/MessageRender";
-import ChatBot from "./components/ChatBot";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Layout from './components/Layout';
+
+const theme = createMuiTheme({});
 
 ReactDOM.render(
-  <div>
-    <MessageRender />
-    <hr />
-    <ChatBot name="Dmitriy" />
-  </div>,
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    <Layout />
+  </ThemeProvider>,
 
-  document.getElementById("app")
+  document.getElementById('app'),
 );
