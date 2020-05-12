@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { ListItem, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => {
-  console.log(theme);
   return {
     item: {},
     message: {

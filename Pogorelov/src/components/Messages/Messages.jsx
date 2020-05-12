@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, List } from '@material-ui/core';
-import MessageItem from '../../MessageItem/MessageItem';
+import MessageItem from '../MessageItem/MessageItem';
 
 const listStyles = {
   border: '1px solid #333',

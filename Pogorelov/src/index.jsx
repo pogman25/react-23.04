@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import Layout from './components/Layout';
+import RootRouter from './pages/RootRouter';
 import './index.css';
 
 const theme = createMuiTheme({
@@ -11,8 +12,10 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <Layout />
+    <BrowserRouter>
+      <CssBaseline />
+      <RootRouter />
+    </BrowserRouter>
   </ThemeProvider>,
   document.getElementById('hello-example'),
 );

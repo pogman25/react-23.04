@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import Header from '../Header/Header';
 import ChatList from '../ChatList/ChatList';
-import Chat from '../Chat';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -11,17 +11,21 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Layout = () => {
+const Layout = ({ children }) => {
   const classes = useStyles();
   return (
     <>
       <Header />
       <main className={classes.root}>
         <ChatList />
-        <Chat />
+        {children}
       </main>
     </>
   );
+};
+
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
 };
 
 export default Layout;

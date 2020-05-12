@@ -13,6 +13,8 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import { Link, useHistory } from 'react-router-dom';
+import pageLinks from './page-links';
 
 const drawerWidth = 240;
 
@@ -73,6 +75,11 @@ const useStyles = makeStyles(theme => ({
 
 const ChatList = () => {
   const classes = useStyles();
+  const history = useHistory();
+
+  const logout = () => {
+    history.push('/chat/1');
+  };
 
   return (
     <Drawer
@@ -85,20 +92,34 @@ const ChatList = () => {
       <div className={classes.toolbar}>
         <Typography variant="body1">Список чатов</Typography>
       </div>
+      <Link to="/" key="home-page">
+        <ListItem
+          classes={{
+            root: classes.itemRoot,
+          }}
+          button
+        >
+          <ListItemIcon>
+            <MenuIcon />
+          </ListItemIcon>
+          <ListItemText>Home</ListItemText>
+        </ListItem>
+      </Link>
       <List disablePadding>
-        {['chat1', 'chat2'].map(chat => (
-          <ListItem
-            key={chat}
-            classes={{
-              root: classes.itemRoot,
-            }}
-            button
-          >
-            <ListItemIcon>
-              <MenuIcon />
-            </ListItemIcon>
-            <ListItemText>{chat}</ListItemText>
-          </ListItem>
+        {Object.values(pageLinks).map(({ title, to }) => (
+          <Link to={to} key={title}>
+            <ListItem
+              classes={{
+                root: classes.itemRoot,
+              }}
+              button
+            >
+              <ListItemIcon>
+                <MenuIcon />
+              </ListItemIcon>
+              <ListItemText>{title}</ListItemText>
+            </ListItem>
+          </Link>
         ))}
       </List>
       <List className={classes.footerList} disablePadding>
@@ -114,12 +135,26 @@ const ChatList = () => {
             <ListItemText>{text}</ListItemText>
           </ListItem>
         ))}
+        <Link to="/about" key="about-page">
+          <ListItem
+            classes={{
+              root: classes.itemRoot,
+            }}
+            button
+          >
+            <ListItemIcon>
+              <MenuIcon />
+            </ListItemIcon>
+            <ListItemText>About</ListItemText>
+          </ListItem>
+        </Link>
         <ListItem
           key="logout-btn"
           classes={{
             root: classes.itemRoot,
           }}
           button
+          onClick={logout}
         >
           <ListItemIcon>
             <ExitToAppIcon />
