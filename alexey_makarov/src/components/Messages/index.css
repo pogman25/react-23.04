@@ -1,15 +1,6 @@
-.list {
+.list{
     list-style: none;
     display: flex;
     flex-direction: column;
-}
-.item {
-    max-width: 250px;
-}
-.left {
-    align-self: flex-start;
-}
-.right {
     color: red;
-    align-self: flex-end;
 }

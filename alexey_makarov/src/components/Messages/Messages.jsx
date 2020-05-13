@@ -1,33 +1,71 @@
 import React,{Component} from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import styles from './index.css'
+import { Container, List, ListItem, Typography } from '@material-ui/core';
+import {withStyles} from "@material-ui/core/styles";
 
-const listStyles = {border: '1px solid #123',
+const listStyles = {
+    border: '1px solid #123',
     borderRadius: 7,
     minHeight:100,
 };
 
+const muiStyles = theme => {
+    console.log(theme);
+    return {
+        message: {
+            maxWidth: '75%',
+            border: 0,
+            borderRadius: 12,
+            boxShadow: theme.shadows[5],
+            color: 'white',
+            padding: theme.spacing(1, 2),
+            backgroundColor: theme.palette.info.main,
+        },
+        left: {
+            justifyContent: 'flex-start',
+        },
+        right: {
+            justifyContent: 'flex-end',
+        },
+        item: {},
+    };
+};
+
 class Messages extends Component {
     render() {
-        const {messages} = this.props;
+        const {messages,classes} = this.props;
+        messages.map(({author, text})=>
+            console.log(`${author}:${text}`)
+        )
         return (
             //Note: через style={{border: '1px solid #123', borderRadius: 7}} можно задать стиль напрямую
             // и можно вынести наверх см. переменную listStyles
-          <ul className={styles.list} style={listStyles}>
-              {messages.map(({text,author},index) =>(
+            <Container maxWidth="sm" style={listStyles}>
+                <List>
+                    {messages.map(({text,author},index) =>(
                   //Note в className можно указать логику, но лучше использовать classnames
                   //TODO: не работает classnames
-                  <li key={index} className={cx(styles.list,
-                      {
-                      [styles.left]: author !== "Bot",
-                      [styles.right]: author === "Bot"
+                  <ListItem color="primary" key={index} className={cx(classes.item, {
+                      [classes.left]: author !== 'Bot',
+                      [classes.right]: author === 'Bot',
                   })}
                   >
-                    <p>{`${author}:${text}`}</p>
-                  </li>
+                      <Typography
+                          component="p"
+                          variant="body1"
+                          color="textPrimary"
+                          className={classes.message}
+                      >
+                          {text}
+                          <Typography variant="caption" display="block">
+                              {author}
+                          </Typography>
+                      </Typography>
+                  </ListItem>
               ))}
-          </ul>
+                </List>
+            </Container>
         );
     }
 }
@@ -41,4 +79,4 @@ Messages.propTypes ={
     ).isRequired,
 }
 
-export default Messages;
+export default withStyles(muiStyles)(Messages);

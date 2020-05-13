@@ -20,12 +20,12 @@ const muiStyles = theme => {
     };
 };
 
-class FirstMessage extends React.Component {
+class Chat extends React.Component {
 
     //Note:Благодаря Proposal не требуется конструктор.
     state = {
         messages:[{text:"Hello", author:"Bot"}],
-        isVisible:true,
+        isVisible:false,
     }
 
     toggle = () =>{
@@ -67,7 +67,7 @@ class FirstMessage extends React.Component {
         const {messages,isVisible} = this.state;
         const {name, classes} = this.props;
 
-        return (<div className={classes.paper} /*className={styles.container}*/>
+        return (<div /*className={classes.paper}*/ /*className={styles.container}*/>
             <h2 className="title">Hello from FirstMessage Component: {name}</h2>
             <Messages messages={messages}/>
         <MessageForm addMessage={this.addMessage}/>
@@ -79,11 +79,11 @@ class FirstMessage extends React.Component {
 
 
 }
-FirstMessage.propTypes = {
+Chat.propTypes = {
     name: PropTypes.string.isRequired,
 }
 
-FirstMessage.defaultProps={}
+Chat.defaultProps={}
 
 //Note: Обертывание компонента стилями, которые полетят через Props
-export default withStyles(muiStyles)(FirstMessage);
+export default withStyles(muiStyles)(Chat);

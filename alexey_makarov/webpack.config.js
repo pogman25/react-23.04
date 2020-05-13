@@ -30,8 +30,18 @@ module.exports = {
             },
             // TODO: Так работает CSS
             {
-                test:/\.css$/i,
-                use:[MiniCssExtractPlugin.loader,"css-loader"],
+                test: /\.css$/i,
+                use: [
+                    "style-loader",
+                    {
+                        loader: "css-loader",
+                        options: {
+                            modules: {
+                                localIdentName: "[path][name]__[local]--[hash:base64:5]",
+                            },
+                        },
+                    },
+                ],
             },
 
             // TODO: Так не работает CSS
