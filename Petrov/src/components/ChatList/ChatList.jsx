@@ -5,34 +5,60 @@ import Paper from '@material-ui/core/Paper';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Typography from '@material-ui/core/Typography';
 import EmailIcon from '@material-ui/icons/Email';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SendIcon from '@material-ui/icons/Send';
+import HomeIcon from '@material-ui/icons/Home';
+import InfoIcon from '@material-ui/icons/Info';
+import { Link, useHistory } from 'react-router-dom';
+import pageLinks from './page-links';
 import styles from './index.css';
 
 class ChatList extends Component {
 
     render() {
-
+        const logout = () => {
+            history.push('/chat/1');
+          };
         return (
             <Paper className={styles.chatListContainer}>
-                <MenuList>
+                <MenuList >
+                <Link to="/" key="home-page">
                     <MenuItem>
                         <ListItemIcon>
-                            <SendIcon fontSize="small" />
+                            <HomeIcon fontSize="small" />
                         </ListItemIcon>
-                        <Typography variant="inherit">Привет, React.js</Typography>
+                        <Typography variant="inherit">HOME</Typography>
                     </MenuItem>
+                    </Link>
+                    {Object.values(pageLinks).map(({ title, to }) => (
+                         <Link to={to} key={title}>
+                          <MenuItem button>
+                           <ListItemIcon>
+                              <SendIcon fontSize="small" />
+                          </ListItemIcon>          
+                              <Typography variant="inherit">{title}</Typography>
+                         </MenuItem>
+                        </Link>
+        ))}
+
+
+                <Link to="/about" key="about-page" >
                     <MenuItem>
                         <ListItemIcon>
-                            <EmailIcon  fontSize="small" />
+                            <InfoIcon  fontSize="small" />
                         </ListItemIcon>
-                        <Typography variant="inherit">HTML Chat</Typography>
+                        <Typography variant="inherit">About</Typography>
                     </MenuItem>
-                    <MenuItem>
+                    </Link>
+                    <MenuItem key="logout-btn"
+                              button
+                              onClick={logout}
+                              >
                         <ListItemIcon>
-                            <EmailIcon  fontSize="small" />
+                            <ExitToAppIcon  fontSize="small" />
                         </ListItemIcon>
                         <Typography variant="inherit" noWrap>
-                            MYSQL Chat
+                        Выйти
                         </Typography>
                     </MenuItem>
                 </MenuList>
