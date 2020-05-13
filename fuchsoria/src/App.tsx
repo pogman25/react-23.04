@@ -1,6 +1,6 @@
 import React from 'react';
-import LayoutContainer from './containers/LayoutContainer';
+import Router from './router';
 
 export default function App() {
-  return <LayoutContainer />;
+  return <Router />;
 }

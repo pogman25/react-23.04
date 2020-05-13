@@ -1,16 +1,30 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Message /> Component should render 1`] = `
-<div>
-  <div
-    class="message"
-  >
+<body>
+  <div>
     <div
-      class="messageAuthor"
+      class="message"
     >
-      Jest
+      <div
+        class="messageAuthor"
+      >
+        Jest
+      </div>
+      Jest example message
     </div>
-    Jest example message
   </div>
-</div>
+  <div>
+    <div
+      class="message messageBot"
+    >
+      <div
+        class="messageAuthor"
+      >
+        Robot
+      </div>
+      Bot example message
+    </div>
+  </div>
+</body>
 `;
