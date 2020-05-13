@@ -4,6 +4,7 @@ export interface IMessage {
   text: string;
   authorAccess?: string;
   isBot?: boolean;
+  date?: number;
 }
 
 export interface IChatListItem {

@@ -13,37 +13,44 @@ export default class ChatContainer extends Component<IChatContainerProps, IChatC
   robotTimeouts: { [key: string]: number } = {};
   state = {
     chats: mockChats,
-    chatList: [{ id: '-1', title: 'Loading', description: 'Loading' }],
+    chatList: [{ id: '', title: 'Loading', description: 'Loading' }],
   };
 
   get chatId() {
     if (this.props.match) {
       return this.props.match.params.chatId;
-    } else {
+    } else if (this.state.chatList.length) {
       return this.state.chatList[0].id;
+    } else {
+      return '';
     }
   }
 
   get messages() {
-    return this.chatId !== '-1' ? this.state.chats[this.chatId].messages : [];
+    return this.chatId ? this.state.chats[this.chatId].messages : [];
   }
 
   updateChatList() {
     this.setState((state) => ({
-      chatList: Object.entries(state.chats).map(([id, { title, messages }]) => {
-        const lastMessage = messages[messages.length - 1];
+      chatList: Object.entries(state.chats)
+        .map(([id, { title, messages }]) => {
+          const lastMessage = messages[messages.length - 1];
 
-        return {
-          id,
-          title,
-          description: lastMessage ? `${lastMessage?.author}: ${lastMessage?.text}` : `Type first message in ${title}`,
-        };
-      }),
+          return {
+            id,
+            title,
+            description: lastMessage
+              ? `${lastMessage?.author}: ${lastMessage?.text}`
+              : `Type first message in ${title}`,
+            lastMessageDate: lastMessage.date || 0,
+          };
+        })
+        .sort((a, b) => b.lastMessageDate - a.lastMessageDate),
     }));
   }
 
   addNewMessage = (author: string, text: string, authorAccess: string = 'user', chatId: string = this.chatId) => {
-    const message = { id: uuid(), author, authorAccess, text };
+    const message = { id: uuid(), author, authorAccess, text, date: new Date().getTime() };
     const robotAnswer = () => {
       if (authorAccess === 'user') {
         this.sendRobotMessage(author);
@@ -113,10 +120,12 @@ export default class ChatContainer extends Component<IChatContainerProps, IChatC
           <ChatList items={this.state.chatList} />
           <ChatListForm handleCreate={this.addNewChat} />
         </div>
-        <div className={styles.chatContent}>
-          <MessageList messages={this.messages} />
-          <ChatForm handleSubmit={this.addNewMessage} />
-        </div>
+        {this.state.chatList.length > 0 && (
+          <div className={styles.chatContent}>
+            <MessageList messages={this.messages} />
+            <ChatForm handleSubmit={this.addNewMessage} />
+          </div>
+        )}
       </div>
     );
   }
