@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import ChatList from '../ChatList'
-import MessageField from '../MessageField'
 import Header from '../Header'
 import styles from './Layout.css'
 
@@ -14,19 +14,23 @@ class Layout extends React.Component {
     };
 
     render() {
-        const { chatList } = this.state;
+        const { children } = this.props;
         const { name, lastName } = this.state.user;
         return (
             <div className={styles.container}>
                 <Header name={name} lastname={lastName}/>
                 <div className={styles.wrapper}>
-                    <ChatList chatList={chatList}/>
-                    <MessageField />
+                    <ChatList />
+                    { children }
                 </div>
                 
             </div>
         )
     }
+}
+
+Layout.propTypes = {
+    children: PropTypes.node.isRequired,
 }
 
 export default Layout;
