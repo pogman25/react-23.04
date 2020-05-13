@@ -42,7 +42,7 @@ export default class ChatContainer extends Component<IChatContainerProps, IChatC
             description: lastMessage
               ? `${lastMessage?.author}: ${lastMessage?.text}`
               : `Type first message in ${title}`,
-            lastMessageDate: lastMessage.date || 0,
+            lastMessageDate: lastMessage?.date || 0,
           };
         })
         .sort((a, b) => b.lastMessageDate - a.lastMessageDate),
