@@ -6,14 +6,6 @@ import Header from "../Header";
 import css from "./index.css";
 
 class Layout extends React.Component {
-  static propTypes = {
-    chatId: PropTypes.number,
-  };
-
-  static defaultProps = {
-    chatId: 1,
-  };
-
   render() {
     return (
       <div className={css.layout}>
@@ -30,5 +22,13 @@ class Layout extends React.Component {
     );
   }
 }
+
+Layout.propTypes = {
+  chatId: PropTypes.number,
+};
+
+Layout.defaultProps = {
+  chatId: 1,
+};
 
 export default Layout;

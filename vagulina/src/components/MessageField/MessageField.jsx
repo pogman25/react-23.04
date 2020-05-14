@@ -27,9 +27,11 @@ export default class MessageField extends Component {
     const { chatId } = this.props;
     const { messages, chats } = this.state;
     const messageList = chats[chatId].messageList;
-    const lastMsgId = messageList[messageList.length - 1];
-    if (messages[lastMsgId].author !== this.ROBOT_NAME) {
-      this.addNewMessage({ text: "This is bot...", author: this.ROBOT_NAME });
+    if (messageList.length > 0) {
+      const lastMsgId = messageList[messageList.length - 1];
+      if (messages[lastMsgId].author !== this.ROBOT_NAME) {
+        this.addNewMessage({ text: "This is bot...", author: this.ROBOT_NAME });
+      }
     }
   }
 
