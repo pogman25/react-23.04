@@ -1,8 +1,10 @@
-import React, { useState, memo, useEffect } from "react";
+import React, { useState, memo, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import Example from "./Example";
-import Counter from "./Counter";
-import FormMessage from "./FormMessage";
+import Example from "../Example/Example";
+// import Counter from "../Counter";
+import FormMessage from "../FormMessage";
+import { makeStyles } from '@material-ui/core/styles';
+import style from '../../index.css';
 
 const initialState = {
     messages: [
@@ -13,6 +15,15 @@ const initialState = {
     visible: true,
 };
 
+const useStyles = makeStyles((theme) => ({
+    paper: {
+      marginTop: theme.spacing(8),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  }));
+
 const HelloMessage = ({ lastname }) => {
     // ({ lastname }) - деструктуризация входящего пропса, можно прописать props,
     // но тогда обращаться как к объекту - props.lastname
@@ -22,16 +33,18 @@ const HelloMessage = ({ lastname }) => {
     const [name, setName] = useState(initialState.name);
     const [isVisible, setVisibility] = useState(true);
 
+    const formRef = useRef();
+
     const toggle = () => {
         setVisibility((prev) => !prev);
     };
 
     const addMessage = () => {
-        setMessages([...messages, { text: "Нормально" }]);
+        setMessages([...messages, { text: "Нормально", author: "User" }]);
     };
 
     const addNewMessage = (message) => {
-        setMessages([...messages, { text: message.text, author: message.author }]);
+        setMessages([...messages, message]);
     };
 
     const changeName = () => {
@@ -51,24 +64,27 @@ const HelloMessage = ({ lastname }) => {
     useEffect(() => {
         if (messages[messages.length - 1].author !== "Bot") {
             setTimeout(() => {
-                setMessages([...messages, { text: "Привет, я Бот!", author: "Bot" }]),
-                    setName("Bot");
+                setMessages([...messages, { text: "Привет, я Бот!", author: "Bot" }]);
+                setName("Bot");
+                formRef.current.focusInput();
             }, 500);
         }
     });
 
+    const classes = useStyles();
+
     return (
-        <div>
-            <h2>{`Hello, ${name} ${lastname}!`}</h2>
+        <div className={classes.paper}>
+            <h2 className={style.title}>{`Hello, ${name} ${lastname}!`}</h2>
             <Example />
             {messages.map(({ text, author }, idx) => (
                 <div key={idx}>{`${author}: ${text}`}</div>
             ))}
-            <FormMessage addNewMessage={addNewMessage} />
-            <button onClick={handleClick}>Ckick</button>
+            <FormMessage addNewMessage={addNewMessage} ref={formRef}/>
+            <button onClick={handleClick}>Click</button>
             <button onClick={reset}>Reset</button>
             <button onClick={toggle}>Visible</button>
-            {isVisible && <Counter />}
+            {/* {isVisible && <Counter />} */}
         </div>
     );
 };
@@ -77,7 +93,7 @@ HelloMessage.defaultProps = {
     lastname: "Ivanov",
 };
 
-HelloMessage.PropTypes = {
+HelloMessage.propTypes = {
     name: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
 };
