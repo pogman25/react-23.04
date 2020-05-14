@@ -2,31 +2,37 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Button from '@material-ui/core/Button'
 import Messages from '../../components/Messages'
-import styles from './MessageField.css'
+import styles from './Chats.css'
 
 class Chats extends Component {
     state = {
         chats: {
             1: {
                 title: 'chat_1',
-                messages: {
-                    text: 'Hi from first chat',
-                    author: 'Bot'
-                }
+                messages: [
+                    {
+                        text: 'Hi from first chat',
+                        author: 'Bot'
+                    },
+                ]
             },
             2: {
                 title: 'chat_2',
-                messages: {
-                    text: 'Hi from second chat',
-                    author: 'Bot'
-                }
+                messages: [
+                    {
+                        text: 'Hi from second chat',
+                        author: 'Bot'
+                    },
+                ]
             },
             3: {
                 title: 'chat_3',
-                messages: {
-                    text: 'Hi from third chat',
-                    author: 'Bot'
-                }
+                messages: [
+                    {
+                        text: 'Hi from third chat',
+                        author: 'Bot'
+                    },
+                ]
             }
         },
         messages: [ { text: 'Hello', author: 'Bot'}],
@@ -41,8 +47,6 @@ class Chats extends Component {
         const { chatId } = params;
         const { chats } = this.state;
         const messages = chats[chatId].messages;
-
-        console.log(messages);
         
         clearTimeout(this.timer);
         if(prevState.chats[chatId].messages.length !== messages.length) {
@@ -94,13 +98,23 @@ class Chats extends Component {
         }
     }
 
+    get messages() {
+        const { chats } = this.state;
+        const {
+          match: { params },
+        } = this.props;
+        const { chatId } = params;
+    
+        return chats[chatId].messages;
+    }
+    
     render() {
         const { text } = this.state;
-        const { messages } = this.state;
+        // const { messages } = this.state;
 
         return (
             <div className={styles.container}>
-                <Messages messages={messages} />
+                <Messages messages={this.messages} />
                 <form className={styles.form} onSubmit={this.onSubmit} onKeyUp={this.onKeyUP}>
                     <textarea
                         className={styles.messageField}

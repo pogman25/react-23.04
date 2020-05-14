@@ -9,9 +9,11 @@ module.exports = {
         filename:"[name].js"
     },
     devServer: {
+        hot: true,
         contentBase: path.join(__dirname, 'build'),
         compress: true,
-        port: 9000
+        port: 9000,
+        historyApiFallback: true
     },
     devtool: 'source-map',
     plugins: [
