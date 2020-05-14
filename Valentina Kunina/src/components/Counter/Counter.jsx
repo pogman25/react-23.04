@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import CountTitle from "./CountTitle";
-import Example from "./Example";
+import Example from "../Example";
+import style from './index.css';
 
 let intervall = null;
 
@@ -39,7 +40,7 @@ class Counter extends PureComponent {
         // console.log('render');
         const { count } = this.state;
         return (
-            <div>
+            <div className={style.counter}>
                 <Example />
                 <CountTitle count={count}/>
                 <span>

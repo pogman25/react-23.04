@@ -1,0 +1,16 @@
+.list {
+    display: flex;
+    flex-direction: column;
+}
+
+.item {
+    max-width: 250px;
+}
+
+.left {
+    align-self: flex-start;
+}
+
+.right {
+    align-self: flex-end;
+}
