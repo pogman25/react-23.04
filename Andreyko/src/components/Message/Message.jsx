@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
+import './style.css'
 
 export default class Message extends Component {
-  render() {
-    const { text, author } = this.props;
+  constructor(props) {
+    super(props);
+  }
 
-  return <div>{`${author}: ${text}`}</div>
+  render() {
+    const { text, author, botName } = this.props;
+
+    return (
+      <div className={cx("message", {"my-message": author !== botName})}>
+        <div className="message-text">{text}</div>
+        <div className="message-author">{author}</div>
+      </div>
+    )
   }
 }
 

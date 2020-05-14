@@ -1,7 +1,9 @@
-import React from "react";
+import React, { memo } from 'react';
+//{ memo } = PureComponent в классах
 
-const Example = () => {
+function Example() {
+    console.log('render');
     return <h3>Hello, Example!</h3>;
 };
 
-export default Example;
+export default memo(Example);

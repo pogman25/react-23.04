@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import HelloMessage from "./components/HelloMessage";
+import MessageField from "./HW2/components/MessageField";
 
 ReactDOM.render(
-	<HelloMessage name="Ivan"/>,
+	<MessageField />,
 	document.getElementById("hello-example")
 );

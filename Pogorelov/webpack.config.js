@@ -1,26 +1,27 @@
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
 
 module.exports = {
-  entry: "./src/index.jsx",
+  entry: './src/index.jsx',
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "[name].js",
+    path: path.resolve(__dirname, 'build'),
+    filename: '[name].js',
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: ['.js', '.jsx'],
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
-            plugins: ["@babel/plugin-proposal-class-properties"],
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: ['@babel/plugin-proposal-class-properties'],
           },
         },
       },
@@ -28,12 +29,12 @@ module.exports = {
       {
         test: /\.css$/i,
         use: [
-          "style-loader",
+          'style-loader',
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: {
               modules: {
-                localIdentName: "[path][name]__[local]--[hash:base64:5]",
+                localIdentName: '[path][name]__[local]--[hash:base64:5]',
               },
             },
           },
@@ -43,32 +44,34 @@ module.exports = {
   },
   optimization: {
     splitChunks: {
-      chunks: "all",
+      chunks: 'all',
       cacheGroups: {
         default: false,
         commons: {
           test: /node_modules/,
-          name: "js/vendor",
-          chunks: "initial",
+          name: 'js/vendor',
+          chunks: 'initial',
         },
         styles: {
-          name: "styles",
+          name: 'styles',
           test: /\.css$/,
-          chunks: "all",
+          chunks: 'all',
           enforce: true,
         },
       },
     },
   },
   devServer: {
-    contentBase: path.join(__dirname, "build"),
+    contentBase: path.join(__dirname, 'build'),
     compress: true,
     port: 9000,
+    hot: true,
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: "src/index.html",
+      filename: 'index.html',
+      template: 'src/index.html',
     }),
     new MiniCssExtractPlugin(),
   ],

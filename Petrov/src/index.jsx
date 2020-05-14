@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import HelloMessage from "./components/HelloMessage";
+import Layout from "./components/Layout";
+
 
 ReactDOM.render(
-  <HelloMessage name="Alex" />,
+  <Layout name="Alex" />,
   document.getElementById("hello-example")
 );

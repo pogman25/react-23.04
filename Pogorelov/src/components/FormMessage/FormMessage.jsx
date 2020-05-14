@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, IconButton } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 import styles from './index.css';
 
 class FormMessage extends Component {
@@ -57,7 +58,9 @@ class FormMessage extends Component {
           onKeyDown={this.onKeyDown}
           value={text}
         />
-        <Button type="submit">Add message</Button>
+        <IconButton type="submit" color="primary">
+          <SendIcon />
+        </IconButton>
       </form>
     );
   }
