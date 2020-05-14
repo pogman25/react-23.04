@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import styles from "../../index.css"
 
 class MessageButton extends React.Component{
     constructor(props) {
@@ -7,7 +8,7 @@ class MessageButton extends React.Component{
     }
 
     render() {
-        return <button onClick={()=>this.props.run()}>Send Message (deprecated)</button>
+        return <button className={styles.deprecated} onClick={()=>this.props.run()}>Send Message (deprecated)</button>
     };
 
 }
