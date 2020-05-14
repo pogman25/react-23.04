@@ -5,12 +5,12 @@ import css from "./index.css";
 import PropTypes from "prop-types";
 
 export default class MessageField extends Component {
-  static ROBOT_NAME = "Robot";
+  ROBOT_NAME = "Robot";
 
   state = {
     chats: {
-      1: { title: "Chat1", messageList: [1] },
-      2: { title: "Chat2", messageList: [2] },
+      1: { title: "Chat1", messageList: [1, 2] },
+      2: { title: "Chat2", messageList: [] },
       3: { title: "Chat3", messageList: [] },
     },
     messages: {
@@ -24,11 +24,11 @@ export default class MessageField extends Component {
   }
 
   componentDidUpdate() {
-    //    console.log("MessageField did update");
-    if (
-      this.state.messages[this.state.messages.length - 1].author !==
-      this.ROBOT_NAME
-    ) {
+    const { chatId } = this.props;
+    const { messages, chats } = this.state;
+    const messageList = chats[chatId].messageList;
+    const lastMsgId = messageList[messageList.length - 1];
+    if (messages[lastMsgId].author !== this.ROBOT_NAME) {
       this.addNewMessage({ text: "This is bot...", author: this.ROBOT_NAME });
     }
   }
@@ -45,7 +45,7 @@ export default class MessageField extends Component {
         ...chats,
         [chatId]: {
           ...chats[chatId],
-          messageList: [...chats[chatId]["messageList"], messageId],
+          messageList: [...chats[chatId]["messageList"], newMessageId],
         },
       },
     }));
@@ -55,6 +55,7 @@ export default class MessageField extends Component {
     //    console.log(`MessageField render`);
     const { messages, chats } = this.state;
     const { chatId } = this.props;
+
     const messageElements = chats[chatId].messageList.map((messageId, id) => (
       <Message
         key={id}
