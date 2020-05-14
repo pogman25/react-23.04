@@ -1,5 +1,6 @@
 import React, {PureComponent} from "react";
 import CountTitle from "./CountTitle";
+import "./index.css"
 
 let interval = null;
 
@@ -48,8 +49,8 @@ class Counter extends PureComponent{
                 <CountTitle count={count}/>
                 <p>{count}</p>
                 <span>
-                    <button onClick={this.increment}>+</button>
-                    <button onClick={this.decrement}>-</button>
+                    <button className="button" onClick={this.increment}>+</button>
+                    <button className="button"  onClick={this.decrement}>-</button>
                 </span>
             </div>
         );
