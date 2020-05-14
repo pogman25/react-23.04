@@ -1,21 +1,17 @@
 .list {
-    background-color: #e2e2e2;
+    list-style: none;
     display: flex;
     flex-direction: column;
-    height: 50%;
-    width: 30%;
-    padding: 14px;
-}
-
-.colorBot {
+  }
+  
+  .item {
+    max-width: 250px;
+  }
+  
+  .left {
+    align-self: flex-start;
+  }
+  
+  .right {
     align-self: flex-end;
-    background-color: lightblue;
-    border: 2px solid #fff;
-    border-radius: 16px;
-}
-
-.colorUser {
-    background-color: lightblue;
-    border: 2px solid #fff;
-    border-radius: 16px;
-}
+  }
