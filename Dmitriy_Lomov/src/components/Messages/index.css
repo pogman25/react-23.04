@@ -1,6 +1,17 @@
 .list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: #eee;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.item {
+  max-width: 250px;
+}
+
+.left {
+  align-self: flex-start;
+}
+
+.right {
+  align-self: flex-end;
 }

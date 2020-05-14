@@ -2,51 +2,52 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
+import { ListItem, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => {
   return {
-    item: {
-      display: 'flex',
-      flexDirection: 'column',
-      minWidth: 120,
-      minHeight: 48,
+    item: {},
+    message: {
+      maxWidth: '75%',
       border: 0,
-      borderRadius: 10,
+      borderRadius: 12,
       boxShadow: theme.shadows[5],
-      padding: '10px 20px',
-      marginTop: 10,
+      backgroundColor: theme.palette.info.main,
+      color: 'white',
+      padding: theme.spacing(1, 2),
     },
     left: {
-      background: 'lightblue',
-      alignSelf: 'flex-start',
+      justifyContent: 'flex-start',
     },
     right: {
-      background: '#fff',
-      alignSelf: 'flex-end',
-    },
-    text: {
-      color: '#000',
-      fontSize: '1em',
-    },
-    author: {
-      fontSize: '0.8em',
-      color: '#aaa',
+      justifyContent: 'flex-end',
     },
   };
 });
 
 const MessageItem = ({ author, text }) => {
   const classes = useStyles();
+
   return (
-    <li
+    <ListItem
+      color="primary"
       className={cx(classes.item, {
-        [classes.left]: author === 'Bot',
         [classes.right]: author !== 'Bot',
+        [classes.left]: author === 'Bot',
       })}
     >
-      <span className={cx(classes.text)}>{text}</span>
-      <span className={cx(classes.author)}>{author}</span>
-    </li>
+      <Typography
+        component="p"
+        variant="body1"
+        color="textPrimary"
+        className={classes.message}
+      >
+        {text}
+        <Typography variant="caption" display="block">
+          {author}
+        </Typography>
+      </Typography>
+    </ListItem>
   );
 };
 

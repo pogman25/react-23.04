@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { TextField, Button } from '@material-ui/core';
-import SendRoundedIcon from '@material-ui/icons/SendRounded';
+import { TextField, IconButton } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 import styles from './index.css';
 
 class FormMessage extends Component {
@@ -16,15 +16,10 @@ class FormMessage extends Component {
     if (this.onChange) checkInputChange(true);
   };
 
-  onChange = e => {
-    const { value, name } = e.target;
+  onChange = event => {
+    const { value, name } = event.target;
     this.setState({ [name]: value });
     this.checkChange();
-  };
-
-  onSubmit = e => {
-    e.preventDefault();
-    this.sendMessage();
   };
 
   sendMessage = () => {
@@ -37,7 +32,12 @@ class FormMessage extends Component {
     });
   };
 
-  onKeyUp = e => {
+  onSubmit = e => {
+    e.preventDefault();
+    this.sendMessage();
+  };
+
+  onKeyDown = e => {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
       this.sendMessage();
     }
@@ -54,7 +54,6 @@ class FormMessage extends Component {
           name="author"
           onChange={this.onChange}
           value={author}
-          required
         />
         <TextField
           id="standard-multiline-flexible"
@@ -63,13 +62,12 @@ class FormMessage extends Component {
           multiline
           rowsMax={4}
           onChange={this.onChange}
-          onKeyUp={this.onKeyUp}
+          onKeyDown={this.onKeyDown}
           value={text}
-          required
         />
-        <Button type="submit" endIcon={<SendRoundedIcon />}>
-          Отправить
-        </Button>
+        <IconButton type="submit" color="primary">
+          <SendIcon />
+        </IconButton>
       </form>
     );
   }

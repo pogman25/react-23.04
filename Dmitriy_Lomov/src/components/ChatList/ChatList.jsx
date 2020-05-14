@@ -1,52 +1,117 @@
-import React, { Component } from 'react';
-import { List } from '@material-ui/core';
+import React, { memo } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import cx from 'classnames';
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import { Link, useHistory } from 'react-router-dom';
+import pageLinks from './page-links';
 
-const styles = {
-  list: {
-    flex: '1 1 30%',
-    textAlign: 'center',
-    border: '1px solid #333',
-    borderRadius: 5,
-    background: '#ddd',
+const drawerWidth = 240;
+
+const useStyles = makeStyles(theme => ({
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
   },
-  item: {
-    padding: 5,
+
+  logo: {
+    marginRight: 'auto',
+    marginLeft: theme.spacing(1),
   },
-  activeItem: {
-    fontSize: '1.1em',
-    fontWeight: 'bold',
-    textDecoration: 'underline',
-    padding: 10,
-    background: 'lightblue',
-    borderRadius: 5,
-    boxShadow: '0 0 2px #000',
+
+  paper: {
+    color: theme.palette.text.primary,
   },
-};
 
-class ChatList extends Component {
-  state = {
-    chats: [
-      { name: 'Чат с ботом' },
-      { name: 'GB_Education' },
-      { name: 'Мемасики' },
-      { name: 'Болтология' },
-      { name: 'Просто чат' },
-    ],
-  };
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
 
-  render() {
-    const { chats } = this.state;
+  itemRoot: {
+    position: 'relative',
+    whiteSpace: 'pre-line',
+  },
 
-    return (
-      <List component="ul" disablePadding={true} style={styles.list}>
-        {chats.map(({ name }, index) => (
-          <li style={index === 0 ? styles.activeItem : styles.item} key={index}>
-            <span>{name}</span>
-          </li>
+  link: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: theme.zIndex.appBar,
+  },
+
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: theme.spacing(3, 2),
+  },
+
+  toolbarClose: {
+    justifyContent: 'flex-start',
+  },
+}));
+
+const ChatList = () => {
+  const classes = useStyles();
+  const history = useHistory();
+
+  return (
+    <Drawer
+      variant="permanent"
+      className={cx(classes.drawer, classes.drawerOpen)}
+      classes={{
+        paper: cx(classes.paper, classes.drawerOpen),
+      }}
+    >
+      <div className={classes.toolbar}>
+        <Typography variant="body1">Список чатов</Typography>
+      </div>
+      <Link to="/" key="home-page">
+        <ListItem
+          classes={{
+            root: classes.itemRoot,
+          }}
+          button
+        >
+          <ListItemIcon>
+            <MenuIcon />
+          </ListItemIcon>
+          <ListItemText>Home</ListItemText>
+        </ListItem>
+      </Link>
+      <List disablePadding>
+        {Object.values(pageLinks).map(({ title, to }) => (
+          <Link to={to} key={title}>
+            <ListItem
+              classes={{
+                root: classes.itemRoot,
+              }}
+              button
+            >
+              <ListItemIcon>
+                <MenuIcon />
+              </ListItemIcon>
+              <ListItemText>{title}</ListItemText>
+            </ListItem>
+          </Link>
         ))}
       </List>
-    );
-  }
-}
+    </Drawer>
+  );
+};
 
-export default ChatList;
+export default memo(ChatList);
