@@ -2,8 +2,25 @@
     background-color: gray;
     border: 1px solid black;
     flex-grow: 1;
+    z-index: 1;
 }
 
-.chatListTitle {
+.drawer {
+    width: 240px;
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+.drawerpaper {
+    width: 240px;
+}
+
+.chatlink {
+    text-decoration: none;
+    color: inherit;
+    
+}
+
+.chatname {
     text-align: center;
 }

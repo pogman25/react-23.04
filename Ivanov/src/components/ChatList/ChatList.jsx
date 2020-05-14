@@ -1,31 +1,44 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
+import {
+    CssBaseline,
+    Divider,
+    Drawer,
+    List,
+    ListItem,
+    ListItemText,
+    Toolbar,
+} from '@material-ui/core'
+import { Link, useHistory } from 'react-router-dom'
+import pageLinks from './page-links'
 import styles from './ChatList.css'
 
 class ChatList extends Component {
     render() {
-        const { chatList } = this.props;
-
-        return (
-            <div className={styles.container}>
-                <h3 className={styles.chatListTitle}>ChatList</h3>
+        return (   
+            <Drawer 
+                className={styles.drawer} 
+                component="nav"
+                variant="permanent"
+                classes={{ paper: styles.drawerpaper}}
+            >
+                <Toolbar />
                 <List>
-                    { chatList.map((chatListItem, index) => (
-                        <ListItem key={index}>
-                            <ListItemText primary={chatListItem} />
-                        </ListItem>
+                    { Object.values(pageLinks).map(({to, title}) => (
+                        <Link to={to} key={title} className={styles.chatlink}>
+                            <ListItem button>
+                                <ListItemText primary={title} className={styles.chatname}/>
+                            </ListItem>
+                        </Link>
                     )) }
                 </List>
-            </div>
+            </Drawer>
         )
     }
 }
 
-ChatList.propTypes = {
-    chatList: PropTypes.arrayOf( PropTypes.string ).isRequired,
-}
+// ChatList.propTypes = {
+//     chatList: PropTypes.arrayOf( PropTypes.string ).isRequired,
+// }
 
 export default ChatList;

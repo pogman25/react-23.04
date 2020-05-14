@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import css from "./index.css";
 import cn from "classnames";
 
-export default class Message extends React.Component {
+class Message extends React.Component {
+
   componentDidMount() {
 //    console.log("message did mount");
   }
@@ -32,3 +33,5 @@ Message.propTypes = {
   text: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
 };
+
+export default Message;
