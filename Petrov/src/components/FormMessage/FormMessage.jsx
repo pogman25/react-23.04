@@ -41,9 +41,7 @@ class FormMessage extends Component {
 
     return (
       <form className={classes.root}  onSubmit={this.onSubmit}>
-
         <TextField label="author" name="author" onChange={this.onChange} value={author}/>
-  
         <TextField label="text" name="text" onKeyDown={this.handleEnterDown} onChange={this.onChange} value={text} ></TextField>
         <Button variant="contained" color="primary"  type="submit"><SendIcon /></Button>
       </form>
