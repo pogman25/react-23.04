@@ -17,3 +17,11 @@
 .Message:not(:last-child) {
     margin-bottom: 20px;
 }
+
+.left {
+    align-self: flex-start;
+  }
+  
+  .right {
+    align-self: flex-end;
+  }
