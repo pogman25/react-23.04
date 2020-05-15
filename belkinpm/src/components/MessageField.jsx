@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import { TextField, FloatingActionButton } from 'material-ui';
+import SendIcon from 'material-ui/svg-icons/content/send';
 import Message from './Message';
+import '../css/styles.css';
 
 class MessageField extends Component {
   state = {
@@ -7,12 +10,29 @@ class MessageField extends Component {
       { text: 'Hello, my friend!', name: 'bot' },
       { text: 'How are you?', name: 'bot' },
     ],
+    input: '',
   };
 
-  messageSender = () => {
+  inputChange = (event) => {
+    this.setState({ input: event.target.value });
+    console.log(event.target);
+  };
+
+  messageSender = (message) => {
     this.setState({
-      messages: [...this.state.messages, { text: 'Fine!', name: 'Paul' }],
+      messages: [...this.state.messages, { text: message, name: 'Paul' }],
+      input: '',
     });
+  };
+
+  enterKeyUp = (event, message) => {
+    if (event.keyCode === 13) {
+      this.messageSender(message);
+    }
+  };
+
+  buttonClick = (message) => {
+    this.messageSender(message);
   };
 
   componentDidUpdate() {
@@ -22,11 +42,18 @@ class MessageField extends Component {
           this.setState({
             messages: [
               ...this.state.messages,
-              {text: "Don't bother me, " + this.state.messages[this.state.messages.length - 1].name + ". I'm just a robot!", name: 'bot'},
+              {
+                text:
+                  'Sorry, ' +
+                  this.state.messages[this.state.messages.length - 1].name +
+                  ". I'm just a robot!",
+                name: 'bot',
+              },
             ],
           }),
         1000
       );
+      console.log(this.state);
     }
   }
 
@@ -36,9 +63,25 @@ class MessageField extends Component {
     ));
 
     return (
-      <div>
-        {messageElements}
-        <button onClick={this.messageSender}>Send</button>
+      <div className='current-chat'>
+        <div id='main' className='message-field'>
+          {messageElements}
+        </div>
+        <div className='input-group'>
+          <TextField
+            name='input'
+            fullWidth={true}
+            hintText='Input your message'
+            onChange={this.inputChange}
+            value={this.state.input}
+            onKeyUp={(event) => this.enterKeyUp(event, this.state.input)}
+          />
+          <FloatingActionButton
+            onClick={() => this.buttonClick(this.state.input)}
+          >
+            <SendIcon />
+          </FloatingActionButton>
+        </div>
       </div>
     );
   }

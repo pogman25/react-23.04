@@ -1,76 +1,131 @@
 import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
-import { IChatContainerState, IMessage } from '../../interfaces';
+import { IChatContainerProps, IChatContainerState } from '../../interfaces';
+import NotFound from '../../pages/NotFound';
 import MessageList from '../../components/MessageList';
 import ChatForm from '../../components/ChatForm';
 import ChatList from '../../components/ChatList';
+import ChatListForm from '../../components/ChatListForm';
+import mockChats from '../../mocks/chats';
 import styles from './styles.module.scss';
 
-const chatList = [
-  {
-    id: 0,
-    title: 'John',
-    description: 'What are you doing?',
-  },
-  {
-    id: 1,
-    title: 'Heinz',
-    description: 'What are you doing?',
-  },
-  {
-    id: 2,
-    title: 'Dungeon Master',
-    description: 'What are you doing?',
-  },
-  {
-    id: 3,
-    title: 'Friedrich',
-    description: 'What are you doing?',
-  },
-];
-
-export default class ChatContainer extends Component<{}, IChatContainerState> {
-  robotTimeout?: number;
+export default class ChatContainer extends Component<IChatContainerProps, IChatContainerState> {
+  robotTimeouts: { [key: string]: number } = {};
   state = {
-    messages: [],
-    chatList,
+    chats: mockChats,
+    chatList: [{ id: '', title: 'Loading', description: 'Loading' }],
   };
 
-  addNewMessage = (author: string, text: string, authorAccess: string = 'user') => {
-    const message = { id: uuid(), author, authorAccess, text };
-
-    this.setState((state) => ({ messages: [...state.messages, message] }));
-  };
-
-  sendRobotMessage(author: string) {
-    this.addNewMessage('Robot', `Hi ${author}, i am your personal assistant`, 'bot');
+  get chatId() {
+    if (this.props.match) {
+      return this.props.match.params.chatId;
+    } else if (this.state.chatList.length) {
+      return this.state.chatList[0].id;
+    } else {
+      return '';
+    }
   }
 
-  // робот отвечает пользователю лишь 1 раз до момента ответа робота, будь хоть 10 сообщений от одного пользователя
-  componentDidUpdate(prevProps: Object, prevState: IChatContainerState) {
-    const prevMessage: IMessage = prevState.messages[prevState.messages.length - 1];
-    const lastMessage: IMessage = this.state.messages[this.state.messages.length - 1];
+  get messages() {
+    return this.chatId ? this.state.chats[this.chatId].messages : [];
+  }
+
+  updateChatList() {
+    this.setState((state) => ({
+      chatList: Object.entries(state.chats)
+        .map(([id, { title, messages }]) => {
+          const lastMessage = messages[messages.length - 1];
+
+          return {
+            id,
+            title,
+            description: lastMessage
+              ? `${lastMessage?.author}: ${lastMessage?.text}`
+              : `Type first message in ${title}`,
+            lastMessageDate: lastMessage?.date || 0,
+          };
+        })
+        .sort((a, b) => b.lastMessageDate - a.lastMessageDate),
+    }));
+  }
+
+  addNewMessage = (author: string, text: string, authorAccess: string = 'user', chatId: string = this.chatId) => {
+    const message = { id: uuid(), author, authorAccess, text, date: new Date().getTime() };
+    const robotAnswer = () => {
+      if (authorAccess === 'user') {
+        this.sendRobotMessage(author);
+      }
+    };
+
+    this.setState(
+      ({ chats }) => ({
+        chats: {
+          ...chats,
+          [chatId]: {
+            ...chats[chatId],
+            messages: [...chats[chatId].messages, message],
+          },
+        },
+      }),
+      robotAnswer
+    );
+  };
+
+  addNewChat = (chatName: string) => {
+    this.setState(({ chats }) => ({
+      chats: {
+        ...chats,
+        [uuid().split('-')[0]]: {
+          title: chatName,
+          messages: [],
+        },
+      },
+    }));
+  };
+
+  // Для уменьшения условий, кода и для более тонкой реализации бота пришлось отказаться от бота в componentDidUpdate
+  sendRobotMessage(author: string) {
+    const cachedChatId = this.chatId;
+    const prevMessage = this.messages[this.messages.length - 2];
+    const lastMessage = this.messages[this.messages.length - 1];
 
     if (prevMessage?.author === lastMessage?.author) {
-      clearTimeout(this.robotTimeout);
+      clearTimeout(this.robotTimeouts[this.chatId]);
     }
 
-    if (lastMessage?.authorAccess === 'user') {
-      // обычный setTimeout в тайпскрипте возвращает не число, в отличии от window.setTimeout :(
-      this.robotTimeout = window.setTimeout(() => this.sendRobotMessage(lastMessage.author), 3000);
+    this.robotTimeouts[cachedChatId] = window.setTimeout(
+      () => this.addNewMessage('Robot', `Hi ${author}, i am your personal assistant`, 'bot', cachedChatId),
+      3000
+    );
+  }
+
+  componentDidUpdate(prevProps: IChatContainerProps, prevState: IChatContainerState) {
+    if (JSON.stringify(prevState.chats) !== JSON.stringify(this.state.chats)) {
+      this.updateChatList();
     }
+  }
+
+  componentDidMount() {
+    this.updateChatList();
   }
 
   render() {
+    if (this.props.match?.params.chatId && !this.state.chats[this.props.match.params.chatId]) {
+      return <NotFound />;
+    }
+
     return (
       <div className={styles.chat}>
         <div className={styles.chatList}>
-          <ChatList items={this.state.chatList}/>
+          <ChatList items={this.state.chatList} />
+          <ChatListForm handleCreate={this.addNewChat} />
         </div>
-        <div className={styles.chatContent}>
-          <MessageList messages={this.state.messages} />
-          <ChatForm handleSubmit={this.addNewMessage} />
-        </div>
+        {this.state.chatList.length > 0 && (
+          <div className={styles.chatContent}>
+            <MessageList messages={this.messages} />
+            <ChatForm handleSubmit={this.addNewMessage} />
+          </div>
+        )}
       </div>
     );
   }
