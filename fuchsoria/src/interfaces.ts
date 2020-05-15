@@ -1,6 +1,6 @@
 export interface IMessage {
   id?: string;
-  author: string;
+  author?: string;
   text: string;
   authorAccess?: string;
   isBot?: boolean;
@@ -18,6 +18,10 @@ export interface IChatListProps {
 }
 
 export interface IChatContainerProps {
+  chats: IChats;
+  profile: IProfileState;
+  addChat: (chatName: string, chatId: string) => void;
+  addMessage: (message: IMessage, chatId: string, callback?: Function) => void;
   noContent?: boolean;
   history?: unknown;
   location?: unknown;
@@ -31,8 +35,11 @@ export interface IChatContainerProps {
   };
 }
 
+export interface IProfileState {
+  nickName: string;
+}
+
 export interface IChatContainerState {
-  chats: IChats;
   chatList?: IChatListItem[];
 }
 
@@ -43,7 +50,7 @@ export interface IMessageListProps {
 export interface IMessageProps extends IMessage {}
 
 export interface IChatFormProps {
-  handleSubmit: (author: string, text: string) => void;
+  handleSubmit: (text: string, author?: string) => void;
 }
 
 export interface IChat {
