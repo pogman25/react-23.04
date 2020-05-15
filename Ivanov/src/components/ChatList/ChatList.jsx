@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
     CssBaseline,
     Divider,
@@ -8,13 +9,13 @@ import {
     ListItem,
     ListItemText,
     Toolbar,
-} from '@material-ui/core'
-import { Link, useHistory } from 'react-router-dom'
-import pageLinks from './page-links'
-import styles from './ChatList.css'
+} from '@material-ui/core';
+import { Link, useHistory } from 'react-router-dom';
+import styles from './ChatList.css';
 
 class ChatList extends Component {
     render() {
+        const { chats } = this.props;
         return (   
             <Drawer 
                 className={styles.drawer} 
@@ -24,7 +25,7 @@ class ChatList extends Component {
             >
                 <Toolbar />
                 <List>
-                    { Object.values(pageLinks).map(({to, title}) => (
+                    { chats.map(({to, title}) => (
                         <Link to={to} key={title} className={styles.chatlink}>
                             <ListItem button>
                                 <ListItemText primary={title} className={styles.chatname}/>
@@ -41,4 +42,8 @@ class ChatList extends Component {
 //     chatList: PropTypes.arrayOf( PropTypes.string ).isRequired,
 // }
 
-export default ChatList;
+const mapStateToProps = store => ({
+    chats: store.chats,
+});
+
+export default connect(mapStateToProps)(ChatList);
