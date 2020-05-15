@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import cx from 'classnames';
 import { AppBar, Toolbar, IconButton, Typography, Badge, makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
+import { useDispatch } from 'react-redux';
 import { DRAWER_WIDTH } from '../utils/constants';
+import { actionGetChats } from '../../actions/chatsActions';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -36,6 +38,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(actionGetChats([1, 2, 3, 4]));
+  }, []);
   const classes = useStyles();
   return (
     <AppBar position="absolute" className={cx(classes.appBar, classes.appBarShift)}>

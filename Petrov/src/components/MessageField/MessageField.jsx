@@ -7,35 +7,92 @@ import styles from './index.css';
 
 class MessageField extends React.Component {
 state = {
-      messages: [],
+    chats: {
+        1: {
+          title: 'chats_1',
+          messages: [
+            {
+                id: 1,
+                message: 'привет, я бот из 1 чата',
+              author: 'Бот',
+            },
+          ],
+        },
+        2: {
+          title: 'chats_1',
+          messages: [
+            {
+                id: 1,
+                message: 'привет, я бот из второго чата',
+              author: 'Бот',
+            },
+          ],
+        },
+      },
+    messages: [
+        { id: 1, message: 'привет, я бОТ', author: 'Бот' },
+        {id: 2, message: 'привет, я Человек', author: 'Pog' },
+      ],
     };
+
+    get messages() {
+        const { chats } = this.state;
+        const {
+          match: { params },
+        } = this.props;
+        const { chatId } = params;    
+        return chats[chatId].messages;
+      }
+
 
 
   addMessage = (name, text) => {
-    this.setState((prev) => ({ messages: [...prev.messages, {id: (prev.messages.length+1), message: text, author: name}] }));
-  }
-
-  componentDidUpdate() {
-    setTimeout(this.answerForBot, 1000);
-    }
-    answerForBot = (props) =>{
-        const { messages } = this.state;      
-        if (messages[messages.length - 1].author !== "Бот") {
-            this.setState(this.addMessage('Бот', 'привет, я Бот'));
-        }
-      }
-  
-  addNewMessage = (e) => {
-   this.addMessage(e.author, e.text);
+    const {
+      match: { params },
+    } = this.props;
+    const { chatId } = params;
+    this.setState(({ chats }) => ({
+      chats: {
+        ...chats,
+        [chatId]: { ...chats[chatId], messages: [...chats[chatId].messages, {id: (chats[chatId].messages.length+1), message: text, author: name}] },
+      },
+    }));
   };
 
+      timer;
+      componentDidUpdate(prevProps, prevState) {
+        const {
+          match: { params },
+        } = this.props;
+        const { chatId } = params;
+        const { chats } = this.state;
+        const messages = chats[chatId].messages;
+        clearTimeout(this.timer);
+        if (prevState.chats[chatId].messages.length !== messages.length) {
+          if (messages[messages.length - 1].author !== 'Бот') {
+            this.timer = setTimeout(() => {
+                this.setState(this.addMessage('Бот', 'привет, я Бот'));
+            }, 1000);
+          }
+        }
+      }
+      
+
+
+
+  addNewMessage = (e) => {
+   this.addMessage(e.author, e.text,);
+    };
+
   render() {
-    const { messages } = this.state;
-    const { name } = this.props;
+     const {
+        match: { params },
+      } = this.props;
+      const { chatId } = params;
     return (
       <div className= {styles.MessageField}>
-        <h2>чат</h2>
-        <Message words={messages} />      
+        <h2>чат {chatId} </h2>
+        <Message words={this.messages} />      
         <FormMessage addNewMessage={this.addNewMessage} />
         </div>
     );

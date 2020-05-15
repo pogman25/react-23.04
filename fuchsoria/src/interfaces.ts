@@ -4,6 +4,7 @@ export interface IMessage {
   text: string;
   authorAccess?: string;
   isBot?: boolean;
+  date?: number;
 }
 
 export interface IChatListItem {
@@ -16,9 +17,23 @@ export interface IChatListProps {
   items: IChatListItem[];
 }
 
+export interface IChatContainerProps {
+  noContent?: boolean;
+  history?: unknown;
+  location?: unknown;
+  match?: {
+    isExact: boolean;
+    params: {
+      chatId: string;
+    };
+    path: string;
+    url: string;
+  };
+}
+
 export interface IChatContainerState {
-  messages: IMessage[];
-  chatList: IChatListItem[];
+  chats: IChats;
+  chatList?: IChatListItem[];
 }
 
 export interface IMessageListProps {
@@ -29,4 +44,13 @@ export interface IMessageProps extends IMessage {}
 
 export interface IChatFormProps {
   handleSubmit: (author: string, text: string) => void;
+}
+
+export interface IChat {
+  title: string;
+  messages: IMessage[];
+}
+
+export interface IChats {
+  [key: string]: IChat;
 }
