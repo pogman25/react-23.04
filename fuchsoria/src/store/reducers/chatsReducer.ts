@@ -22,7 +22,6 @@ export default createReducer<IChats>(initialState, {
     return { ...state };
   },
   ADD_CHAT: (state, action: Action<AddChatPayload>) => {
-    console.log(action);
     const { chatName, chatId } = action.payload;
 
     return {
@@ -34,7 +33,6 @@ export default createReducer<IChats>(initialState, {
     };
   },
   ADD_MESSAGE: (state, action: Action<AddMessagePayload>) => {
-    console.log(action);
     const { message, chatId } = action.payload;
 
     return {

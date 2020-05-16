@@ -61,3 +61,11 @@ export interface IChat {
 export interface IChats {
   [key: string]: IChat;
 }
+
+export interface IUpdateProfile {
+  nickName?: string;
+}
+
+export interface IProfileFormProps {
+  updateProfile: ({ nickName }: IUpdateProfile) => void;
+}

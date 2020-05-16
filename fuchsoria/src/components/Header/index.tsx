@@ -7,6 +7,7 @@ type TypeSwitchPage = { key: string; keyPath?: Array<string>; item?: any; domEve
 
 export default function Header() {
   const history = useHistory();
+  const defaultSelected = history?.location?.pathname ? history.location.pathname.replace(/\//, '') : 'home';
   const switchPage = ({ key }: TypeSwitchPage) => {
     history.push(`/${key}`);
   };
@@ -14,7 +15,7 @@ export default function Header() {
   return (
     <div className={styles.headerContainer}>
       <h2 className={styles.headerLogo}>Messenger</h2>
-      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['home']} onClick={switchPage}>
+      <Menu theme="dark" mode="horizontal" defaultSelectedKeys={[defaultSelected]} onClick={switchPage}>
         <Menu.Item key="home">Home</Menu.Item>
         <Menu.Item key="chats">Chats</Menu.Item>
         <Menu.Item key="profile">Profile</Menu.Item>

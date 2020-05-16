@@ -1,4 +1,4 @@
-import React, { Component, Dispatch } from 'react';
+import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
 import { connect } from 'react-redux';
 import { IChatContainerProps, IChatContainerState, IChats, IProfileState } from '../../interfaces';
@@ -10,7 +10,7 @@ import ChatListForm from '../../components/ChatListForm';
 import { addChat, addMessage } from '../../store/actions/chatsActions';
 import styles from './styles.module.scss';
 
-class ChatContainer extends Component<IChatContainerProps, IChatContainerState> {
+class ChatsContainer extends Component<IChatContainerProps, IChatContainerState> {
   robotTimeouts: { [key: string]: number } = {};
   state = {
     chatList: [{ id: '', title: 'Loading', description: 'Loading' }],
@@ -70,7 +70,6 @@ class ChatContainer extends Component<IChatContainerProps, IChatContainerState> 
     this.props.addChat(chatName, uuid().split('-')[0]);
   };
 
-  // Для уменьшения условий, кода и для более тонкой реализации бота пришлось отказаться от бота в componentDidUpdate
   sendRobotMessage(author: string) {
     const cachedChatId = this.chatId;
     const prevMessage = this.messages[this.messages.length - 2];
@@ -97,7 +96,6 @@ class ChatContainer extends Component<IChatContainerProps, IChatContainerState> 
   }
 
   render() {
-    console.log(this.props);
     if (this.props.match?.params.chatId && !this.props.chats[this.props.match.params.chatId]) {
       return <NotFound />;
     }
@@ -130,4 +128,4 @@ const mapDispatchToProps = {
   addMessage,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ChatContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatsContainer);
