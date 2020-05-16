@@ -5,7 +5,7 @@ class HelloMessage extends React.Component {
     super();
 
     this.state = {
-      messages: [],
+      messages: ['Привет!', 'Как дела?'],
     };
 
     this.addMessage = this.addMessage.bind(this);
