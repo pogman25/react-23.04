@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 
 const { Header: AntHeader, Footer: AntFooter } = AntLayout;
 
-export default function LayoutContainer({ children }: { children: React.ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <AntLayout className={styles.layout}>
       <AntHeader className={styles.layoutHeader}>

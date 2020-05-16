@@ -26,7 +26,7 @@ exports[`<MessageList /> Component should render 1`] = `
       Jest second example message
     </div>
     <div
-      class="message messageBot"
+      class="message"
     >
       <div
         class="messageAuthor"
