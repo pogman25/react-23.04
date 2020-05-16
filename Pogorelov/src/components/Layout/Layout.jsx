@@ -17,7 +17,7 @@ const Layout = ({ children }) => {
     <>
       <Header />
       <main className={classes.root}>
-        <ChatList />
+        <ChatList ownProps="мой собственный проп" />
         {children}
       </main>
     </>

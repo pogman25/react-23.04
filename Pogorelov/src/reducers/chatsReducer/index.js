@@ -1,19 +1,23 @@
-import { getChats } from '../../actions/chatsActions';
+import { handleActions } from 'redux-actions';
+import { setChats, updateChats } from '../../actions/chatsActions';
 
-const initialState = {
-  chatByIds: {},
-  chatIds: [],
-};
+const initialState = [];
 
-const reducer = (state = initialState, action) => {
-  switch (action.type) {
-    case getChats:
-      return action.payload;
-    case updateChats:
-      return { ...state, [action.payload.id]: action.payload };
-    default:
-      return state;
-  }
-};
+const reducer = handleActions(
+  {
+    [setChats]: (state, action) => action.payload,
+    [updateChats]: state => state,
+  },
+  initialState,
+);
+
+// const reducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case setChats:
+//       return action.payload;
+//     default:
+//       return state;
+//   }
+// };
 
 export default reducer;
