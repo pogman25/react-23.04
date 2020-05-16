@@ -3,7 +3,7 @@ export interface IMessage {
   author?: string;
   text: string;
   authorAccess?: string;
-  isBot?: boolean;
+  isSelf?: boolean;
   date?: number;
 }
 

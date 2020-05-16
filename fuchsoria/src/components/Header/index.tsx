@@ -7,7 +7,7 @@ type TypeSwitchPage = { key: string; keyPath?: Array<string>; item?: any; domEve
 
 export default function Header() {
   const history = useHistory();
-  const defaultSelected = history?.location?.pathname.replace(/\//, '');
+  const defaultSelected = history?.location?.pathname.replace(/[\/0-9]*/gi, '');
   const switchPage = ({ key }: TypeSwitchPage) => {
     history.push(`/${key}`);
   };

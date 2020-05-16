@@ -15,7 +15,7 @@ export default function MessageList({ messages }: IMessageListProps) {
   return (
     <div className={styles.messageList} ref={listRef}>
       {messages.map(({ id, author, text, authorAccess }) => (
-        <Message key={id} author={author} text={text} isBot={authorAccess === 'bot'} />
+        <Message key={id} author={author} text={text} isSelf={authorAccess === 'self'} />
       ))}
     </div>
   );

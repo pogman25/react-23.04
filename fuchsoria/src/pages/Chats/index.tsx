@@ -53,7 +53,7 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
     const message = {
       id: uuid(),
       author: author ? author : this.props.profile.nickName,
-      authorAccess,
+      authorAccess: author ? authorAccess : 'self',
       text,
       date: new Date().getTime(),
     };
