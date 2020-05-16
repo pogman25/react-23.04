@@ -1,4 +1,6 @@
 import React, { memo } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
 import {
@@ -73,7 +75,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ChatList = () => {
+const ChatList = props => {
+  console.log(props);
   const classes = useStyles();
   const history = useHistory();
 
@@ -106,7 +109,7 @@ const ChatList = () => {
         </ListItem>
       </Link>
       <List disablePadding>
-        {Object.values(pageLinks).map(({ title, to }) => (
+        {props.chats.map(({ title, to }) => (
           <Link to={to} key={title}>
             <ListItem
               classes={{
@@ -166,4 +169,8 @@ const ChatList = () => {
   );
 };
 
-export default memo(ChatList);
+const mapStateToProps = store => ({
+  chats: store.chats,
+});
+
+export default compose(connect(mapStateToProps), memo)(ChatList);
