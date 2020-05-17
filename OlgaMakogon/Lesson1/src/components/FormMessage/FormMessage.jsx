@@ -1,60 +1,73 @@
-import React, { Component } from "react";
-import styles from "./index.css";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import Icon from '@material-ui/core/Icon';
-
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { TextField, IconButton } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
+import styles from './index.css';
 
 class FormMessage extends Component {
   state = {
-    messages: [],
+    text: '',
+    author: '',
   };
 
-  onChange = (event) => {
+  onChange = event => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
   };
 
-  onSubmit = (e) => {
-    e.preventDefault();
+  sendMessage = () => {
     const { addNewMessage } = this.props;
     const { text, author } = this.state;
-    addNewMessage({author, text})
+
+    addNewMessage({ author, text });
+    this.setState({
+      text: '',
+    });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    this.sendMessage();
+  };
+
+  onKeyDown = e => {
+    if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+      this.sendMessage();
+    }
   };
 
   render() {
     const { text, author } = this.state;
-    
 
     return (
-      <form>
+      <form className={styles.container} onSubmit={this.onSubmit}>
         <TextField
-          type="text"
-          label="Author"
+          id="standard-basic"
+          label="Автор"
           name="author"
           onChange={this.onChange}
           value={author}
-          variant="outlined"
         />
-        <TextField 
-        label="Text"
-        autoFocus
-        name="text"
-        multiline 
-        onChange={this.onChange} 
-        value={text}
-        placeholder="Введите сообщение"
-        variant="outlined" />
-        <Button
-        variant="contained"
-        color="primary"
-        onClick={this.onSubmit}
-        >
-        Send
-      </Button>
+        <TextField
+          id="standard-multiline-flexible"
+          label="Текст сообщения"
+          name="text"
+          multiline
+          rowsMax={4}
+          onChange={this.onChange}
+          onKeyDown={this.onKeyDown}
+          value={text}
+        />
+        <IconButton type="submit" color="primary">
+          <SendIcon />
+        </IconButton>
       </form>
     );
   }
 }
+
+FormMessage.propTypes = {
+  addNewMessage: PropTypes.func.isRequired,
+};
 
 export default FormMessage;
