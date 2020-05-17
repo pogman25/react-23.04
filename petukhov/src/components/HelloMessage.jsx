@@ -1,11 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, memo } from "react";
+import propTypes from "prop-types";
 
 const HelloMessage = ({ userName }) => {
 
-    const [messages, setMessages] = useState(['Привет!', 'Как дела?']);
+    const [messages, setMessages] = useState([{text: 'Привет!', author: 'Anton'}, {text: 'Как дела!', author: 'Anton'}]);
+
+    useEffect(() => {
+        if(messages[messages.length-1].author === "Anton") {
+            setTimeout(() => {
+                setMessages(prev => [...prev, { text: "Привет! Я бот.", author: "Bot" }]);
+            }, 1000)
+        }
+    })
 
     const addMessage = () => {
-        setMessages(prev => [...prev, "Нормально..."]);
+        setMessages(prev => [...prev, { text: "Нормально...", author: "Anton" }]);
     }
 
     return (
@@ -15,7 +24,9 @@ const HelloMessage = ({ userName }) => {
             <ul>
                 {messages.map((item, index) => (
                     <li key={index}>
-                        {item}
+                        <h2>{item.author}</h2>
+                        <h2>{item.text}</h2>
+                        <hr/>
                     </li>
                 ))}
             </ul>
@@ -23,4 +34,12 @@ const HelloMessage = ({ userName }) => {
     );
 }
 
-export default HelloMessage;
+HelloMessage.defaultProps = {
+    userName: "Петухов"
+}
+
+HelloMessage.propTypes = {
+    userName: propTypes.string
+}
+
+export default memo(HelloMessage);
