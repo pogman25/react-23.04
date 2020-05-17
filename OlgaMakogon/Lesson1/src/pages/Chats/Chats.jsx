@@ -36,6 +36,15 @@ class Chats extends Component {
           },
         ],
       },
+      3: {
+        title: 'chats_1',
+        messages: [
+          {
+            text: 'привет, я бот из второго чата',
+            author: 'Bot',
+          },
+        ],
+      },
     },
     messages: [
       { text: 'привет, я бОТ', author: 'Bot' },

@@ -1,9 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import cx from 'classnames';
 import { AppBar, Toolbar, IconButton, Typography, Badge, makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { DRAWER_WIDTH } from '../utils/constants';
+import { getProfileFromStore } from '../../reducers/profileReducer';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -36,6 +38,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = () => {
+  const profile = useSelector(getProfileFromStore);
+
   const classes = useStyles();
   return (
     <AppBar position="absolute" className={cx(classes.appBar, classes.appBarShift)}>
