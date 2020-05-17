@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
-import { makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import { ListItem, Typography } from '@material-ui/core';
 
-const useStyles = makeStyles(theme => {
+const muiStyles = theme => {
   return {
     item: {},
     message: {
@@ -12,9 +12,9 @@ const useStyles = makeStyles(theme => {
       border: 0,
       borderRadius: 12,
       boxShadow: theme.shadows[5],
-      backgroundColor: theme.palette.info.main,
-      color: 'white',
+      color: '#fff',
       padding: theme.spacing(1, 2),
+      textShadow: '1px 1px 4px #444'
     },
     left: {
       justifyContent: 'flex-start',
@@ -22,38 +22,49 @@ const useStyles = makeStyles(theme => {
     right: {
       justifyContent: 'flex-end',
     },
+    leftBg: {
+      backgroundColor: theme.palette.info.light,
+    },
+    rightBg: {
+      backgroundColor: theme.palette.success.light,
+    }
   };
-});
+};
 
-const MessageItem = ({ author, text }) => {
-  const classes = useStyles();
+class MessageItem extends PureComponent {
+  render() {
+    const { author, text, classes } = this.props;
 
-  return (
-    <ListItem
-      color="primary"
-      className={cx(classes.item, {
-        [classes.right]: author !== 'Bot',
-        [classes.left]: author === 'Bot',
-      })}
-    >
-      <Typography
-        component="p"
-        variant="body1"
-        color="textPrimary"
-        className={classes.message}
+    return (
+      <ListItem
+        className={cx(classes.item, {
+          [classes.right]: author !== 'Bot',
+          [classes.left]: author === 'Bot',
+        })}
       >
-        {text}
-        <Typography variant="caption" display="block">
-          {author}
+        <Typography
+          component="p"
+          variant="body1"
+          color="textPrimary"
+          className={cx(classes.message, {
+            [classes.rightBg]: author !== 'Bot',
+            [classes.leftBg]: author === 'Bot',
+          })}
+        >
+          {text}
+          <Typography variant="caption" display="block" color="textSecondary">
+            {author}
+          </Typography>
         </Typography>
-      </Typography>
-    </ListItem>
-  );
+      </ListItem>
+    );
+  }
 };
 
 MessageItem.propTypes = {
+  classes: PropTypes.object.isRequired,
   author: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
 };
 
-export default MessageItem;
+export default withStyles(muiStyles)(MessageItem);

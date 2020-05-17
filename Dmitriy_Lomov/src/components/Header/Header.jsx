@@ -1,13 +1,13 @@
-import React from 'react';
-import cx from 'classnames';
-import { AppBar, Toolbar, IconButton, Typography, Badge, makeStyles } from '@material-ui/core';
-import MenuIcon from '@material-ui/icons/Menu';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { DRAWER_WIDTH } from '../utils/constants';
+import React, { PureComponent } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
 
-const useStyles = makeStyles(theme => ({
+import cx from 'classnames';
+import { AppBar, Toolbar, Typography, withStyles } from '@material-ui/core';
+
+const muiStyles = theme => ({
   toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+    paddingRight: 24, 
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -17,8 +17,8 @@ const useStyles = makeStyles(theme => ({
     }),
   },
   appBarShift: {
-    marginLeft: DRAWER_WIDTH,
-    width: `calc(100% - ${DRAWER_WIDTH}px)`,
+    marginLeft: 240,
+    width: `calc(100% - 240px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -33,33 +33,42 @@ const useStyles = makeStyles(theme => ({
   title: {
     flexGrow: 1,
   },
-}));
+});
 
-const Header = () => {
-  const classes = useStyles();
-  return (
-    <AppBar position="absolute" className={cx(classes.appBar, classes.appBarShift)}>
-      <Toolbar className={classes.toolbar}>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="open drawer"
-          className={cx(classes.menuButton, classes.menuButtonHidden)}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Typography
-          component="h1"
-          variant="h6"
-          color="inherit"
-          noWrap
-          className={classes.title}
-        >
-          Chat1
+class Header extends PureComponent {
+  render() {
+    const { profile, classes } = this.props;
+
+    return (
+      <AppBar position="absolute" className={cx(classes.appBar, classes.appBarShift)}>
+        <Toolbar className={classes.toolbar}>
+          <Typography
+            component="h1"
+            variant="h6"
+            color="inherit"
+            noWrap
+            className={classes.title}
+          >
+            Эмулятор чата
         </Typography>
-      </Toolbar>
-    </AppBar>
-  );
+          <Typography
+            component="p"
+            variant="body2"
+            color="textSecondary"
+            noWrap
+            className={classes.title}
+          >
+            Текущий профиль: {profile.name} {profile.lastName}
+          </Typography>
+        </Toolbar>
+      </AppBar>
+    );
+  }
 };
 
-export default Header;
+const mapStateToProps = store => ({
+  chats: store.chats,
+  profile: store.profile
+})
+
+export default compose(connect(mapStateToProps), withStyles(muiStyles))(Header);
