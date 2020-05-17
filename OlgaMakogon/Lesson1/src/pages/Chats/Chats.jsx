@@ -40,7 +40,7 @@ class Chats extends Component {
         title: 'chats_1',
         messages: [
           {
-            text: 'привет, я бот из второго чата',
+            text: 'привет, я бот из 3 чата',
             author: 'Bot',
           },
         ],

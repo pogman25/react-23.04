@@ -137,7 +137,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "/";
 /******/
 /******/ 	var jsonpArray = window["webpackJsonp"] = window["webpackJsonp"] || [];
 /******/ 	var oldJsonpFunction = jsonpArray.push.bind(jsonpArray);
@@ -993,6 +993,13 @@ var Chats = /*#__PURE__*/function (_Component) {
           }]
         },
         2: {
+          title: 'chats_1',
+          messages: [{
+            text: 'привет, я бот из второго чата',
+            author: 'Bot'
+          }]
+        },
+        3: {
           title: 'chats_1',
           messages: [{
             text: 'привет, я бот из второго чата',
