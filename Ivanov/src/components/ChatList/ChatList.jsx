@@ -25,8 +25,8 @@ class ChatList extends Component {
             >
                 <Toolbar />
                 <List>
-                    { chats.map(({to, title}) => (
-                        <Link to={to} key={title} className={styles.chatlink}>
+                    { chats.map(({id, title}) => (
+                        <Link to={"/chats/"+id} key={title} className={styles.chatlink}>
                             <ListItem button>
                                 <ListItemText primary={title} className={styles.chatname}/>
                             </ListItem>

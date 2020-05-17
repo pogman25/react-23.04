@@ -23,7 +23,7 @@ class RootRouter extends Component {
                     <Route exact path="/" component={Home} />
                     <Route path="/chats/:chatId" component={Chats} />
                     <Route path="/profile">
-                        <Profile name="Nicholas" />
+                        <Profile />
                     </Route>
                 </Switch>
             </Layout>
