@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, memo } from "react";
 import propTypes from "prop-types";
 
 const FormMessage = (props) => {
@@ -11,8 +11,8 @@ const FormMessage = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        const { addNewMessage } = props;
-        addNewMessage({ text, author });
+        const { addNewMessage2 } = props;
+        addNewMessage2({ text, author });
     }
 
     return (

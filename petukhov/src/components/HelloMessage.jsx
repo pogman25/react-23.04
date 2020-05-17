@@ -26,7 +26,7 @@ const HelloMessage = ({ userName }) => {
     return (
         <div>
             <h2>Hello, {userName}!</h2>
-            <FormMessage addNewMessage={addNewMessage}/>
+            <FormMessage addNewMessage2={addNewMessage}/>
             <button onClick={addMessage}>Add list item</button>
             <ul>
                 {messages.map(({ text, author }, index) => (
