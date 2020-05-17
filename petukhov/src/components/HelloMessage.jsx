@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 const HelloMessage = ({ userName }) => {
 
-    const [messages, setMessages, name] = useState(['Привет!', 'Как дела?']);
+    const [messages, setMessages] = useState(['Привет!', 'Как дела?']);
 
     const addMessage = () => {
         setMessages(prev => [...prev, "Нормально..."]);
