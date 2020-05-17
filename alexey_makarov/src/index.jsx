@@ -1,11 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import FirstMessage from "./components/Chat/Chat";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import ChatList from "./components/ChatList/ChatList";
-import Header from "./components/Header/Header";
-import Layout from "./components/Layout/Layout";
+import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
+import {BrowserRouter} from 'react-router-dom';
+import RootRouter from "./components/router";
 
 //Note: Обязательно необходимо задать темы в рамках которой будет работать Материал
 const theme = createMuiTheme({
@@ -13,9 +11,11 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-    <ThemeProvider theme={theme}>
-        <Layout/>
-        <CssBaseline/>
-    </ThemeProvider>,
+    <BrowserRouter>
+        <ThemeProvider theme={theme}>
+            <RootRouter/>
+            <CssBaseline/>
+        </ThemeProvider>
+    </BrowserRouter>,
     document.getElementById("msg")
 );

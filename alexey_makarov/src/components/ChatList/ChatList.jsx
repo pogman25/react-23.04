@@ -1,23 +1,13 @@
 import React, {Component} from 'react';
-import PropTypes from "prop-types";
-import {
-    Drawer,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Typography,
-} from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import {Drawer, List, ListItem, ListItemIcon, ListItemText, Typography,} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import InfoIcon from '@material-ui/icons/Info';
 import HomeIcon from '@material-ui/icons/Home';
-import styles from './index.css'
+import pageLinks from "./page-links";
 import cx from 'classnames';
 import {withStyles} from "@material-ui/core/styles";
-import Link from "@material-ui/core/Link";
+// import Link from "@material-ui/core/Link";
+import {Link, withRouter} from 'react-router-dom';
 
 const drawerWidth = 240;
 
@@ -80,24 +70,16 @@ const muiStyles = theme => {
     };
 };
 
-class ChatList extends Component{
+class ChatList extends Component {
 
-    state={
-        pageLinks:[
-            {
-                to:"1",
-                title:"chat1",
-            },
-            {
-                to:"2",
-                title:"chat2",
-            },
-        ]
+    state = {
+        pageLinks: pageLinks,
     }
 
     render() {
 
         const {classes} = this.props;
+        //const {pageLinks} = pageLinks;
 
         return (
             <Drawer
@@ -162,4 +144,4 @@ class ChatList extends Component{
 }
 
 
-export default withStyles(muiStyles)(ChatList);
+export default withRouter(withStyles(muiStyles)(ChatList));

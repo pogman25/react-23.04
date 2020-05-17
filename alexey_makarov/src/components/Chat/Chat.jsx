@@ -1,12 +1,8 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import MessageButton from "../MessageButton/MessageButton"
-import Counter from "../Counter/Counter";
-import PropTypes from "prop-types";
 import MessageForm from "../MessageForm/MessageForm";
 import Messages from "../Messages/Messages";
-import styles from "./index.css";
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
+import Box from "@material-ui/core/Box";
 
 const muiStyles = theme => {
     console.log(theme);
@@ -67,20 +63,16 @@ class Chat extends React.Component {
         const {messages,isVisible} = this.state;
         const {name, classes} = this.props;
 
-        return (<div /*className={classes.paper}*/ /*className={styles.container}*/>
-            <h2 className="title">Hello from FirstMessage Component: {name}</h2>
+        return (<Box /*className={classes.paper}*/ /*className={styles.container}*/>
             <Messages messages={messages}/>
-        <MessageForm addMessage={this.addMessage}/>
-        <MessageButton run={this.addMessage_Deprecated}/>
-        <button onClick={this.toggle}>Visible</button>
-            {isVisible && <Counter/>}
-        </div>);
+            <MessageForm addMessage={this.addMessage}/>
+            {/*<MessageButton run={this.addMessage_Deprecated}/>*/}
+            {/*<button onClick={this.toggle}>Visible</button>*/}
+            {/*    {isVisible && <Counter/>}*/}
+        </Box>);
     }
 
 
-}
-Chat.propTypes = {
-    name: PropTypes.string.isRequired,
 }
 
 Chat.defaultProps={}
