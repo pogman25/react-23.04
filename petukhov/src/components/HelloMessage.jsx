@@ -1,18 +1,14 @@
 import React from "react";
 
 class HelloMessage extends React.Component {
-  constructor() {
-    super();
 
-    this.state = {
+    state = {
       messages: ['Привет!', 'Как дела?'],
     };
 
-    this.addMessage = this.addMessage.bind(this);
-  }
-
-  addMessage() {
-    this.setState(prev => ({ messages: [...prev.messages, "Нормально"] }));
+  addMessage = () => {
+      const { messages } = this.state;
+    this.setState({ messages: [...messages, "Нормально!"] });
   }
 
   render() {
