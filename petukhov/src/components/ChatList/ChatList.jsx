@@ -1,11 +1,11 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import Divider from '@material-ui/core/Divider';
-import InboxIcon from '@material-ui/icons/Inbox';
 import ChatIcon from '@material-ui/icons/Chat';
 
 const useStyles = makeStyles((theme) => ({
@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-// function ListItemLink(props) {
-//     return <ListItem button component="a" {...props} />;
-// }
+function ListItemLink(props) {
+    return <ListItem button component="a" {...props} />;
+}
 
 const ChatList = (props) => {
 
@@ -30,12 +30,12 @@ const ChatList = (props) => {
         <div className={classes.root}>
             <List component="nav" aria-label="main mailbox folders">
                 {
-                    chats.map((chat) => (
-                        <ListItem key={chat} button>
+                    chats.map(({ to, title }) => (
+                        <ListItem key={title} button>
                             <ListItemIcon>
                                 <ChatIcon />
                             </ListItemIcon>
-                            <ListItemText primary={chat} />
+                            <Link to={to}>{title}</Link>
                         </ListItem>
                     ))
                 }

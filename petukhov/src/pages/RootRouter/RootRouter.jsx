@@ -10,13 +10,13 @@ const RootRouter = () => {
     return (
     <Layout>
         <Switch>
-            <Route path="/">
+            <Route exact path="/">
                 <Home />
             </Route>
-            <Route path="/about">
+            <Route exact path="/about">
                 <About />
             </Route>
-            <Route path="/chat">
+            <Route exact path="/chat">
                 <Chat />
             </Route>
         </Switch>

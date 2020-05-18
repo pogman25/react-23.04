@@ -3,7 +3,8 @@ import propTypes from "prop-types";
 
 import Header from "../Header";
 import ChatList from "../ChatList";
-import Chat from "../../pages/Chat";
+import pageLinks from "../ChatList/page-links";
+
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -33,7 +34,7 @@ const Layout = ({ children }) => {
             <Header />
             <Grid container spacing={0}>
                 <Grid item xs={2}>
-                    <ChatList chats={['chat 1', 'chat 2', 'chat 3']}/>
+                    <ChatList chats={ pageLinks }/>
                 </Grid>
                 <Grid item xs>
                     <div className={classes.mainField}>
