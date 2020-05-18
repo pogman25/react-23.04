@@ -1,4 +1,6 @@
 import React, { memo } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
 import {
@@ -166,4 +168,8 @@ const ChatList = () => {
     );
 };
 
-export default memo(ChatList);
+const mapStateToProps = store => ({
+    chats: store.chats,
+});
+
+export default compose(connect(mapStateToProps), memo)(ChatList);

@@ -1,60 +1,20 @@
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
 import Message from "../Message";
 import MessageForm from "../MessageForm";
 import css from "./index.css";
 import PropTypes from "prop-types";
 
-export default class MessageField extends Component {
-  static ROBOT_NAME = "Robot";
-
-  state = {
-    chats: {
-      1: { title: "Chat1", messageList: [1] },
-      2: { title: "Chat2", messageList: [2] },
-      3: { title: "Chat3", messageList: [] },
-    },
-    messages: {
-      1: { text: "Hello!", author: this.ROBOT_NAME },
-      2: { text: "How do you do?", author: this.ROBOT_NAME },
-    },
-  };
-
+class MessageField extends Component {
   componentDidMount() {
     //    console.log("MessageField did mount");
   }
 
-  componentDidUpdate() {
-    //    console.log("MessageField did update");
-    if (
-      this.state.messages[this.state.messages.length - 1].author !==
-      this.ROBOT_NAME
-    ) {
-      this.addNewMessage({ text: "This is bot...", author: this.ROBOT_NAME });
-    }
-  }
-
-  addNewMessage = (message) => {
-    const { chatId } = this.props;
-    const newMessageId = Object.keys(this.state.messages).length + 1;
-    this.setState(({ messages, chats }) => ({
-      messages: {
-        ...messages,
-        [newMessageId]: { text: message.text, author: message.author },
-      },
-      chats: {
-        ...chats,
-        [chatId]: {
-          ...chats[chatId],
-          messageList: [...chats[chatId]["messageList"], messageId],
-        },
-      },
-    }));
-  };
-
   render() {
     //    console.log(`MessageField render`);
-    const { messages, chats } = this.state;
-    const { chatId } = this.props;
+    const { chatId, messages, chats, addNewMessage } = this.props;
+
     const messageElements = chats[chatId].messageList.map((messageId, id) => (
       <Message
         key={id}
@@ -66,7 +26,7 @@ export default class MessageField extends Component {
       <div className={css.container}>
         <div className={css.elements}>
           {messageElements}
-          <MessageForm addNewMessage={this.addNewMessage} />
+          <MessageForm addNewMessage={addNewMessage} />
         </div>
       </div>
     );
@@ -75,4 +35,13 @@ export default class MessageField extends Component {
 
 MessageField.propTypes = {
   chatId: PropTypes.number.isRequired,
+  chats: PropTypes.object.isRequired,
+  messages: PropTypes.object.isRequired,
+  addNewMessage: PropTypes.func.isRequired,
 };
+
+const mapStateToProps = ({ chatReducer }) => ({ chats: chatReducer.chats });
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageField);

@@ -1,33 +1,23 @@
 .list {
+    list-style: none;
     display: flex;
     flex-direction: column;
-    background-color: #e2e2e2;
-    height: 50%;
-    width: 50%;
-    padding: 10px;
 }
 
-.colorBot {
+.item {
+    max-width: 250px;
+}
+
+.left {
+    align-self: flex-start;
+}
+
+.right {
     align-self: flex-end;
-    background-color: rgb(173, 230, 218);
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 18px;
-    margin: 5px;
-
-}
-
-.colorUser {
-    background-color: lightblue;
-    padding: 5px 15px;
-    border-radius: 20px;
-    font-size: 18px;
-    margin: 5px;
-
 }
 
 .author {
     color: gray;
     font-size: 12px;
     font-weight: bold;
-  }
+}

@@ -9,10 +9,10 @@ export default class Message extends Component {
   }
 
   render() {
-    const { text, author, botName } = this.props;
+    const { text, author } = this.props;
 
     return (
-      <div className={cx("message", {"my-message": author !== botName})}>
+      <div className={cx("message", {"my-message": author === 'me'})}>
         <div className="message-text">{text}</div>
         <div className="message-author">{author}</div>
       </div>

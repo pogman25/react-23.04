@@ -6,11 +6,13 @@ module.exports = {
 	entry: "./src/index.js",
 	output: {
 		path: path.resolve(__dirname, 'build'),
-		filename: 'app.js'
+		filename: 'app.js',
+		publicPath: '/',
 	},
 	resolve: {
 		extensions: [".js", ".jsx"]
 	},
+	devtool: 'source-map',
 	module: {
 		rules: [
 			{
@@ -40,10 +42,31 @@ module.exports = {
 			}
 		  ]
 	},
+	optimization: {
+	  splitChunks: {
+		chunks: 'all',
+		cacheGroups: {
+		  default: false,
+		  commons: {
+			test: /node_modules/,
+			name: 'js/vendor',
+			chunks: 'initial',
+		  },
+		  styles: {
+			name: 'styles',
+			test: /\.css$/,
+			chunks: 'all',
+			enforce: true,
+		  },
+		},
+	  },
+	},
 	devServer: {
 		contentBase: path.join(__dirname, 'build'),
 		compress: true,
-		port: 9000
+		port: 9000,
+		hot: true,
+		historyApiFallback: true,
 	},
 	plugins: [
 		new HtmlWebpackPlugin({

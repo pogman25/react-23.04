@@ -1,33 +1,32 @@
-import React, { Component } from 'react';
-import PropTypes from "prop-types";
-import cx from "classnames";
-import styles from "./index.css";
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Container, List } from '@material-ui/core';
+import MessageItem from '../MessageItem/MessageItem';
 
-class Messages extends Component {
-    render() {
-        const { messages } = this.props;
-        return (
-            <ul className={styles.list}>
+const listStyles = {
+    border: '1px solid #333',
+    borderRadius: 3,
+    minHeight: 300,
+};
+
+const Messages = ({ messages }) => {
+    return (
+        <Container maxWidth="sm" style={listStyles}>
+            <List>
                 {messages.map(({ text, author }, index) => (
-                    <li key={index} className={cx(styles.list, {
-                        [styles.colorBot]: author === 'bot',
-                        [styles.colorUser]: author !== 'bot',
-                    })}>
-                    {`${text}`}
-                    <div className={styles.author}>{author}</div>
-                    </li>
+                    <MessageItem key={index} text={text} author={author} />
                 ))}
-            </ul>
-        )
-    }
-}
+            </List>
+        </Container>
+    );
+};
 
 Messages.propTypes = {
     messages: PropTypes.arrayOf(
         PropTypes.shape({
             text: PropTypes.string,
             author: PropTypes.string,
-        })
+        }),
     ).isRequired,
 };
 
