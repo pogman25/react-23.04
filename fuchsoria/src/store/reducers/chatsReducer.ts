@@ -1,5 +1,6 @@
 import { createReducer } from 'typesafe-actions';
 import { IChats, IMessage } from './../../interfaces';
+import { setChats, getChats, addChat, addMessage } from './../actions/chatsActions';
 import { Action } from './reducerTypes';
 
 const initialState = {};
@@ -15,13 +16,13 @@ type AddMessagePayload = {
 };
 
 export default createReducer<IChats>(initialState, {
-  SET_CHATS: (state, action: Action<IChats>) => {
+  [setChats.toString()]: (state, action: Action<IChats>) => {
     return action.payload;
   },
-  GET_CHATS: (state, action: Action<IChats>) => {
+  [getChats.toString()]: (state, action: Action<IChats>) => {
     return { ...state };
   },
-  ADD_CHAT: (state, action: Action<AddChatPayload>) => {
+  [addChat.toString()]: (state, action: Action<AddChatPayload>) => {
     const { chatName, chatId } = action.payload;
 
     return {
@@ -32,7 +33,7 @@ export default createReducer<IChats>(initialState, {
       },
     };
   },
-  ADD_MESSAGE: (state, action: Action<AddMessagePayload>) => {
+  [addMessage.toString()]: (state, action: Action<AddMessagePayload>) => {
     const { message, chatId } = action.payload;
 
     return {

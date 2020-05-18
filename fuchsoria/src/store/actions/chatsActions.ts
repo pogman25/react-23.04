@@ -1,6 +1,5 @@
 import { createAction } from 'typesafe-actions';
-import { IChats } from './../../interfaces';
-import { IMessage } from './../../interfaces';
+import { IChats, IMessage } from './../../interfaces';
 
 export const setChats = createAction('SET_CHATS', (chats: IChats) => chats)();
 export const getChats = createAction('GET_CHATS')();
