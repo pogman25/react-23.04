@@ -19,7 +19,7 @@ export default createReducer<IChats>(initialState, {
   [setChats.toString()]: (state, action: Action<IChats>) => {
     return action.payload;
   },
-  [getChats.toString()]: (state, action: Action<IChats>) => {
+  [getChats.toString()]: (state) => {
     return { ...state };
   },
   [addChat.toString()]: (state, action: Action<AddChatPayload>) => {

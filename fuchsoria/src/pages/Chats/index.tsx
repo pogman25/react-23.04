@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
 import { connect } from 'react-redux';
-import { IChatContainerProps, IChatContainerState, IChats, IProfileState } from '../../interfaces';
+import { IChatContainerProps, IChatContainerState } from '../../interfaces';
 import NotFound from '../../pages/NotFound';
 import MessageList from '../../components/MessageList';
 import ChatForm from '../../components/ChatForm';
@@ -52,7 +52,7 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
     }));
   }
 
-  addNewMessage = (text: string, author?: string, authorAccess: string = 'user', chatId: string = this.chatId) => {
+  addNewMessage = (text: string, author?: string, authorAccess = 'user', chatId: string = this.chatId) => {
     const message = {
       id: uuid(),
       author: author ? author : this.props.profile.nickName,
@@ -88,7 +88,7 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
     );
   }
 
-  componentDidUpdate(prevProps: IChatContainerProps, prevState: IChatContainerState) {
+  componentDidUpdate(prevProps: IChatContainerProps) {
     if (JSON.stringify(prevProps.chats) !== JSON.stringify(this.props.chats)) {
       this.updateChatList();
     }
