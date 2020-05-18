@@ -16,14 +16,14 @@ exports[`<Message /> Component should render 1`] = `
   </div>
   <div>
     <div
-      class="message messageBot"
+      class="message messageSelf"
     >
       <div
         class="messageAuthor"
       >
-        Robot
+        Self
       </div>
-      Bot example message
+      Self example message
     </div>
   </div>
 </body>

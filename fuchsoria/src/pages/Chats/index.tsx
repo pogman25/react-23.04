@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
-import { IChatContainerProps, IChatContainerState } from '../../interfaces';
+import { connect } from 'react-redux';
+import { IChatContainerProps, IChatContainerState, IChats, IProfileState } from '../../interfaces';
 import NotFound from '../../pages/NotFound';
 import MessageList from '../../components/MessageList';
 import ChatForm from '../../components/ChatForm';
 import ChatList from '../../components/ChatList';
 import ChatListForm from '../../components/ChatListForm';
-import mockChats from '../../mocks/chats';
+import { addChat, addMessage } from '../../store/actions/chatsActions';
 import styles from './styles.module.scss';
 
-export default class ChatContainer extends Component<IChatContainerProps, IChatContainerState> {
+class ChatsContainer extends Component<IChatContainerProps, IChatContainerState> {
   robotTimeouts: { [key: string]: number } = {};
   state = {
-    chats: mockChats,
     chatList: [{ id: '', title: 'Loading', description: 'Loading' }],
   };
 
@@ -27,12 +27,12 @@ export default class ChatContainer extends Component<IChatContainerProps, IChatC
   }
 
   get messages() {
-    return this.chatId ? this.state.chats[this.chatId].messages : [];
+    return this.chatId && this.props.chats ? this.props.chats[this.chatId].messages : [];
   }
 
   updateChatList() {
-    this.setState((state) => ({
-      chatList: Object.entries(state.chats)
+    this.setState(() => ({
+      chatList: Object.entries(this.props.chats)
         .map(([id, { title, messages }]) => {
           const lastMessage = messages[messages.length - 1];
 
@@ -49,41 +49,27 @@ export default class ChatContainer extends Component<IChatContainerProps, IChatC
     }));
   }
 
-  addNewMessage = (author: string, text: string, authorAccess: string = 'user', chatId: string = this.chatId) => {
-    const message = { id: uuid(), author, authorAccess, text, date: new Date().getTime() };
+  addNewMessage = (text: string, author?: string, authorAccess: string = 'user', chatId: string = this.chatId) => {
+    const message = {
+      id: uuid(),
+      author: author ? author : this.props.profile.nickName,
+      authorAccess: author ? authorAccess : 'self',
+      text,
+      date: new Date().getTime(),
+    };
     const robotAnswer = () => {
       if (authorAccess === 'user') {
-        this.sendRobotMessage(author);
+        this.sendRobotMessage(message.author);
       }
     };
 
-    this.setState(
-      ({ chats }) => ({
-        chats: {
-          ...chats,
-          [chatId]: {
-            ...chats[chatId],
-            messages: [...chats[chatId].messages, message],
-          },
-        },
-      }),
-      robotAnswer
-    );
+    this.props.addMessage(message, chatId, robotAnswer);
   };
 
   addNewChat = (chatName: string) => {
-    this.setState(({ chats }) => ({
-      chats: {
-        ...chats,
-        [uuid().split('-')[0]]: {
-          title: chatName,
-          messages: [],
-        },
-      },
-    }));
+    this.props.addChat(chatName, uuid().split('-')[0]);
   };
 
-  // Для уменьшения условий, кода и для более тонкой реализации бота пришлось отказаться от бота в componentDidUpdate
   sendRobotMessage(author: string) {
     const cachedChatId = this.chatId;
     const prevMessage = this.messages[this.messages.length - 2];
@@ -94,13 +80,13 @@ export default class ChatContainer extends Component<IChatContainerProps, IChatC
     }
 
     this.robotTimeouts[cachedChatId] = window.setTimeout(
-      () => this.addNewMessage('Robot', `Hi ${author}, i am your personal assistant`, 'bot', cachedChatId),
+      () => this.addNewMessage(`Hi ${author}, i am your personal assistant`, 'Robot', 'bot', cachedChatId),
       3000
     );
   }
 
   componentDidUpdate(prevProps: IChatContainerProps, prevState: IChatContainerState) {
-    if (JSON.stringify(prevState.chats) !== JSON.stringify(this.state.chats)) {
+    if (JSON.stringify(prevProps.chats) !== JSON.stringify(this.props.chats)) {
       this.updateChatList();
     }
   }
@@ -110,7 +96,7 @@ export default class ChatContainer extends Component<IChatContainerProps, IChatC
   }
 
   render() {
-    if (this.props.match?.params.chatId && !this.state.chats[this.props.match.params.chatId]) {
+    if (this.props.match?.params.chatId && !this.props.chats[this.props.match.params.chatId]) {
       return <NotFound />;
     }
 
@@ -130,3 +116,16 @@ export default class ChatContainer extends Component<IChatContainerProps, IChatC
     );
   }
 }
+
+const mapStateToProps = (store: { chats: IChats; profile: IProfileState }) => {
+  const { chats, profile } = store;
+
+  return { chats, profile };
+};
+
+const mapDispatchToProps = {
+  addChat,
+  addMessage,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatsContainer);
