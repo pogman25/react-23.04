@@ -1,17 +1,14 @@
 import React from "react";
+import MessageItem from "../MessageItem";
 import propTypes from "prop-types";
-import style from "./MessageList.css"
 
 const MessageList = (props) => {
 
     const { messages } = props;
 
     const list = (<ul>
-                    {messages.map(({ text, author }, index) => (
-                        <li key={index}>
-                            <p className={style.title}>{author}</p>
-                            <h2>{text}</h2>
-                        </li>
+                    {messages.map((item, index) => (
+                        <MessageItem key={index} item={item}/>
                     ))}
                 </ul>);
 
