@@ -1,19 +1,9 @@
 import { createReducer } from 'typesafe-actions';
-import { IChats, IMessage } from './../../interfaces';
+import { IChats } from './../../interfaces';
 import { setChats, getChats, addChat, addMessage } from './../actions/chatsActions';
-import { Action } from './reducerTypes';
+import { Action, AddChatPayload, AddMessagePayload } from './reducerTypes';
 
 const initialState = {};
-
-type AddChatPayload = {
-  chatName: string;
-  chatId: string;
-};
-
-type AddMessagePayload = {
-  message: IMessage;
-  chatId: string;
-};
 
 export default createReducer<IChats>(initialState, {
   [setChats.toString()]: (state, action: Action<IChats>) => {
