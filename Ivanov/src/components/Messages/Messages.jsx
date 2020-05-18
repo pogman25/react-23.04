@@ -6,7 +6,6 @@ import styles from './Messages.css'
 class Messages extends Component {
     render() {
         const { messages } = this.props;
-
         return (
             <ul className={styles.list}>
                 { messages.map(({author,text}, index) => (
@@ -25,13 +24,13 @@ class Messages extends Component {
     }
 }
 
-Messages.propTypes = {
-    messages: PropTypes.arrayOf(
-        PropTypes.shape({
-            text: PropTypes.string,
-            author: PropTypes.string,
-        })
-    ).isRequired,
-}
+// Messages.propTypes = {
+//     messages: PropTypes.arrayOf(
+//         PropTypes.shape({
+//             text: PropTypes.string,
+//             author: PropTypes.string,
+//         })
+//     ).isRequired,
+// }
 
 export default Messages;

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button'
-import Messages from '../../components/Messages'
+import { connect } from 'react-redux';
+import Messages from '../../components/Messages';
+import { setChats, updateChats } from '../../actions/chatsActions';
+import Button from '@material-ui/core/Button';
 import styles from './Chats.css'
 
 class Chats extends Component {
@@ -36,7 +38,7 @@ class Chats extends Component {
             }
         },
         messages: [ { text: 'Hello', author: 'Bot'}],
-    };
+    };    
 
     timer;
 
@@ -45,18 +47,18 @@ class Chats extends Component {
             match: { params }
         } = this.props;
         const { chatId } = params;
-        const { chats } = this.state;
+        const { chats } = this.props;
         const messages = chats[chatId].messages;
         
         clearTimeout(this.timer);
-        if(prevState.chats[chatId].messages.length !== messages.length) {
+        // if(prevState.chats[chatId].messages.length !== messages.length) {
             if (messages[messages.length - 1].author !== "Bot") {
                     this.timer = setTimeout(() => {
                         this.addNewMessage({ text: "привет, я Бот", author: "Bot" });
                         }, 1000);
                 
             }
-        }
+        // }
     }
     
     addNewMessage = ({text, author}) => {
@@ -64,16 +66,11 @@ class Chats extends Component {
             match: { params }
         } = this.props;
         const { chatId } = params;
-        const { chats } = this.state;
-        const messages = chats[chatId].messages;
-        this.setState(({ chats }) => ({
-            chats: {
-                ...chats,
-                [chatId]: { 
-                    ...chats[chatId], messages: [...chats[chatId].messages, { text: text, author: author }],
-                },
-            },
-        }));
+        const { chats } = this.props;
+        const messages = chats[chatId-1].messages;
+        const toAdd = { text:text,author: author,chatId: chatId-1 };
+        console.log(toAdd);
+        this.props.updateChats(toAdd);
     };
 
     onChange = (event) => {
@@ -99,21 +96,21 @@ class Chats extends Component {
     }
 
     get messages() {
-        const { chats } = this.state;
+        const { chats } = this.props;
         const {
           match: { params },
         } = this.props;
         const { chatId } = params;
-    
-        return chats[chatId].messages;
+        return chats[chatId-1].messages;
     }
     
     render() {
         const { text } = this.state;
         // const { messages } = this.state;
-
+        
         return (
             <div className={styles.container}>
+                
                 <Messages messages={this.messages} />
                 <form className={styles.form} onSubmit={this.onSubmit} onKeyUp={this.onKeyUP}>
                     <textarea
@@ -141,4 +138,12 @@ class Chats extends Component {
 //     addNewMessage: PropTypes.func.isRequired,
 // }
 
-export default Chats;
+const mapStateToProps = store => ({
+    chats: store.chats,
+});
+
+const mapDispatchToProps = {
+    updateChats,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Chats);

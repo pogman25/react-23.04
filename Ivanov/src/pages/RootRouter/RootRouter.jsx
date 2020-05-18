@@ -5,7 +5,7 @@ import Layout from '../../components/Layout';
 import Home from '../Home';
 import Chats from '../Chats';
 import Profile from '../Profile';
-import { setChats } from '../../actions/chatsActions';
+import { setChats, updateChats } from '../../actions/chatsActions';
 import mockPageLinks from './mockPageLinks'
 
 class RootRouter extends Component {
@@ -17,13 +17,14 @@ class RootRouter extends Component {
     }
 
     render() {
+        const {profile} = this.props;
         return (
             <Layout>
                 <Switch>
                     <Route exact path="/" component={Home} />
                     <Route path="/chats/:chatId" component={Chats} />
                     <Route path="/profile">
-                        <Profile />
+                        <Profile name={profile.name}/>
                     </Route>
                 </Switch>
             </Layout>
@@ -33,9 +34,11 @@ class RootRouter extends Component {
 
 const mapStateToProps = store => ({
     chats: store.chats,
+    profile: store.profile,
 });
 const mapDispatchToProps = {
     setChats,
+    updateChats,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootRouter);
