@@ -48,17 +48,17 @@ class Chats extends Component {
         } = this.props;
         const { chatId } = params;
         const { chats } = this.props;
-        const messages = chats[chatId].messages;
+        const messages = chats[chatId-1].messages;
         
         clearTimeout(this.timer);
-        // if(prevState.chats[chatId].messages.length !== messages.length) {
+        if(prevState.chats[chatId].messages.length !== messages.length) {
             if (messages[messages.length - 1].author !== "Bot") {
                     this.timer = setTimeout(() => {
                         this.addNewMessage({ text: "привет, я Бот", author: "Bot" });
                         }, 1000);
                 
             }
-        // }
+        }
     }
     
     addNewMessage = ({text, author}) => {
