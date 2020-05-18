@@ -7,7 +7,7 @@ export default function MessageList({ messages }: IMessageListProps) {
   const listRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (listRef.current?.lastElementChild) {
+    if (typeof listRef.current?.lastElementChild?.scrollIntoView === 'function') {
       listRef.current.lastElementChild.scrollIntoView({ block: 'center', behavior: 'smooth' });
     }
   });
@@ -15,7 +15,7 @@ export default function MessageList({ messages }: IMessageListProps) {
   return (
     <div className={styles.messageList} ref={listRef}>
       {messages.map(({ id, author, text, authorAccess }) => (
-        <Message key={id} author={author} text={text} isBot={authorAccess === 'bot'} />
+        <Message key={id} author={author} text={text} isSelf={authorAccess === 'self'} />
       ))}
     </div>
   );

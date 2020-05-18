@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Layout from './components/Layout/Layout';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import Router from './components/Router';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <>
-    <Layout />
-  </>,
+  <BrowserRouter>
+    <MuiThemeProvider>
+      <Router />
+    </MuiThemeProvider>
+  </BrowserRouter>,
   document.getElementById('root')
 );

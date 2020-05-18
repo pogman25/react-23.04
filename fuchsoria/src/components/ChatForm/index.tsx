@@ -4,7 +4,6 @@ import { IChatFormProps } from '../../interfaces';
 import styles from './styles.module.scss';
 
 export default function ChatForm({ handleSubmit }: IChatFormProps) {
-  const [author, setAuthor] = useState('');
   const [message, setMessage] = useState('');
   let messageRef = useRef<Input | null>(null);
 
@@ -12,8 +11,8 @@ export default function ChatForm({ handleSubmit }: IChatFormProps) {
     e.preventDefault();
     messageRef.current?.focus();
 
-    if (author && message) {
-      handleSubmit(author, message);
+    if (message) {
+      handleSubmit(message);
       setMessage('');
     }
   };
@@ -21,7 +20,6 @@ export default function ChatForm({ handleSubmit }: IChatFormProps) {
   return (
     <form onSubmit={sendMessage} className={styles.chatForm}>
       <div className={styles.chatFormGroup}>
-        <Input placeholder="Your NickName" value={author} onChange={(e) => setAuthor(e.target.value)} />
         <Input
           placeholder="Your Message"
           value={message}

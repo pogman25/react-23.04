@@ -20,13 +20,13 @@ class MessageField extends React.PureComponent {
     }
 
     render () {
-        const { messages, uname } = this.props
+        const { messages, uname, sel } = this.props
         return (
             <div className="message-field">
                 <div className="message-container">
                     {!messages.length && <center><br />Нет сообщений для отображения. Напишите что-нибудь.</center>}
                     {messages.map((msg, index) => (
-                                <Message key={`id-${msg.id}`} data={{
+                                <Message key={`msg-${sel}-${msg.id}`} data={{
                                     ...msg, 
                                     showTimestamp: ((index === 0 || msg.timestamp-messages[index-1].timestamp > 1800000 ) ? true : false),
                                     isMine: (msg.author === uname)

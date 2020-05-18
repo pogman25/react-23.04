@@ -13,8 +13,8 @@
 }
 
 .message-author {
-  color: #fff;
-  font-size: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 10px;
 }
 
 .my-message {
@@ -23,7 +23,10 @@
   background-color: transparent;
 }
 
-.my-message .message-author,
 .my-message .message-text {
   color: #188ac7;
+}
+
+.my-message .message-author {
+  color: rgba(24, 138, 199, 0.5);
 }
