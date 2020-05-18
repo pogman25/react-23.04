@@ -47,8 +47,6 @@ export interface IMessageListProps {
   messages: IMessage[];
 }
 
-export interface IMessageProps extends IMessage {}
-
 export interface IChatFormProps {
   handleSubmit: (text: string, author?: string) => void;
 }

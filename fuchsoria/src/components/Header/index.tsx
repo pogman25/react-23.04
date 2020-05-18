@@ -3,7 +3,7 @@ import { Menu } from 'antd';
 import { useHistory } from 'react-router-dom';
 import styles from './styles.module.scss';
 
-type TypeSwitchPage = { key: string; keyPath?: Array<string>; item?: any; domEvent?: Event };
+type TypeSwitchPage = { key: string; keyPath?: Array<string>; item?: unknown; domEvent?: Event };
 
 export default function Header() {
   const history = useHistory();
