@@ -27,7 +27,7 @@ class MessageForm extends PureComponent {
     this.setState({ text: "" });
   };
 
-  onKeyUp = (e, msg) => {
+  onKeyUp = (e) => {
     if (e.keyCode === 13) {
       this.onSubmit(e);
     }
