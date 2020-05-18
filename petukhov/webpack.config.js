@@ -3,6 +3,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const path = require("path");
 
+
 module.exports = {
   entry: "./src/index.jsx",
   output: {
@@ -27,7 +28,20 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [
+            MiniCssExtractPlugin.loader,
+            {
+              loader: 'css-loader',
+              options: {
+                modules: {
+                  mode: 'local',
+                  exportGlobals: true,
+                  localIdentName: '[path][name]__[local]--[hash:base64:5]',
+                  context: path.resolve(__dirname, 'src'),
+                  hashPrefix: 'my-custom-hash',
+                },
+              },
+            }],
       },
     ],
   },
