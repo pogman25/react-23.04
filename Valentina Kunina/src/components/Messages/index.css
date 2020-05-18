@@ -1,10 +1,11 @@
 .list {
     display: flex;
     flex-direction: column;
+    justify-content: center;
 }
 
 .item {
-    max-width: 250px;
+    max-width: 20%;
 }
 
 .left {
