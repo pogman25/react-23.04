@@ -13,7 +13,7 @@ class RootRouter extends Component {
   componentDidMount() {
     const { setChats } = this.props;
     setTimeout(() => {
-      setChats(mockPageLinks);
+      // setChats(mockPageLinks);
     }, 1000);
   }
 

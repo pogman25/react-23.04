@@ -1,12 +1,12 @@
 import { handleActions } from 'redux-actions';
-import { setChats, addMessage } from '../../actions/chatsActions';
+import { setChats, addNewMessage } from '../../actions/chatsActions';
 
 const initialState = { chatsByIds: {}, chatsIds: [] };
 
 const reducer = handleActions(
   {
     [setChats]: (state, action) => action.payload,
-    [addMessage]: (state, { payload }) => ({
+    [addNewMessage]: (state, { payload }) => ({
       ...state,
       chatsByIds: {
         ...state.chatsByIds,
