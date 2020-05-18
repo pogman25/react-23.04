@@ -76,7 +76,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ChatList = props => {
-  console.log(props);
   const classes = useStyles();
   const history = useHistory();
 

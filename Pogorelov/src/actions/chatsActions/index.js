@@ -16,6 +16,16 @@ export const setChats = createAction('chats/SET_CHATS', data => {
   );
 });
 
-export const addMessage = createAction('chats/ADD_MESSAGE', data => {
-  return { ...data, id: uuidv4() };
-});
+export const addNewMessage = createAction('chats/ADD_MESSAGE');
+
+export const addMessage = data => (dispatch, getState) => {
+  const { author, chatId } = data;
+  if (author !== 'Bot') {
+    const { messagesIds } = getState().messages;
+    const lastId = messagesIds[messagesIds.length - 1];
+    setTimeout(() => {
+      dispatch(addNewMessage({ author: 'Bot', text: "I'm bot", chatId, id: lastId + 1 }));
+    }, 1000);
+  }
+  dispatch(addNewMessage({ ...data, id: uuidv4() }));
+};
