@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`<MessageList /> Component should render 1`] = `
+exports[`<MessageField /> Component should render 1`] = `
 <div>
   <div
     class="messageList"

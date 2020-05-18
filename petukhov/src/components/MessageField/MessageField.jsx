@@ -2,7 +2,7 @@ import React from "react";
 import MessageItem from "../MessageItem";
 import propTypes from "prop-types";
 
-const MessageList = (props) => {
+const MessageField = (props) => {
 
     const { messages } = props;
 
@@ -15,8 +15,8 @@ const MessageList = (props) => {
     return list;
 }
 
-MessageList.propTypes = {
+MessageField.propTypes = {
     messages: propTypes.array.isRequired,
 }
 
-export default  MessageList;
+export default  MessageField;
