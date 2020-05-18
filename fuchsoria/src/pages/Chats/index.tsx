@@ -8,7 +8,10 @@ import ChatForm from '../../components/ChatForm';
 import ChatList from '../../components/ChatList';
 import ChatListForm from '../../components/ChatListForm';
 import { addChat, addMessage } from '../../store/actions/chatsActions';
+import { selectChats, selectProfile } from '../../store/selectors';
 import styles from './styles.module.scss';
+import { State } from '../../store/reducers/reducerTypes';
+import { StateType } from 'typesafe-actions';
 
 class ChatsContainer extends Component<IChatContainerProps, IChatContainerState> {
   robotTimeouts: { [key: string]: number } = {};
@@ -117,10 +120,8 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
   }
 }
 
-const mapStateToProps = (store: { chats: IChats; profile: IProfileState }) => {
-  const { chats, profile } = store;
-
-  return { chats, profile };
+const mapStateToProps = (state: StateType<State>) => {
+  return { chats: selectChats(state), profile: selectProfile(state) };
 };
 
 const mapDispatchToProps = {
