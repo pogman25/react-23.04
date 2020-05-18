@@ -30,6 +30,7 @@ const FormMessage = (props) => {
         e.preventDefault();
         const { addNewMessage2 } = props;
         addNewMessage2({ text, author: "US" });
+        setMessage({ text: '' });
     }
 
     return (
