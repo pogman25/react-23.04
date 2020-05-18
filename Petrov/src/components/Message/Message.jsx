@@ -8,8 +8,9 @@ class Message extends React.PureComponent {
 
   
   render() {
-
+    console.log(this.props.words);
   return (
+    
     <Container maxWidth="sm" component="ul" display="flex" className={styles.list} style={{display: 'flex'}}>
     
       {this.props.words.map(({ id, message, author }, index) =>
