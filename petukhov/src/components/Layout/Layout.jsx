@@ -1,9 +1,10 @@
-import React, { useState, useEffect, memo } from "react";
+import React from "react";
 import propTypes from "prop-types";
+
 import Header from "../Header";
 import ChatList from "../ChatList";
-import FormMessage from "../FormMessage";
-import MessageField from "../MessageField";
+import Chat from "../../pages/Chat";
+
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 
@@ -23,29 +24,12 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const Layout = () => {
+const Layout = ({ children }) => {
 
     const classes = useStyles();
 
-
-
-    const [messages, setMessages] = useState([{text: 'Привет!', author: 'US'}, {text: 'Как дела!', author: 'US'}]);
-
-    useEffect(() => {
-        if(messages[messages.length-1].author !== "Bot") {
-            setTimeout(() => {
-                setMessages(prev => [...prev, { text: "Привет! Я бот.", author: "Bot" }]);
-            }, 1000)
-        }
-    })
-
-    const addNewMessage = (e) => {
-        const { author, text } = e;
-        setMessages(prev => [...prev, { text: text, author: author }]);
-    }
-
     return (
-        <div className={classes.root}>
+        <div>
             <Header />
             <Grid container spacing={0}>
                 <Grid item xs={2}>
@@ -53,10 +37,8 @@ const Layout = () => {
                 </Grid>
                 <Grid item xs>
                     <div className={classes.mainField}>
-                        <MessageField
-                            className={classes.mainMessageField}
-                            messages={messages}/>
-                        <FormMessage addNewMessage2={addNewMessage}/>
+                        {/*<Chat />*/}
+                        { children }
                     </div>
                 </Grid>
             </Grid>
@@ -64,12 +46,9 @@ const Layout = () => {
     );
 }
 
-Layout.defaultProps = {
-    userName: "Петухов"
-}
-
 Layout.propTypes = {
-    userName: propTypes.string
+    children: propTypes.node.isRequired,
 }
 
-export default memo(Layout);
+
+export default Layout;

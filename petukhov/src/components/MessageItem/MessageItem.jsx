@@ -3,7 +3,6 @@ import style from "../MessageField/MessageField.css";
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import { deepOrange, deepPurple } from '@material-ui/core/colors';
-import Paper from '@material-ui/core/Paper';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -15,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     userAns: {
         border: "1px solid rgba(0, 0, 0, 0.23)",
         padding: "20px",
-        alignSelf: "flex-start",
+        justifyContent: "flex-start",
         display: "flex",
         alignItems: "center",
         marginBottom: 20,
@@ -24,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
     botAns: {
         border: "1px solid rgba(0, 0, 0, 0.23)",
         padding: "20px",
-        alignSelf: "flex-end",
+        justifyContent: "flex-end",
         display: "flex",
         alignItems: "center",
         marginBottom: 20,
