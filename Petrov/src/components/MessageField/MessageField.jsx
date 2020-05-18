@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Message from "../Message";
 import FormMessage from "../FormMessage";
@@ -24,6 +25,16 @@ state = {
             {
                 id: 1,
                 message: 'привет, я бот из второго чата',
+              author: 'Бот',
+            },
+          ],
+        },
+        3: {
+          title: 'chats_3',
+          messages: [
+            {
+                id: 1,
+                message: 'привет, я бот из 3 чата',
               author: 'Бот',
             },
           ],
@@ -85,6 +96,7 @@ state = {
     };
 
   render() {
+    console.log(this.props.mess);
      const {
         match: { params },
       } = this.props;
@@ -102,4 +114,10 @@ MessageField.propTypes = {
     name: PropTypes.string,
     text: PropTypes.string,
   };
-export default MessageField;
+
+  const mapStateToProps = store => ({
+    messag: store.messages,
+  });
+  
+  export default connect(mapStateToProps)(MessageField);
+//export default MessageField;

@@ -1,24 +1,28 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import { List } from '@material-ui/core';
-import styles from './index.css';
+import { Container, List } from '@material-ui/core';
 import MessageItem from '../MessageItem';
 
 const listStyles = {
   border: '1px solid #333',
-  padding: 15,
-  borderRadius: 5,
+  borderRadius: 3,
   minHeight: 300,
 };
 
-const Messages = ({ messages }) => {
-  return (
-    <List component="ul" className={styles.list} style={listStyles}>
-      {messages.map(({ text, author }, index) => (
-        <MessageItem key={index} text={text} author={author} />
-      ))}
-    </List>
-  );
+class Messages extends PureComponent {
+  render() {
+    const { messages } = this.props;
+
+    return (
+      <Container maxWidth="md" style={listStyles}>
+        <List>
+          {messages.map(({ text, author }, index) => (
+            <MessageItem key={index} text={text} author={author} />
+          ))}
+        </List>
+      </Container>
+    );
+  }
 };
 
 Messages.propTypes = {

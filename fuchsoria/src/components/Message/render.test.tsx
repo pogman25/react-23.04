@@ -10,11 +10,11 @@ const mockData: IMessage = {
   authorAccess: 'user',
 };
 
-const mockDataBot: IMessage = {
+const mockDataSelf: IMessage = {
   id: 'w7i3hgf48trg4',
-  author: 'Robot',
-  text: 'Bot example message',
-  authorAccess: 'bot',
+  author: 'Self',
+  text: 'Self example message',
+  authorAccess: 'self',
 };
 
 const message = document.createElement('div');
@@ -27,17 +27,17 @@ describe('<Message />', () => {
         key={mockData.id}
         author={mockData.author}
         text={mockData.text}
-        isBot={mockData.authorAccess === 'bot'}
+        isSelf={mockData.authorAccess === 'self'}
       />,
       { container: document.body.appendChild(message) }
     );
 
     render(
       <Message
-        key={mockDataBot.id}
-        author={mockDataBot.author}
-        text={mockDataBot.text}
-        isBot={mockDataBot.authorAccess === 'bot'}
+        key={mockDataSelf.id}
+        author={mockDataSelf.author}
+        text={mockDataSelf.text}
+        isSelf={mockDataSelf.authorAccess === 'self'}
       />,
       { container: document.body.appendChild(messageBot) }
     );
@@ -48,12 +48,12 @@ describe('<Message />', () => {
   it('Check rendered user message', () => {
     expect(message.querySelector('.messageAuthor')?.textContent).toBe(mockData.author);
     expect(message.querySelector('.message')?.lastChild?.textContent).toBe(mockData.text);
-    expect(message.querySelector('.message')?.classList.contains('messageBot')).toBeFalsy();
+    expect(message.querySelector('.message')?.classList.contains('messageSelf')).toBeFalsy();
   });
 
-  it('Check rendered bot message', () => {
-    expect(messageBot.querySelector('.messageAuthor')?.textContent).toBe(mockDataBot.author);
-    expect(messageBot.querySelector('.message')?.lastChild?.textContent).toBe(mockDataBot.text);
-    expect(messageBot.querySelector('.message')?.classList.contains('messageBot')).toBeTruthy();
+  it('Check rendered self message', () => {
+    expect(messageBot.querySelector('.messageAuthor')?.textContent).toBe(mockDataSelf.author);
+    expect(messageBot.querySelector('.message')?.lastChild?.textContent).toBe(mockDataSelf.text);
+    expect(messageBot.querySelector('.message')?.classList.contains('messageSelf')).toBeTruthy();
   });
 });

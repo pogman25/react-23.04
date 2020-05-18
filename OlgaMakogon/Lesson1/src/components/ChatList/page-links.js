@@ -9,6 +9,11 @@ const pageLinks = {
       to: '/chats/2',
       title: 'Чат_2',
     },
+    3: {
+      id: 3,
+      to: '/chats/3',
+      title: 'Чат_3',
+    },
   };
   
   export default pageLinks;

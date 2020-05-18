@@ -1,7 +1,8 @@
 .message {
   padding: 10px 20px;
   margin-bottom: 10px;
-  text-align: right;
+  text-align: left;
+  align-self: flex-start;
   background-color: #ffff;
   border-radius: 10px;
   max-width: 400px;
@@ -10,9 +11,9 @@
     margin-bottom: 0;
   }
 
-  &_bot {
-    text-align: left;
-    align-self: flex-start;
+  &_self {
+    text-align: right;
+    align-self: flex-end;
   }
 
   &__author {
