@@ -1,52 +1,131 @@
-import React, { Component } from 'react';
-import { List } from '@material-ui/core';
+import React, { PureComponent } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import PropTypes from 'prop-types';
 
-const styles = {
-  list: {
-    flex: '1 1 30%',
-    textAlign: 'center',
-    border: '1px solid #333',
-    borderRadius: 5,
-    background: '#ddd',
-  },
-  item: {
-    padding: 5,
-  },
-  activeItem: {
-    fontSize: '1.1em',
-    fontWeight: 'bold',
-    textDecoration: 'underline',
-    padding: 10,
-    background: 'lightblue',
-    borderRadius: 5,
-    boxShadow: '0 0 2px #000',
-  },
-};
+import { withStyles } from '@material-ui/core/styles';
+import cx from 'classnames';
+import {
+  Drawer,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from '@material-ui/core';
+import ChatIcon from '@material-ui/icons/Chat';
+import HomeIcon from '@material-ui/icons/Home';
 
-class ChatList extends Component {
-  state = {
-    chats: [
-      { name: 'Чат с ботом' },
-      { name: 'GB_Education' },
-      { name: 'Мемасики' },
-      { name: 'Болтология' },
-      { name: 'Просто чат' },
-    ],
-  };
+const drawerWidth = 240;
+
+const muiStyles = theme => ({
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+  },
+
+  logo: {
+    marginRight: 'auto',
+    marginLeft: theme.spacing(1),
+  },
+
+  paper: {
+    color: theme.palette.text.primary,
+  },
+
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+
+  itemRoot: {
+    position: 'relative',
+    whiteSpace: 'pre-line',
+  },
+
+  link: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: theme.zIndex.appBar,
+  },
+
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    padding: theme.spacing(3, 2),
+  },
+
+  toolbarClose: {
+    justifyContent: 'flex-start',
+  },
+});
+
+class ChatList extends PureComponent {
 
   render() {
-    const { chats } = this.state;
+    const { chats, classes } = this.props;
 
     return (
-      <List component="ul" disablePadding={true} style={styles.list}>
-        {chats.map(({ name }, index) => (
-          <li style={index === 0 ? styles.activeItem : styles.item} key={index}>
-            <span>{name}</span>
-          </li>
-        ))}
-      </List>
+      <Drawer
+        variant="permanent"
+        className={cx(classes.drawer, classes.drawerOpen)}
+        classes={{
+          paper: cx(classes.paper, classes.drawerOpen),
+        }}
+      >
+        <div className={classes.toolbar}>
+          <Typography variant="body1">Список чатов</Typography>
+        </div>
+        <Link to="/" key="home-page">
+          <ListItem
+            classes={{
+              root: classes.itemRoot,
+            }}
+            button
+          >
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText>Home</ListItemText>
+          </ListItem>
+        </Link>
+        <List disablePadding>
+          {chats.map(({ title, to }) => (
+            <Link to={to} key={title}>
+              <ListItem
+                classes={{
+                  root: classes.itemRoot,
+                }}
+                button
+              >
+                <ListItemIcon>
+                  <ChatIcon />
+                </ListItemIcon>
+                <ListItemText>{title}</ListItemText>
+              </ListItem>
+            </Link>
+          ))}
+        </List>
+      </Drawer>
     );
   }
+};
+
+ChatList.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
-export default ChatList;
+const mapStateToProps = store => ({
+  chats: store.chats
+})
+
+export default compose(connect(mapStateToProps),withStyles(muiStyles))(ChatList);
