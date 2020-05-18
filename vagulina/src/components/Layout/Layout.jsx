@@ -1,20 +1,17 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
 import PropTypes from "prop-types";
 import MessageField from "../MessageField";
 import ChatList from "../ChatList";
 import Header from "../Header";
+import { addNewMessage } from "../../actions/messageActions";
 import css from "./index.css";
 
 class Layout extends React.Component {
   ROBOT_NAME = "Robot";
 
   state = {
-    chats: {
-      1: { title: "Chat1", messageList: [1, 2] },
-      2: { title: "Chat2", messageList: [] },
-      3: { title: "Chat3", messageList: [] },
-      4: { title: "Chat4", messageList: [] },
-    },
     messages: {
       1: { text: "Hello!", author: this.ROBOT_NAME },
       2: { text: "How do you do?", author: this.ROBOT_NAME },
@@ -41,14 +38,13 @@ class Layout extends React.Component {
         ...messages,
         [newMessageId]: { text: message.text, author: message.author },
       },
-      chats: {
-        ...chats,
-        [chatId]: {
-          ...chats[chatId],
-          messageList: [...chats[chatId]["messageList"], newMessageId],
-        },
-      },
     }));
+    this.props.addNewMessage(
+      newMessageId,
+      message.text,
+      message.author,
+      chatId
+    );
   };
 
   addChat = (title) => {
@@ -65,12 +61,11 @@ class Layout extends React.Component {
         <Header chatId={this.props.chatId} />
         <div className={css.canvas}>
           <div className="layout-left-side">
-            <ChatList chats={this.state.chats} addChat={this.addChat} />
+            <ChatList />
           </div>
           <div className="layout-right-side">
             <MessageField
               chatId={this.props.chatId}
-              chats={this.state.chats}
               messages={this.state.messages}
               addNewMessage={this.addNewMessage}
             />
@@ -83,10 +78,16 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   chatId: PropTypes.number,
+  addNewMessage: PropTypes.func.isRequired,
 };
 
 Layout.defaultProps = {
   chatId: 1,
 };
 
-export default Layout;
+const mapStateToProps = ({}) => ({});
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ addNewMessage }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Layout);

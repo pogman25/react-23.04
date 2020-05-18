@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
 import Message from "../Message";
 import MessageForm from "../MessageForm";
 import css from "./index.css";
@@ -38,4 +40,8 @@ MessageField.propTypes = {
   addNewMessage: PropTypes.func.isRequired,
 };
 
-export default MessageField;
+const mapStateToProps = ({ chatReducer }) => ({ chats: chatReducer.chats });
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessageField);

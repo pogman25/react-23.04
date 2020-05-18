@@ -1,10 +1,13 @@
 import React from "react";
+import { bindActionCreators } from "redux";
+import connect from "react-redux/es/connect/connect";
 import { Link } from "react-router-dom";
 import { List, ListItem } from "material-ui/List";
-import { TextField } from 'material-ui';
+import { TextField } from "material-ui";
 import Flag from "material-ui/svg-icons/content/flag";
 import AddIcon from "material-ui/svg-icons/content/add";
 import PropTypes from "prop-types";
+import { addChat } from "../../actions/chatActions";
 
 class ChatList extends React.Component {
   state = { newChatTitle: "" };
@@ -24,7 +27,7 @@ class ChatList extends React.Component {
     if (e.keyCode === 13) {
       this.handleAddChat();
     }
-  }
+  };
 
   render() {
     const { chats, addChat } = this.props;
@@ -66,4 +69,9 @@ ChatList.propTypes = {
   addChat: PropTypes.func.isRequired,
 };
 
-export default ChatList;
+const mapStateToProps = ({ chatReducer }) => ({ chats: chatReducer.chats });
+
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators({ addChat }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatList);
