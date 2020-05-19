@@ -1,8 +1,11 @@
-import { IChats, IProfileState } from './../../interfaces';
+import { IChats, IProfileState, IMessage } from './../../interfaces';
 
 export type State = {
   chats: IChats;
   profile: IProfileState;
+  chatlist: {
+    blinkingIds: string[];
+  };
 };
 
 export type Action<P> = {
@@ -16,4 +19,14 @@ export type ProfileState = {
 
 export type SetNickNamePayload = {
   nickName: string;
+};
+
+export type AddMessagePayload = {
+  message: IMessage;
+  chatId: string;
+};
+
+export type AddChatPayload = {
+  chatName: string;
+  chatId: string;
 };

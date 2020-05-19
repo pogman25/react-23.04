@@ -14,7 +14,6 @@ import { State } from '../../store/reducers/reducerTypes';
 import { StateType } from 'typesafe-actions';
 
 class ChatsContainer extends Component<IChatContainerProps, IChatContainerState> {
-  robotTimeouts: { [key: string]: number } = {};
   state = {
     chatList: [{ id: '', title: 'Loading', description: 'Loading' }],
   };
@@ -60,33 +59,13 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
       text,
       date: new Date().getTime(),
     };
-    const robotAnswer = () => {
-      if (authorAccess === 'user') {
-        this.sendRobotMessage(message.author);
-      }
-    };
 
-    this.props.addMessage(message, chatId, robotAnswer);
+    this.props.addMessage(message, chatId);
   };
 
   addNewChat = (chatName: string) => {
     this.props.addChat(chatName, uuid().split('-')[0]);
   };
-
-  sendRobotMessage(author: string) {
-    const cachedChatId = this.chatId;
-    const prevMessage = this.messages[this.messages.length - 2];
-    const lastMessage = this.messages[this.messages.length - 1];
-
-    if (prevMessage?.author === lastMessage?.author) {
-      clearTimeout(this.robotTimeouts[this.chatId]);
-    }
-
-    this.robotTimeouts[cachedChatId] = window.setTimeout(
-      () => this.addNewMessage(`Hi ${author}, i am your personal assistant`, 'Robot', 'bot', cachedChatId),
-      3000
-    );
-  }
 
   componentDidUpdate(prevProps: IChatContainerProps) {
     if (JSON.stringify(prevProps.chats) !== JSON.stringify(this.props.chats)) {
