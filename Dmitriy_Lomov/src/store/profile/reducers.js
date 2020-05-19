@@ -1,11 +1,11 @@
+import { handleAction } from 'redux-actions';
+
 const initialState = {
-    name: 'Dmitriy',
-    lastName: 'Lomov',
+  name: 'Dmitriy',
+  lastName: 'Lomov',
 };
 
-export const profileReducer = (state = initialState, action) => {
-    switch (action.type) {
-        default:
-            return state;
-    }
-}
+const profileReducer = handleAction('', store => store, initialState);
+
+export default profileReducer;
+

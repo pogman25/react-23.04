@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { getAllChats } from '../../store/chats/selectors';
 import PropTypes from 'prop-types';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -70,7 +71,6 @@ const muiStyles = theme => ({
 });
 
 class ChatList extends PureComponent {
-
   render() {
     const { chats, classes } = this.props;
 
@@ -118,14 +118,14 @@ class ChatList extends PureComponent {
       </Drawer>
     );
   }
-};
-
-ChatList.propTypes = {
-  classes: PropTypes.object.isRequired
 }
 
-const mapStateToProps = store => ({
-  chats: store.chats
-})
+ChatList.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-export default compose(connect(mapStateToProps),withStyles(muiStyles))(ChatList);
+const mapStateToProps = store => ({
+  chats: getAllChats(store),
+});
+
+export default compose(connect(mapStateToProps), withStyles(muiStyles))(ChatList);
