@@ -23,12 +23,6 @@ const muiStyles = theme => {
 };
 
 class Chats extends Component {
-  timer;
-
-  checkInputChange = boolean => {
-    if (boolean) clearTimeout(this.timer);
-  };
-
   addNewMessage = data => {
     const {
       addMessage,
@@ -41,14 +35,11 @@ class Chats extends Component {
 
   render() {
     const { messages } = this.props;
-    
+
     return (
       <Box p={3} mt={2} flexGrow={1}>
         <Messages messages={messages} />
-        <FormMessage
-          addNewMessage={this.addNewMessage}
-          checkInputChange={this.checkInputChange}
-        />
+        <FormMessage addNewMessage={this.addNewMessage} />
       </Box>
     );
   }

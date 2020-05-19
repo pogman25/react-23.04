@@ -10,16 +10,9 @@ class FormMessage extends Component {
     author: '',
   };
 
-  checkChange = () => {
-    const { checkInputChange } = this.props;
-
-    if (this.onChange) checkInputChange(true);
-  };
-
   onChange = event => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
-    this.checkChange();
   };
 
   sendMessage = () => {
