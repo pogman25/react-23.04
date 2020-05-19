@@ -10,12 +10,6 @@ exports[`<ChatForm /> Component should render 1`] = `
     >
       <input
         class="ant-input"
-        placeholder="Your NickName"
-        type="text"
-        value=""
-      />
-      <input
-        class="ant-input"
         placeholder="Your Message"
         type="text"
         value=""

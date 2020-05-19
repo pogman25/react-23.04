@@ -64,4 +64,5 @@ module.exports = {
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
   ],
+  devtool: 'cheap-inline-module-source-map',
 };

@@ -36,6 +36,9 @@ module.exports = {
     contentBase: path.join(__dirname, "build"),
     compress: true,
     port: 9000,
+    historyApiFallback: {
+        index: 'index.html'
+    },
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -43,4 +46,5 @@ module.exports = {
       template: 'src/index.html'
     }),
   ],
+  devtool: 'cheap-inline-module-source-map',
 };
