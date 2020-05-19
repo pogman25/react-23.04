@@ -24,20 +24,24 @@ describe('<Message />', () => {
   it('Component should render', async () => {
     render(
       <Message
+        id={mockData.id}
         key={mockData.id}
         author={mockData.author}
         text={mockData.text}
         isSelf={mockData.authorAccess === 'self'}
+        handleDelete={jest.fn()}
       />,
       { container: document.body.appendChild(message) }
     );
 
     render(
       <Message
+        id={mockData.id}
         key={mockDataSelf.id}
         author={mockDataSelf.author}
         text={mockDataSelf.text}
         isSelf={mockDataSelf.authorAccess === 'self'}
+        handleDelete={jest.fn()}
       />,
       { container: document.body.appendChild(messageBot) }
     );

@@ -1,7 +1,7 @@
 import { createReducer } from 'typesafe-actions';
 import { IChats } from './../../interfaces';
-import { setChats, getChats, addChat, addMessage } from './../actions/chatsActions';
-import { Action, AddChatPayload, AddMessagePayload } from './reducerTypes';
+import { setChats, getChats, addChat, addMessage, deleteChat, deleteMessage } from './../actions/chatsActions';
+import { Action, AddChatPayload, AddMessagePayload, DeleteChatPayload, DeleteMessagePayload } from './reducerTypes';
 
 const initialState = {};
 
@@ -31,6 +31,27 @@ export default createReducer<IChats>(initialState, {
       [chatId]: {
         ...state[chatId],
         messages: [...state[chatId].messages, message],
+      },
+    };
+  },
+  [deleteChat.toString()]: (state, action: Action<DeleteChatPayload>) => {
+    const { chatId } = action.payload;
+    const copy = JSON.parse(JSON.stringify(state));
+    delete copy[chatId];
+
+    return {
+      ...copy,
+    };
+  },
+  [deleteMessage.toString()]: (state, action: Action<DeleteMessagePayload>) => {
+    const { messageId, chatId } = action.payload;
+    const filteredMessages = state[chatId].messages.filter((message) => message.id !== messageId);
+
+    return {
+      ...state,
+      [chatId]: {
+        ...state[chatId],
+        messages: [...filteredMessages],
       },
     };
   },

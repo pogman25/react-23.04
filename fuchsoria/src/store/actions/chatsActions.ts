@@ -7,4 +7,8 @@ export const addChat = createAction('ADD_CHAT', (chatName: string, chatId: strin
 export const addMessage = createAction('ADD_MESSAGE', (message: IMessage, chatId: string) => {
   return { message, chatId };
 })();
-
+export const deleteChat = createAction('DELETE_CHAT', (chatId: string) => ({ chatId }))();
+export const deleteMessage = createAction('DELETE_MESSAGE', (messageId: string, chatId: string) => ({
+  messageId,
+  chatId,
+}))();

@@ -90,7 +90,7 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
         </div>
         {this.state.chatList.length > 0 && (
           <div className={styles.chatContent}>
-            <MessageList messages={this.messages} />
+            <MessageList messages={this.messages} chatId={this.chatId} />
             <ChatForm handleSubmit={this.addNewMessage} />
           </div>
         )}
