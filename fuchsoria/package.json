@@ -44,7 +44,7 @@
     "mini-css-extract-plugin": "0.9.0",
     "node-sass": "4.14.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
-    "redux-devtools-extension": "^2.13.8",
+    "redux-devtools-extension": "2.13.8",
     "sass-loader": "8.0.2",
     "style-loader": "1.1.4",
     "terser-webpack-plugin": "2.3.6",
@@ -67,8 +67,8 @@
     "react-redux": "7.2.0",
     "react-router-dom": "5.2.0",
     "redux": "4.0.5",
-    "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0",
+    "redux-persist": "6.0.0",
+    "redux-thunk": "2.3.0",
     "typesafe-actions": "5.1.0",
     "uuid": "7.0.3"
   }
