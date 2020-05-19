@@ -30,3 +30,12 @@ export type AddChatPayload = {
   chatName: string;
   chatId: string;
 };
+
+export type DeleteChatPayload = {
+  chatId: string;
+};
+
+export type DeleteMessagePayload = {
+  messageId: string;
+  chatId: string;
+};

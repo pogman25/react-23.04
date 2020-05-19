@@ -1,16 +1,28 @@
 import React from 'react';
 import { List, Avatar } from 'antd';
 import { useHistory } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { connect, useStore } from 'react-redux';
 import { IChatListProps } from '../../interfaces';
-import styles from './styles.module.scss';
 import { State } from '../../store/reducers/reducerTypes';
+import { deleteChat } from '../../store/actions/chatsActions';
+import styles from './styles.module.scss';
 
 function ChatList({ items, blinkingIds }: IChatListProps) {
   const history = useHistory();
+  const store = useStore();
 
-  const switchChat = (chatId: string) => (): void => {
+  const switchChat = (chatId: string) => () => {
     history.push(`/chats/${chatId}`);
+  };
+
+  const handleDelete = (chatId: string) => () => {
+    const isConfirmed = confirm('Remove chat?');
+
+    if (isConfirmed) {
+      store.dispatch(deleteChat(chatId));
+
+      setTimeout(() => history.push('/chats/'), 300);
+    }
   };
 
   return (
@@ -19,7 +31,11 @@ function ChatList({ items, blinkingIds }: IChatListProps) {
       itemLayout="horizontal"
       dataSource={items}
       renderItem={(item) => (
-        <List.Item className={styles.chatListItem} onClick={switchChat(String(item.id))}>
+        <List.Item
+          className={styles.chatListItem}
+          onClick={switchChat(String(item.id))}
+          onDoubleClick={handleDelete(String(item.id))}
+        >
           <List.Item.Meta
             avatar={<Avatar src="https://source.unsplash.com/random/300x300" />}
             title={item.title}
