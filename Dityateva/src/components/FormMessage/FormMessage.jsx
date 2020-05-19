@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
-import Input from '@material-ui/core/Input';
+import { TextField, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import styles from './index.css';
 
@@ -42,7 +41,11 @@ class FormMessage extends Component {
 
     return (
       <form className={styles.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
-        <Input 
+        <TextField
+          id="standard-multiline-flexible"
+          //label="Текст сообщения"
+          //multiline
+          rowsMax={4}
           placeholder="Напишите сообщение..." 
           inputProps={{ 'aria-label': 'description' }} 
           name="text"
@@ -52,14 +55,9 @@ class FormMessage extends Component {
           className={styles.input}
           autoFocus
         />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          endIcon={<SendIcon />}
-        >
-          Send 
-        </Button>
+        <IconButton type="submit" color="primary">
+          <SendIcon />
+        </IconButton>
       </form>
     );
   }
