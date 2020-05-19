@@ -2,9 +2,6 @@ import React, {Component} from "react";
 import Header from "../Header/Header";
 import ChatList from "../ChatList/ChatList";
 import {withStyles} from "@material-ui/core/styles";
-import MessageForm from "../MessageForm/MessageForm";
-import FirstMessage from "../Chat/Chat";
-import Chat from "../Chat/Chat";
 
 const muiStyles = theme => {
     console.log(theme);
@@ -19,14 +16,14 @@ const muiStyles = theme => {
 class Layout extends Component{
 
     render() {
-        const {classes} = this.props;
+        const {classes, children} = this.props;
         return(
             <>
-                <Header />
+                <Header/>
                 <main className={classes.root}>
-                    <ChatList />
-                    {/*{children}*/}
-                    <Chat name="Ready"/>
+                    <ChatList/>
+                    {children}
+                    {/*<Chat name="Ready"/>*/}
                 </main>
             </>
         )
