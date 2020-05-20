@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { getAllChats } from '../../store/chats/selectors';
+import { getAllChats, getMessagesById } from '../../store/chats/selectors';
 import PropTypes from 'prop-types';
 
 import styles from './index.css';
@@ -73,8 +73,7 @@ const muiStyles = theme => ({
 
 class ChatList extends PureComponent {
   render() {
-    const { chats, classes } = this.props;
-
+    const { chats, classes, messages } = this.props;
     return (
       <Drawer
         variant="permanent"
@@ -100,9 +99,10 @@ class ChatList extends PureComponent {
           </ListItem>
         </Link>
         <List disablePadding>
-          {chats.map(({ title, to }) => (
+          {chats.map(({ title, to, notification }) => (
             <Link to={to} key={title}>
               <ListItem
+                className={notification ? styles.highlighter : ''}
                 classes={{
                   root: classes.itemRoot,
                 }}
@@ -127,6 +127,7 @@ ChatList.propTypes = {
 
 const mapStateToProps = store => ({
   chats: getAllChats(store),
+  messages: getMessagesById(store),
 });
 
 export default compose(connect(mapStateToProps), withStyles(muiStyles))(ChatList);

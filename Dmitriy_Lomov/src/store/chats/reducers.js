@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { setChats, addNewMessage } from './actions';
+import { setChats, addNewMessage, handleNotification } from './actions';
 
 const initialState = { chatsByIds: {}, chatsIds: [] };
 
@@ -13,6 +13,16 @@ const chatsReducer = handleActions(
         [payload.chatId]: {
           ...state.chatsByIds[payload.chatId],
           messages: [...state.chatsByIds[payload.chatId].messages, payload.id],
+        },
+      },
+    }),
+    [handleNotification]: (state, { payload }) => ({
+      ...state,
+      chatsByIds: {
+        ...state.chatsByIds,
+        [payload.chatId]: {
+          ...state.chatsByIds[payload.chatId],
+          notification: payload.notification,
         },
       },
     }),

@@ -34,3 +34,12 @@ export const addMessage = data => dispatch => {
   }
   dispatch(addNewMessage({ ...data, id: uuidv4() }));
 };
+
+export const handleNotification = createAction('chats/HANDLE_NOTIFICATION');
+
+export const putNotification = data => dispatch => {
+  dispatch(handleNotification({ ...data, notification: true }));
+  setTimeout(() => {
+    dispatch(handleNotification({ ...data, notification: false }));
+  }, 1000);
+};
