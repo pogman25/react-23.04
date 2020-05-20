@@ -5,6 +5,7 @@ import { compose } from 'redux';
 import { getAllChats } from '../../store/chats/selectors';
 import PropTypes from 'prop-types';
 
+import styles from './index.css';
 import { withStyles } from '@material-ui/core/styles';
 import cx from 'classnames';
 import {

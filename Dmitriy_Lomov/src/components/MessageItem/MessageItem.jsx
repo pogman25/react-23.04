@@ -14,7 +14,7 @@ const muiStyles = theme => {
       boxShadow: theme.shadows[5],
       color: '#fff',
       padding: theme.spacing(1, 2),
-      textShadow: '1px 1px 4px #444'
+      textShadow: '0 1px 2px #000'
     },
     left: {
       justifyContent: 'flex-start',
@@ -26,7 +26,7 @@ const muiStyles = theme => {
       backgroundColor: theme.palette.info.light,
     },
     rightBg: {
-      backgroundColor: theme.palette.success.light,
+      backgroundColor: '#bbb',
     }
   };
 };
@@ -52,7 +52,7 @@ class MessageItem extends PureComponent {
           })}
         >
           {text}
-          <Typography variant="caption" display="block" color="textSecondary">
+          <Typography variant="caption" display="block" color="textPrimary">
             {author}
           </Typography>
         </Typography>

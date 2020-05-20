@@ -47,6 +47,7 @@ class FormMessage extends Component {
           name="author"
           onChange={this.onChange}
           value={author}
+          required
         />
         <TextField
           id="standard-multiline-flexible"
@@ -57,6 +58,7 @@ class FormMessage extends Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           value={text}
+          required
         />
         <IconButton type="submit" color="primary">
           <SendIcon />
