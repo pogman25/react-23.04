@@ -159,17 +159,38 @@
 /*!*******************************************!*\
   !*** ./src/actions/chatsActions/index.js ***!
   \*******************************************/
-/*! exports provided: setChats, updateChats */
+/*! exports provided: setChats, addMessage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setChats", function() { return setChats; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "updateChats", function() { return updateChats; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMessage", function() { return addMessage; });
 /* harmony import */ var redux_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-actions */ "./node_modules/redux-actions/es/index.js");
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/index.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
-var setChats = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["createAction"])('chats/SET_CHATS');
-var updateChats = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["createAction"])('chats/UPDATE_CHATS');
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var setChats = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["createAction"])('chats/SET_CHATS', function (data) {
+  return data.reduce(function (all, item) {
+    all.chatsByIds[item.id] = item;
+    all.chatsIds.push(item.id);
+    return all;
+  }, {
+    chatsByIds: {},
+    chatsIds: []
+  });
+});
+var addMessage = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["createAction"])('chats/ADD_MESSAGE', function (data) {
+  return _objectSpread({}, data, {
+    id: Object(uuid__WEBPACK_IMPORTED_MODULE_1__["v4"])()
+  });
+});
 
 /***/ }),
 
@@ -199,7 +220,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _material_ui_icons_ExitToApp__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @material-ui/icons/ExitToApp */ "./node_modules/@material-ui/icons/ExitToApp.js");
 /* harmony import */ var _material_ui_icons_ExitToApp__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_material_ui_icons_ExitToApp__WEBPACK_IMPORTED_MODULE_9__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var _page_links__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./page-links */ "./src/components/ChatList/page-links.js");
+/* harmony import */ var _selectors_chatsSelectors__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../../selectors/chatsSelectors */ "./src/selectors/chatsSelectors.js");
 
 
 
@@ -334,41 +355,11 @@ var ChatList = function ChatList(props) {
 
 var mapStateToProps = function mapStateToProps(store) {
   return {
-    chats: store.chats
+    chats: Object(_selectors_chatsSelectors__WEBPACK_IMPORTED_MODULE_11__["getAllChats"])(store)
   };
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_1__["compose"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps), react__WEBPACK_IMPORTED_MODULE_0__["memo"])(ChatList));
-
-/***/ }),
-
-/***/ "./src/components/ChatList/page-links.js":
-/*!***********************************************!*\
-  !*** ./src/components/ChatList/page-links.js ***!
-  \***********************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var pageLinks = {
-  1: {
-    id: 1,
-    to: '/chats/1',
-    title: 'Чат_1'
-  },
-  2: {
-    id: 2,
-    to: '/chats/2',
-    title: 'Чат_2'
-  },
-  3: {
-    id: 3,
-    to: '/chats/3',
-    title: 'Чат_3'
-  }
-};
-/* harmony default export */ __webpack_exports__["default"] = (pageLinks);
 
 /***/ }),
 
@@ -906,23 +897,15 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
-/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
-/* harmony import */ var _components_FormMessage__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../components/FormMessage */ "./src/components/FormMessage/index.js");
-/* harmony import */ var _components_Messages_Messages__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../components/Messages/Messages */ "./src/components/Messages/Messages.jsx");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
+/* harmony import */ var _material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @material-ui/core/styles */ "./node_modules/@material-ui/core/esm/styles/index.js");
+/* harmony import */ var _material_ui_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @material-ui/core */ "./node_modules/@material-ui/core/esm/index.js");
+/* harmony import */ var _components_FormMessage__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../components/FormMessage */ "./src/components/FormMessage/index.js");
+/* harmony import */ var _components_Messages_Messages__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../components/Messages/Messages */ "./src/components/Messages/Messages.jsx");
+/* harmony import */ var _selectors_chatsSelectors__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../selectors/chatsSelectors */ "./src/selectors/chatsSelectors.js");
+/* harmony import */ var _actions_chatsActions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../actions/chatsActions */ "./src/actions/chatsActions/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -949,6 +932,10 @@ function _isNativeReflectConstruct() { if (typeof Reflect === "undefined" || !Re
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+
 
 
 
@@ -983,114 +970,116 @@ var Chats = /*#__PURE__*/function (_Component) {
 
     _this = _super.call.apply(_super, [this].concat(args));
 
-    _defineProperty(_assertThisInitialized(_this), "state", {
-      chats: {
-        1: {
-          title: 'chats_1',
-          messages: [{
-            text: 'привет, я бот из 1 чата',
-            author: 'Bot'
-          }]
-        },
-        2: {
-          title: 'chats_1',
-          messages: [{
-            text: 'привет, я бот из второго чата',
-            author: 'Bot'
-          }]
-        },
-        3: {
-          title: 'chats_1',
-          messages: [{
-            text: 'привет, я бот из второго чата',
-            author: 'Bot'
-          }]
-        }
-      },
-      messages: [{
-        text: 'привет, я бОТ',
-        author: 'Bot'
-      }, {
-        text: 'привет, я Человек',
-        author: 'Pog'
-      }]
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "timer", void 0);
-
     _defineProperty(_assertThisInitialized(_this), "addNewMessage", function (data) {
-      var params = _this.props.match.params;
+      var _this$props = _this.props,
+          addMessage = _this$props.addMessage,
+          params = _this$props.match.params;
       var chatId = params.chatId;
-
-      _this.setState(function (_ref) {
-        var chats = _ref.chats;
-        return {
-          chats: _objectSpread({}, chats, _defineProperty({}, chatId, _objectSpread({}, chats[chatId], {
-            messages: [].concat(_toConsumableArray(chats[chatId].messages), [data])
-          })))
-        };
-      });
+      addMessage(_objectSpread({}, data, {
+        chatId: chatId
+      }));
     });
 
     return _this;
   }
 
   _createClass(Chats, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(prevProps, prevState) {
-      var _this2 = this;
+    key: "componentDidMount",
+    value: function componentDidMount() {} // state = {
+    //   chats: {
+    //     1: {
+    //       title: 'chats_1',
+    //       messages: [
+    //         {
+    //           text: 'привет, я бот из 1 чата',
+    //           author: 'Bot',
+    //         },
+    //       ],
+    //     },
+    //     2: {
+    //       title: 'chats_1',
+    //       messages: [
+    //         {
+    //           text: 'привет, я бот из второго чата',
+    //           author: 'Bot',
+    //         },
+    //       ],
+    //     },
+    //   },
+    //   messages: [
+    //     { text: 'привет, я бОТ', author: 'Bot' },
+    //     { text: 'привет, я Человек', author: 'Pog' },
+    //   ],
+    // };
+    // timer;
+    // componentDidUpdate(prevProps, prevState) {
+    //   const {
+    //     match: { params },
+    //   } = this.props;
+    //   const { chatId } = params;
+    //   const { chats } = this.state;
+    //   const messages = chats[chatId].messages;
+    //   clearTimeout(this.timer);
+    //   if (prevState.chats[chatId].messages.length !== messages.length) {
+    //     if (messages[messages.length - 1].author !== 'Bot') {
+    //       this.timer = setTimeout(() => {
+    //         this.setState(({ chats }) => ({
+    //           chats: {
+    //             ...chats,
+    //             [chatId]: {
+    //               ...chats[chatId],
+    //               messages: [
+    //                 ...chats[chatId].messages,
+    //                 { text: 'привет, я БОТ, ответ на сообщение', author: 'Bot' },
+    //               ],
+    //             },
+    //           },
+    //         }));
+    //       }, 1000);
+    //     }
+    //   }
+    // }
+    // get messages() {
+    //   const { chats } = this.state;
+    //   const {
+    //     match: { params },
+    //   } = this.props;
+    //   const { chatId } = params;
+    //   return chats[chatId].messages;
+    // }
 
-      var params = this.props.match.params;
-      var chatId = params.chatId;
-      var chats = this.state.chats;
-      var messages = chats[chatId].messages;
-      clearTimeout(this.timer);
-
-      if (prevState.chats[chatId].messages.length !== messages.length) {
-        if (messages[messages.length - 1].author !== 'Bot') {
-          this.timer = setTimeout(function () {
-            _this2.setState(function (_ref2) {
-              var chats = _ref2.chats;
-              return {
-                chats: _objectSpread({}, chats, _defineProperty({}, chatId, _objectSpread({}, chats[chatId], {
-                  messages: [].concat(_toConsumableArray(chats[chatId].messages), [{
-                    text: 'привет, я БОТ, ответ на сообщение',
-                    author: 'Bot'
-                  }])
-                })))
-              };
-            });
-          }, 1000);
-        }
-      }
-    }
   }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_2__["Box"], {
+      var messages = this.props.messages;
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core__WEBPACK_IMPORTED_MODULE_4__["Box"], {
         p: 3,
         mt: 2,
         flexGrow: 1
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Messages_Messages__WEBPACK_IMPORTED_MODULE_4__["default"], {
-        messages: this.messages
-      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_FormMessage__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_Messages_Messages__WEBPACK_IMPORTED_MODULE_6__["default"], {
+        messages: messages
+      }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components_FormMessage__WEBPACK_IMPORTED_MODULE_5__["default"], {
         addNewMessage: this.addNewMessage
       }));
-    }
-  }, {
-    key: "messages",
-    get: function get() {
-      var chats = this.state.chats;
-      var params = this.props.match.params;
-      var chatId = params.chatId;
-      return chats[chatId].messages;
     }
   }]);
 
   return Chats;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_1__["withStyles"])(muiStyles)(Chats));
+var mapStateToProps = function mapStateToProps(store, ownProps) {
+  return {
+    messages: Object(_selectors_chatsSelectors__WEBPACK_IMPORTED_MODULE_7__["getChatMessages"])(store, ownProps)
+  };
+};
+
+var mapDispatchToProps = {
+  addMessage: _actions_chatsActions__WEBPACK_IMPORTED_MODULE_8__["addMessage"]
+};
+Chats.defaultProps = {
+  messages: []
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_1__["compose"])(Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps), Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__["withStyles"])(muiStyles))(Chats));
 
 /***/ }),
 
@@ -1317,15 +1306,18 @@ __webpack_require__.r(__webpack_exports__);
 var mockPageLinks = [{
   id: 1,
   to: '/chats/1',
-  title: 'Чат_1'
+  title: 'Чат_1',
+  messages: [1]
 }, {
   id: 2,
   to: '/chats/2',
-  title: 'Чат_2'
+  title: 'Чат_2',
+  messages: [2]
 }, {
   id: 3,
   to: '/chats/3',
-  title: 'Чат_3'
+  title: 'Чат_3',
+  messages: []
 }];
 /* harmony default export */ __webpack_exports__["default"] = (mockPageLinks);
 
@@ -1344,15 +1336,39 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/chatsActions */ "./src/actions/chatsActions/index.js");
 var _handleActions;
 
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 
 
-var initialState = [];
+var initialState = {
+  chatsByIds: {},
+  chatsIds: []
+};
 var reducer = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["handleActions"])((_handleActions = {}, _defineProperty(_handleActions, _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__["setChats"], function (state, action) {
   return action.payload;
-}), _defineProperty(_handleActions, _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__["updateChats"], function (state) {
-  return state;
+}), _defineProperty(_handleActions, _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__["addMessage"], function (state, _ref) {
+  var payload = _ref.payload;
+  return _objectSpread({}, state, {
+    chatsByIds: _objectSpread({}, state.chatsByIds, _defineProperty({}, payload.chatId, _objectSpread({}, state.chatsByIds[payload.chatId], {
+      messages: [].concat(_toConsumableArray(state.chatsByIds[payload.chatId].messages), [payload.id])
+    })))
+  });
 }), _handleActions), initialState);
 /* harmony default export */ __webpack_exports__["default"] = (reducer);
 
@@ -1370,14 +1386,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _chatsReducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./chatsReducer */ "./src/reducers/chatsReducer/index.js");
 /* harmony import */ var _profileReducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./profileReducer */ "./src/reducers/profileReducer/index.js");
+/* harmony import */ var _messages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./messages */ "./src/reducers/messages/index.js");
+
 
 
 
 var rootReducer = Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
   chats: _chatsReducer__WEBPACK_IMPORTED_MODULE_1__["default"],
-  profile: _profileReducer__WEBPACK_IMPORTED_MODULE_2__["default"]
+  profile: _profileReducer__WEBPACK_IMPORTED_MODULE_2__["default"],
+  messages: _messages__WEBPACK_IMPORTED_MODULE_3__["default"]
 });
 /* harmony default export */ __webpack_exports__["default"] = (rootReducer);
+
+/***/ }),
+
+/***/ "./src/reducers/messages/index.js":
+/*!****************************************!*\
+  !*** ./src/reducers/messages/index.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var redux_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-actions */ "./node_modules/redux-actions/es/index.js");
+/* harmony import */ var _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../actions/chatsActions */ "./src/actions/chatsActions/index.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(n); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
+
+var initialReducer = {
+  messagesByIds: {
+    1: {
+      id: 1,
+      text: 'привет, я бот из 1 чата',
+      author: 'Bot'
+    },
+    2: {
+      id: 2,
+      text: 'привет, я бот из 2 чата',
+      author: 'Bot'
+    }
+  },
+  messagesIds: [1, 2]
+};
+var reducer = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["handleActions"])(_defineProperty({}, _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__["addMessage"], function (state, _ref) {
+  var payload = _ref.payload;
+  return {
+    messagesByIds: _objectSpread({}, state.messagesByIds, _defineProperty({}, payload.id, payload)),
+    messagesIds: [].concat(_toConsumableArray(state.messagesIds), [payload.id])
+  };
+}), initialReducer);
+/* harmony default export */ __webpack_exports__["default"] = (reducer);
 
 /***/ }),
 
@@ -1403,6 +1479,52 @@ var reducer = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["handleAction"])
 /* harmony default export */ __webpack_exports__["default"] = (reducer);
 var getProfileFromStore = function getProfileFromStore(store) {
   return store.profile;
+};
+
+/***/ }),
+
+/***/ "./src/selectors/chatsSelectors.js":
+/*!*****************************************!*\
+  !*** ./src/selectors/chatsSelectors.js ***!
+  \*****************************************/
+/*! exports provided: getChatsByIds, getChatsIds, getAllChats, getMessagesById, getChatMessages */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatsByIds", function() { return getChatsByIds; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatsIds", function() { return getChatsIds; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getAllChats", function() { return getAllChats; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getMessagesById", function() { return getMessagesById; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getChatMessages", function() { return getChatMessages; });
+/* harmony import */ var reselect__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! reselect */ "./node_modules/reselect/es/index.js");
+
+var getChatsByIds = function getChatsByIds(store) {
+  return store.chats.chatsByIds;
+};
+var getChatsIds = function getChatsIds(store) {
+  return store.chats.chatsIds;
+};
+var getAllChats = Object(reselect__WEBPACK_IMPORTED_MODULE_0__["createSelector"])(getChatsByIds, getChatsIds, function (byIds, ids) {
+  return ids.map(function (key) {
+    return byIds[key];
+  });
+});
+var getMessagesById = function getMessagesById(store) {
+  return store.messages.messagesByIds;
+};
+var getChatMessages = function getChatMessages(store, ownProps) {
+  var chatsByIds = getChatsByIds(store);
+  var messagesByIds = getMessagesById(store);
+  var chatId = ownProps.match.params.chatId;
+
+  if (chatId in chatsByIds) {
+    return chatsByIds[chatId].messages.map(function (id) {
+      return messagesByIds[id];
+    });
+  }
+
+  return [];
 };
 
 /***/ }),
