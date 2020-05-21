@@ -2,7 +2,10 @@ import { handleActions } from 'redux-actions';
 import update from 'immutability-helper';
 import { setChats, updateChats } from '../../actions/chatsActions';
 
-const initialStore = [];
+const initialStore = {
+    chatsByIds: {},
+    chatsIds: []
+};
 
 const reducer = handleActions({
     [setChats]: (state, action) => action.payload,

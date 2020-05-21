@@ -11,6 +11,7 @@ import {
     Toolbar,
 } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
+import { getAllChats } from '../../selectors/chatSelectors'
 import styles from './ChatList.css';
 
 class ChatList extends Component {
@@ -43,7 +44,7 @@ class ChatList extends Component {
 // }
 
 const mapStateToProps = store => ({
-    chats: store.chats,
+    chats: getAllChats(store),
 });
 
 export default connect(mapStateToProps)(ChatList);
