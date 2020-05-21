@@ -1,8 +1,8 @@
 import React, { useState, memo, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import Example from "../Archive/Example/Example";
+import Example from "../../components/Archive/Example/Example";
 // import Counter from "../Counter";
-import FormMessage from "../FormMessage";
+import FormMessage from "../../components/FormMessage";
 import { makeStyles } from '@material-ui/core/styles';
 import style from '../../index.css';
 
