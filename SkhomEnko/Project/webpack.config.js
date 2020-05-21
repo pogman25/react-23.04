@@ -1,55 +1,70 @@
 const MiniCssExtractPlugin = require ('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-const path = require("path")
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const path = require("path")
 
 module.exports = {
-  entry: "./src/index.jsx",
+  entry: './src/index.jsx',
   output: {
-    path: path.resolve(__dirname, "build"),
-    filename: "[name].js"
+    path: path.resolve(__dirname, 'build'),
+    filename: '[name].js',
+    publicPath: '/'
   },
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: ['.js', '.jsx']
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules|bower_components)/,
         use: {
-          loader: "babel-loader",
+          loader: 'babel-loader',
           options: {
-            presets: ["@babel/preset-env", "@babel/preset-react"],
-            plugins: ["@babel/plugin-proposal-class-properties"]
+            presets: ['@babel/preset-env', '@babel/preset-react'],
+            plugins: ['@babel/plugin-proposal-class-properties']
           }
         }
       },
       {
-        test: /\.css$/,
+        test: /\.css$/i,
         use: [
-            {
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                    publicPath: '../',
-                    hmr: process.env.NODE_ENV
-                },
-            },
-            'css-loader'
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+                publicPath: '../',
+                hmr: process.env.NODE_ENV
+            }
+          },
+          {
+            loader: 'css-loader'
+          }
         ]
-      },
-      {
-        test: /\.(woff|ttf|otf|eot|woff2|svg)$/i,
-        loader: "file-loader",
-        options: {
-          name: 'static/media/[name].[hash:4].[ext]'
-        }
       }
     ]
   },
-  devtool: 'source-map',
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+      cacheGroups: {
+        default: false,
+        commons: {
+          test: /node_modules/,
+          name: 'js/vendor',
+          chunks: 'initial'
+        },
+        styles: {
+          name: 'styles',
+          test: /\.css$/,
+          chunks: 'all',
+          enforce: true
+        }
+      }
+    }
+  },
   devServer: {
-    contentBase: path.join(__dirname, "build"),
+    contentBase: path.join(__dirname, 'build'),
     compress: true,
     port: 9000,
     hot: true,
@@ -61,14 +76,14 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
-      filename: "index.html",
-      template: "src/index.html",
+      filename: 'index.html',
+      template: 'src/index.html',
       favicon: "./src/favicon.ico"
     }),
     new MiniCssExtractPlugin ({
       filename: 'css/[name].css',
       chunkFilename: '[id].css',
-      ignoreOrder: false,
+      ignoreOrder: false
     })
   ]
 }
