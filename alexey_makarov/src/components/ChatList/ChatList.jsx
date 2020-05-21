@@ -1,52 +1,38 @@
-import React, {Component} from 'react';
-import PropTypes from "prop-types";
-import {
-    Drawer,
-    List,
-    ListItem,
-    ListItemIcon,
-    ListItemText,
-    Typography,
-} from '@material-ui/core';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import React, {memo} from 'react';
+import {compose} from 'redux';
+import {connect} from 'react-redux';
+import {makeStyles} from '@material-ui/core/styles';
+import cx from 'classnames';
+import {Drawer, List, ListItem, ListItemIcon, ListItemText, Typography,} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import {Link, useHistory} from 'react-router-dom';
 import InfoIcon from '@material-ui/icons/Info';
 import HomeIcon from '@material-ui/icons/Home';
-import styles from './index.css'
-import cx from 'classnames';
-import {withStyles} from "@material-ui/core/styles";
-import Link from "@material-ui/core/Link";
 
-const drawerWidth = 240;
 
-const muiStyles = theme => {
-    console.log(theme);
-    return {
+const useStyles = makeStyles(theme => ({
+    drawer: {
+        width: 240,
+        flexShrink: 0,
+        whiteSpace: 'nowrap',
+    },
 
-        drawer: {
-            width: drawerWidth,
-            flexShrink: 0,
-            whiteSpace: 'nowrap',
-        },
+    logo: {
+        marginRight: 'auto',
+        marginLeft: theme.spacing(1),
+    },
 
-        logo: {
-            marginRight: 'auto',
-            marginLeft: theme.spacing(1),
-        },
+    paper: {
+        color: theme.palette.text.primary,
+    },
 
-        paper: {
-            color: theme.palette.text.primary,
-        },
-
-        drawerOpen: {
-            width: drawerWidth,
-            transition: theme.transitions.create('width', {
-                easing: theme.transitions.easing.sharp,
-                duration: theme.transitions.duration.enteringScreen,
-            }),
-        },
+    drawerOpen: {
+        width: 240,
+        transition: theme.transitions.create('width', {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.enteringScreen,
+        }),
+    },
 
         itemRoot: {
             position: 'relative',
@@ -62,68 +48,53 @@ const muiStyles = theme => {
             zIndex: theme.zIndex.appBar,
         },
 
-        toolbar: {
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'flex-start',
-            padding: theme.spacing(3, 2),
-        },
+    toolbar: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        padding: theme.spacing(3, 2),
+    },
 
-        toolbarClose: {
-            justifyContent: 'flex-start',
-        },
+    toolbarClose: {
+        justifyContent: 'flex-start',
+    },
 
-        footerList: {
-            marginTop: 'auto',
-            marginBottom: theme.spacing(5),
-        },
-    };
-};
+    footerList: {
+        marginTop: 'auto',
+        marginBottom: theme.spacing(5),
+    },
+}));
 
-class ChatList extends Component{
+const ChatList = props => {
 
-    state={
-        pageLinks:[
-            {
-                to:"1",
-                title:"chat1",
-            },
-            {
-                to:"2",
-                title:"chat2",
-            },
-        ]
-    }
+    const classes = useStyles();
+    const history = useHistory();
 
-    render() {
-
-        const {classes} = this.props;
-
-        return (
-            <Drawer
-                className={cx(classes.drawer, classes.drawerOpen)}
-                classes={{
-                    paper: cx(classes.paper, classes.drawerOpen),
-                }}
-                variant="permanent">
-                <div className={classes.toolbar}>
-                    <Typography variant="body1">Список чатов</Typography>
-                </div>
-                <Link to="/" key="home-page">
-                    <ListItem
-                        classes={{
-                            root: classes.itemRoot,
-                        }}
-                        button
-                    >
-                        <ListItemIcon>
-                            <HomeIcon/>
+    return (
+        <Drawer
+            className={cx(classes.drawer, classes.drawerOpen)}
+            classes={{
+                paper: cx(classes.paper, classes.drawerOpen),
+            }}
+            variant="permanent">
+            <div className={classes.toolbar}>
+                <Typography variant="body1">Список чатов</Typography>
+            </div>
+            <Link to="/" key="home-page">
+                <ListItem
+                    classes={{
+                        root: classes.itemRoot,
+                    }}
+                    button
+                >
+                    <ListItemIcon>
+                        <HomeIcon/>
                         </ListItemIcon>
                         <ListItemText>Home</ListItemText>
                     </ListItem>
                 </Link>
                 <List disablePadding>
-                    {Object.values(this.state.pageLinks).map(({ title, to }) => (
+                    {props.chats.map(({title, to}) => (
                         <Link to={to} key={title}>
                             <ListItem
                                 classes={{
@@ -132,7 +103,7 @@ class ChatList extends Component{
                                 button
                             >
                                 <ListItemIcon>
-                                    <MenuIcon />
+                                    <MenuIcon/>
                                 </ListItemIcon>
                                 <ListItemText>{title}</ListItemText>
                             </ListItem>
@@ -155,11 +126,12 @@ class ChatList extends Component{
                     </Link>
 
                 </List>
-            </Drawer>
-        )
-    }
+        </Drawer>
+    )
 
 }
+const mapStateToProps = (store, ownProps) => ({
+    chats: store.chats,
+})
 
-
-export default withStyles(muiStyles)(ChatList);
+export default compose(connect(mapStateToProps), memo)(ChatList);
