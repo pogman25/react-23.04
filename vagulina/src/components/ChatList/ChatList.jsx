@@ -8,6 +8,7 @@ import Flag from "material-ui/svg-icons/content/flag";
 import AddIcon from "material-ui/svg-icons/content/add";
 import PropTypes from "prop-types";
 import { addChat } from "../../actions/chatActions";
+import { ListItemText } from "@material-ui/core";
 
 class ChatList extends React.Component {
   state = { newChatTitle: "" };
@@ -33,10 +34,9 @@ class ChatList extends React.Component {
     const { chats, addChat } = this.props;
     const chatElements = Object.keys(chats).map((chatId) => (
       <Link key={chatId} to={`/chat/${chatId}`}>
-        <ListItem
-          primaryText={chats[chatId].title}
-          leftIcon={<Flag />}
-        ></ListItem>
+        <ListItem leftIcon={<Flag />}>
+          <ListItemText>{chats[chatId].title}</ListItemText>
+        </ListItem>
       </Link>
     ));
     return (

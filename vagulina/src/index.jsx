@@ -10,7 +10,7 @@ ReactDOM.render(
   <Provider store={initStore()}>
     <BrowserRouter>
       <MuiThemeProvider>
-        <Router name="REACT" />
+        <Router />
       </MuiThemeProvider>
     </BrowserRouter>
   </Provider>,

@@ -19,7 +19,7 @@ class Layout extends React.Component {
   };
 
   componentDidUpdate() {
-    const { chatId } = this.props;
+    /*const { chatId } = this.props;
     const { messages, chats } = this.state;
     const messageList = chats[chatId].messageList;
     if (messageList.length > 0) {
@@ -27,13 +27,13 @@ class Layout extends React.Component {
       if (messages[lastMsgId].author !== this.ROBOT_NAME) {
         this.addNewMessage({ text: "This is bot...", author: this.ROBOT_NAME });
       }
-    }
+    }*/
   }
 
   addNewMessage = (message) => {
     const { chatId } = this.props;
     const newMessageId = Object.keys(this.state.messages).length + 1;
-    this.setState(({ messages, chats }) => ({
+    this.setState(({ messages }) => ({
       messages: {
         ...messages,
         [newMessageId]: { text: message.text, author: message.author },
