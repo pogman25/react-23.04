@@ -8,7 +8,7 @@ class Message extends Component {
     state = {
         chats: {
             1: { title: "ChatRoom 1", messageList: [1] },
-            2: { title: "ChatRoom 2", messageList: [2] },
+            2: { title: "ChatRoom 2", messageList: [1] },
         },
         messages: {
             1: { text: "Obey!", author: "Bot" },
@@ -71,36 +71,40 @@ class Message extends Component {
     }
 
     render() {
-        const { text, author } = this.state;
+        const { messages } = this.state;//передать все сообщения по id чата
+
 
         return (
-        <form className={styles.container} noValidate onSubmit={this.onSubmit}>
-            <Input 
-                placeholder="Author:" 
-                inputProps={{ 'aria-label': 'description' }} 
-                name="author"
-                onChange={this.onChange}
-                value={author}
-                className={styles.input}
-            />
-            <Input 
-                placeholder="Your message:" 
-                inputProps={{ 'aria-label': 'description' }} 
-                name="text"
-                onChange={this.onChange}
-                onKeyDown={this.onKeyDown}
-                value={text}
-                className={styles.input}
-            />
-            <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                endIcon={<SendIcon />}
-            >
-                Add message 
-            </Button>
-        </form>
+            <div>
+                <ChatList messages={messages} />
+                <form className={styles.container} noValidate onSubmit={this.onSubmit}>
+                    <Input
+                        placeholder="Author:"
+                        inputProps={{ 'aria-label': 'description' }}
+                        name="author"
+                        onChange={this.onChange}
+                        value={author}
+                        className={styles.input}
+                    />
+                    <Input
+                        placeholder="Your message:"
+                        inputProps={{ 'aria-label': 'description' }}
+                        name="text"
+                        onChange={this.onChange}
+                        onKeyDown={this.onKeyDown}
+                        value={text}
+                        className={styles.input}
+                    />
+                    <Button
+                        type="submit"
+                        variant="contained"
+                        color="primary"
+                        endIcon={<SendIcon />}
+                    >
+                        Add message
+                    </Button>
+                </form>
+            </div>
         );
     }
 }

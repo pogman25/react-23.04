@@ -9,9 +9,6 @@ class Header extends Component {
     return (
       <div className="header-container">
         <h1 className="header-name">{`ChatRoom ${cid}`}</h1>
-        <Link to="/profile/">
-          <h2>Profile</h2>
-        </Link>
       </div>
     );
   }
