@@ -23,7 +23,7 @@ class Header extends Component {
                     <AccountBoxIcon/>
                 </IconButton>
                 </Link>
-                {this.props.profile.name}
+                
 
             </Paper>
 
