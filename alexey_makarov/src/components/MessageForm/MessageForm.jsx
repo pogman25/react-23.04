@@ -1,25 +1,26 @@
-import React,{Component} from 'react';
+import React, {Component} from 'react';
 import PropTypes from "prop-types";
-import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import styles from './index.css';
+import {IconButton} from "@material-ui/core";
+import SendIcon from '@material-ui/icons/Send';
 
-class MessageForm extends Component{
-    state={
-        text:"",
-        author:""
+class MessageForm extends Component {
+    state = {
+        text: "",
+        author: ""
     };
 
-    onChange = (event)=>{
-        const {value,name} = event.target;
-        this.setState({[name]:value})
+    onChange = (event) => {
+        const {value, name} = event.target;
+        this.setState({[name]: value})
     };
 
-    onSubmit = (e) =>{
+    onSubmit = (e) => {
         e.preventDefault();
         const {text, author} = this.state;
         const {addMessage} = this.props;
-        addMessage({text,author})
+        addMessage({text, author})
         console.log("onSubmit event");
     };
 
@@ -29,7 +30,7 @@ class MessageForm extends Component{
         <form className={styles.container} onSubmit={this.onSubmit}>
             <TextField type="text" name="author" onChange={this.onChange} value={author} placeholder="Author" />
             <TextField name="text" value={text} onChange={this.onChange} placeholder="Message"/>
-            <Button type="submit" variant="contained">Add message</Button>
+            <IconButton type="submit" variant="contained"><SendIcon/> Send</IconButton>
         </form>
         )
     }

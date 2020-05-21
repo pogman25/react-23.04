@@ -12,6 +12,7 @@ module.exports = {
     resolve: {
         extensions: [".js", ".jsx"],
     },
+    devtool: 'source-map',
     module: {
         rules: [
             {
@@ -38,6 +39,25 @@ module.exports = {
                 ],
             },
         ],
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+            cacheGroups: {
+                default: false,
+                commons: {
+                    test: /node_modules/,
+                    name: 'js/vendor',
+                    chunks: 'initial',
+                },
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true,
+                },
+            },
+        },
     },
     devServer: {
         contentBase: path.join(__dirname, 'build'),

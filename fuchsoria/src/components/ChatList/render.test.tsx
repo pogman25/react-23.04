@@ -1,7 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { initStore } from '../../store';
 import { IChatListProps } from '../../interfaces';
 import ChatList from '../ChatList';
+
+const { store } = initStore();
 
 const mockData: IChatListProps = {
   items: [
@@ -21,6 +25,7 @@ const mockData: IChatListProps = {
       description: 'What are you doing?',
     },
   ],
+  blinkingIds: [],
 };
 
 describe('<ChatList/>', () => {
@@ -38,7 +43,11 @@ describe('<ChatList/>', () => {
   });
 
   it('Component should render', () => {
-    const { container } = render(<ChatList items={mockData.items} />);
+    const { container } = render(
+      <Provider store={store}>
+        <ChatList items={mockData.items} />
+      </Provider>
+    );
 
     expect(container).toMatchSnapshot();
   });

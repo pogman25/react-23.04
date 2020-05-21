@@ -1,27 +1,18 @@
 import { createReducer } from 'typesafe-actions';
-import { IChats, IMessage } from './../../interfaces';
-import { Action } from './reducerTypes';
+import { IChats } from './../../interfaces';
+import { setChats, getChats, addChat, addMessage, deleteChat, deleteMessage } from './../actions/chatsActions';
+import { Action, AddChatPayload, AddMessagePayload, DeleteChatPayload, DeleteMessagePayload } from './reducerTypes';
 
 const initialState = {};
 
-type AddChatPayload = {
-  chatName: string;
-  chatId: string;
-};
-
-type AddMessagePayload = {
-  message: IMessage;
-  chatId: string;
-};
-
 export default createReducer<IChats>(initialState, {
-  SET_CHATS: (state, action: Action<IChats>) => {
+  [setChats.toString()]: (state, action: Action<IChats>) => {
     return action.payload;
   },
-  GET_CHATS: (state, action: Action<IChats>) => {
+  [getChats.toString()]: (state) => {
     return { ...state };
   },
-  ADD_CHAT: (state, action: Action<AddChatPayload>) => {
+  [addChat.toString()]: (state, action: Action<AddChatPayload>) => {
     const { chatName, chatId } = action.payload;
 
     return {
@@ -32,7 +23,7 @@ export default createReducer<IChats>(initialState, {
       },
     };
   },
-  ADD_MESSAGE: (state, action: Action<AddMessagePayload>) => {
+  [addMessage.toString()]: (state, action: Action<AddMessagePayload>) => {
     const { message, chatId } = action.payload;
 
     return {
@@ -40,6 +31,27 @@ export default createReducer<IChats>(initialState, {
       [chatId]: {
         ...state[chatId],
         messages: [...state[chatId].messages, message],
+      },
+    };
+  },
+  [deleteChat.toString()]: (state, action: Action<DeleteChatPayload>) => {
+    const { chatId } = action.payload;
+    const copy = JSON.parse(JSON.stringify(state));
+    delete copy[chatId];
+
+    return {
+      ...copy,
+    };
+  },
+  [deleteMessage.toString()]: (state, action: Action<DeleteMessagePayload>) => {
+    const { messageId, chatId } = action.payload;
+    const filteredMessages = state[chatId].messages.filter((message) => message.id !== messageId);
+
+    return {
+      ...state,
+      [chatId]: {
+        ...state[chatId],
+        messages: [...filteredMessages],
       },
     };
   },

@@ -1,10 +1,13 @@
 import React, { useEffect, useRef } from 'react';
+import { useStore } from 'react-redux';
 import { IMessageListProps } from '../../interfaces';
 import Message from '../Message';
+import { deleteMessage } from '../../store/actions/chatsActions';
 import styles from './styles.module.scss';
 
-export default function MessageList({ messages }: IMessageListProps) {
+export default function MessageList({ messages, chatId }: IMessageListProps) {
   const listRef = useRef<HTMLDivElement | null>(null);
+  const store = useStore();
 
   useEffect(() => {
     if (typeof listRef.current?.lastElementChild?.scrollIntoView === 'function') {
@@ -12,10 +15,18 @@ export default function MessageList({ messages }: IMessageListProps) {
     }
   });
 
+  const handleDelete = (messageId: string, chatId: string) => () => {
+    const isConfirmed = confirm('Remove message?');
+    
+    if (isConfirmed) {
+      store.dispatch(deleteMessage(messageId, chatId));
+    }
+  };
+
   return (
     <div className={styles.messageList} ref={listRef}>
       {messages.map(({ id, author, text, authorAccess }) => (
-        <Message key={id} author={author} text={text} isSelf={authorAccess === 'self'} />
+        <Message key={id} id={id} author={author} text={text} isSelf={authorAccess === 'self'} handleDelete={handleDelete(id, chatId)}/>
       ))}
     </div>
   );
