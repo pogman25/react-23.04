@@ -10,16 +10,9 @@ class FormMessage extends Component {
     author: '',
   };
 
-  checkChange = () => {
-    const { checkInputChange } = this.props;
-
-    if (this.onChange) checkInputChange(true);
-  };
-
   onChange = event => {
     const { value, name } = event.target;
     this.setState({ [name]: value });
-    this.checkChange();
   };
 
   sendMessage = () => {
@@ -54,6 +47,7 @@ class FormMessage extends Component {
           name="author"
           onChange={this.onChange}
           value={author}
+          required
         />
         <TextField
           id="standard-multiline-flexible"
@@ -64,6 +58,7 @@ class FormMessage extends Component {
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           value={text}
+          required
         />
         <IconButton type="submit" color="primary">
           <SendIcon />

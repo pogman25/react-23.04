@@ -1,8 +1,36 @@
 import { createStore, applyMiddleware } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import logger from 'redux-logger';
+import thunk from 'redux-thunk';
+import { createLogger } from 'redux-logger';
 import rootReducer from './reducers';
+import { loadState, saveState } from './loadStore';
 
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(logger)));
+// middleware
 
-export default store;
+const logger = createLogger({ collapsed: true });
+
+// const notificationCheck = store => next => action => {
+//   if (action.type !== 'chats/ADD_MESSAGE') {
+//     return next(action);
+//   }
+
+//   return next(action);
+// };
+
+// store
+
+const storeConfig = () => {
+  const persistedState = loadState();
+
+  const store = createStore(
+    rootReducer,
+    persistedState,
+    applyMiddleware(thunk, logger),
+  );
+
+  store.subscribe(() => {
+    saveState(store.getState());
+  });
+  return store;
+};
+
+export default storeConfig();

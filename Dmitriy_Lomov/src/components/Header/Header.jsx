@@ -7,7 +7,7 @@ import { AppBar, Toolbar, Typography, withStyles } from '@material-ui/core';
 
 const muiStyles = theme => ({
   toolbar: {
-    paddingRight: 24, 
+    paddingRight: 24,
   },
   appBar: {
     zIndex: theme.zIndex.drawer + 1,
@@ -50,7 +50,7 @@ class Header extends PureComponent {
             className={classes.title}
           >
             Эмулятор чата
-        </Typography>
+          </Typography>
           <Typography
             component="p"
             variant="body2"
@@ -64,11 +64,10 @@ class Header extends PureComponent {
       </AppBar>
     );
   }
-};
+}
 
 const mapStateToProps = store => ({
-  chats: store.chats,
-  profile: store.profile
-})
+  profile: store.profile,
+});
 
 export default compose(connect(mapStateToProps), withStyles(muiStyles))(Header);

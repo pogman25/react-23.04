@@ -1,12 +1,33 @@
-import { SET_CHATS } from './actions';
+import { handleActions } from 'redux-actions';
+import { setChats, addNewMessage, handleNotification } from './actions';
 
-const initialState = []
+const initialState = { chatsByIds: {}, chatsIds: [] };
 
-export const chatsReducer = (state = initialState, action) => {
-    switch (action.type) {
-        case SET_CHATS:
-            return action.payload
-        default:
-            return state;
-    }
-}
+const chatsReducer = handleActions(
+  {
+    [setChats]: (state, action) => action.payload,
+    [addNewMessage]: (state, { payload }) => ({
+      ...state,
+      chatsByIds: {
+        ...state.chatsByIds,
+        [payload.chatId]: {
+          ...state.chatsByIds[payload.chatId],
+          messages: [...state.chatsByIds[payload.chatId].messages, payload.id],
+        },
+      },
+    }),
+    [handleNotification]: (state, { payload }) => ({
+      ...state,
+      chatsByIds: {
+        ...state.chatsByIds,
+        [payload.chatId]: {
+          ...state.chatsByIds[payload.chatId],
+          notification: payload.notification,
+        },
+      },
+    }),
+  },
+  initialState,
+);
+
+export default chatsReducer;
