@@ -1,10 +1,17 @@
-import { createStore, combineReducers, compose } from 'redux';
-import { createBrowserHistory } from 'history';
-import { connectRouter } from 'connected-react-router';
+import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import { persistStore, persistReducer } from 'redux-persist';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import storage from 'redux-persist/lib/storage';
+import { connectRouter, routerMiddleware } from 'connected-react-router';
 import chatsReducer from './reducers/chatsReducer';
 import profileReducer from './reducers/profileReducer';
+import chatlistReducer from './reducers/chatlistReducer';
+import { botAnswer } from './middlewares/botMiddleware';
+import { autoRedirect } from './middlewares/chatMiddleware';
+import { createBrowserHistory, History } from 'history';
 
-export const history = createBrowserHistory();
+const history = createBrowserHistory();
 
 declare global {
   interface Window {
@@ -12,16 +19,31 @@ declare global {
   }
 }
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const reducer = (history: History) =>
+  combineReducers({
+    chats: chatsReducer,
+    profile: profileReducer,
+    chatlist: chatlistReducer,
+    router: connectRouter(history),
+  });
 
-const reducer = combineReducers({
-  chats: chatsReducer,
-  profile: profileReducer,
-  router: connectRouter(history),
-});
+const persistConfig = {
+  key: 'messengerweb',
+  whitelist: ['chats', 'profile'],
+  storage,
+};
 
 export function initStore(preloadedState = undefined) {
-  const store = createStore(reducer, preloadedState, composeEnhancers());
+  const persistedReducer = persistReducer(persistConfig, reducer(history));
 
-  return { store };
+  const middlewares = [routerMiddleware(history), thunk, botAnswer, autoRedirect];
+  const middlewareEnhancer = applyMiddleware(...middlewares);
+
+  const enhancers = [middlewareEnhancer];
+  const composedEnhancers = composeWithDevTools(...enhancers);
+
+  const store = createStore(persistedReducer, preloadedState, composedEnhancers);
+  const persistor = persistStore(store);
+
+  return { store, persistor, history };
 }
