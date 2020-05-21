@@ -24,9 +24,9 @@ class Layout extends Component {
     return (
       <Container maxWidth="lg">
         <Header cid={this.props.cid} />
+        <ChatList />
         <div className={classes.paper}>
-          <ChatList messages={messages} />        
-          <Message addNewMessage={this.addNewMessage} />
+          <Message cid={this.props.cid} />
         </div>
       </Container>
     );
