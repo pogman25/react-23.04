@@ -9,14 +9,16 @@ export const getAllChats = createSelector(getChatsByIds, getChatsIds, (byIds, id
 
 export const getMessagesById = store => store.messages.messagesByIds;
 
-export const getChatMessages = (store, ownProps) => {
+export const getChatMessages = (store, params) => {
   const chatsByIds = getChatsByIds(store);
   const messagesByIds = getMessagesById(store);
 
-  const { chatId } = ownProps.match.params;
+  const { chatId } = params;
 
   if (chatId in chatsByIds) {
     return chatsByIds[chatId].messages.map(id => messagesByIds[id]);
   }
   return [];
 };
+
+export const getChatUpdatedIds = store => store.chats.updatedChatsIds;
