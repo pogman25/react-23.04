@@ -38,7 +38,6 @@ const mapStateToProps = store => ({
 });
 const mapDispatchToProps = {
     setChats,
-    updateChats,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootRouter);

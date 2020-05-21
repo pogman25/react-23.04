@@ -1,4 +1,5 @@
-import { createAction } from 'redux-actions'
+import { createAction } from 'redux-actions';
+import { v4 as uuidv4 } from 'uuid';
 
 export const setChats = createAction('chats/SET_CHATS', data => {
     return data.reduce((all, item) => {
@@ -10,4 +11,8 @@ export const setChats = createAction('chats/SET_CHATS', data => {
         chatsIds: []
     });
 });
-export const updateChats = createAction('chats/UPDATE_CHATS');
+export const addMessage = createAction('chats/ADD_MESSAGE',
+ data => {
+    console.log('addmessage action');
+    return { ...data, id: uuidv4() };
+});

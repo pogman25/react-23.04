@@ -6,6 +6,7 @@ import styles from './Messages.css'
 class Messages extends Component {
     render() {
         const { messages } = this.props;
+        console.log(messages)
         return (
             <ul className={styles.list}>
                 { messages.map(({author,text}, index) => (
