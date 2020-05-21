@@ -11,7 +11,7 @@ const Layout = ({ children }) => {
         <div className={styles.layout}>
         <Header />
             <div className={styles.body}>
-            
+            <ChatList />
             {children}
             </div>
         </div>

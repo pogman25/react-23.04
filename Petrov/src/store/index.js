@@ -1,20 +1,10 @@
-import { createStore, applyMiddleware } from 'redux';
-import { createLogger } from 'redux-logger';
-import thunk from 'redux-thunk';
+import { createStore, compose, applyMiddleware } from 'redux';
+import logger from 'redux-logger';
 import rootReducer from '../reducers';
-import { loadState, saveState } from './loadStore';
 
-const logger = createLogger({ collapsed: true });
 
-const storeConfig = () => {
-  const persistedState = loadState();
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-  const store = createStore(rootReducer, persistedState, applyMiddleware(thunk, logger));
+const store = createStore(rootReducer, composeEnhancer(applyMiddleware(logger)));
 
-  store.subscribe(() => {
-    saveState(store.getState());
-  });
-  return store;
-};
-
-export default storeConfig();
+export default store;

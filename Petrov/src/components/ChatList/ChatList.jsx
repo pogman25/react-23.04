@@ -11,10 +11,8 @@ import SendIcon from '@material-ui/icons/Send';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
 import { Link } from 'react-router-dom';
-import { getAllChats } from '../../selectors/chatsSelectors';
 import pageLinks from './page-links';
 import styles from './index.css';
-
 
 class ChatList extends Component {
 
@@ -31,7 +29,7 @@ class ChatList extends Component {
                         <Typography variant="inherit">HOME</Typography>
                     </MenuItem>
                     </Link>
-                    {props.chats.map(({ title, to }) => (
+                    {this.props.chats.map(({ title, to }) => (
                          <Link to={to} key={title}>
                           <MenuItem button>
                            <ListItemIcon>
@@ -68,7 +66,7 @@ class ChatList extends Component {
 }
 
 const mapStateToProps = store => ({
-    chats: getAllChats(store),
+    chats: store.chats,
   });
   
   export default connect(mapStateToProps)(ChatList);

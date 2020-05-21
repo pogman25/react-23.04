@@ -15,10 +15,10 @@ import mockMessLinks from './mockMessLinks';
 
 class RootRouter extends Component {
   componentDidMount() {
-    const { setChats} = this.props;
+    const { setChats,setMessages } = this.props;
     setTimeout(() => {
-      // setChats(mockPageLinks);
-      // setMessages(mockMessLinks);
+      setChats(mockPageLinks);
+      setMessages(mockMessLinks);
 
     }, 1000);
   }
@@ -46,10 +46,12 @@ class RootRouter extends Component {
 
 const mapStateToProps = store => ({
   chats: store.chats,
+  messages: store.messages,
 });
 
 const mapDispatchToProps = {
   setChats,
+  setMessages,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootRouter);
