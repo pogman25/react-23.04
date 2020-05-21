@@ -9,8 +9,9 @@ module.exports = {
     },
     context: path.resolve(__dirname,"src"),
     output: {
-        path: path.resolve(__dirname,"static", "build"),
-        filename: '[name].[contenthash].js',
+        path: path.resolve(__dirname, "static", "build"),
+        filename: '[name].[hash].js',
+        publicPath: '/',
     },
     resolve: {
         extensions: [".js",".jsx"],
@@ -43,27 +44,14 @@ module.exports = {
                     },
                 ],
             },
-
-            // TODO: Так не работает CSS
-            // {
-            //     test:/\.css$/i,
-            //     use:[MiniCssExtractPlugin.loader,
-            //         {
-            //             loader: "css-loader",
-            //             options: {
-            //                 modules:{
-            //                     localIdentName: '[path][name]__[local]--[hash:base64:5]',
-            //                 }
-            //             }
-            //         }
-            //     ],
-            // },
         ],
     },
     devServer: {
-        contentBase: path.join(__dirname,"build"),
-        compress:true,
-        port:9000,
+        contentBase: path.join(__dirname, "build"),
+        compress: true,
+        port: 9000,
+        historyApiFallback: true,
+        hot: true,
     },
     plugins: [new HtmlWebpackPlugin({
         title: "Alf",

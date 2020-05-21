@@ -1,7 +1,11 @@
 import React from 'react';
 import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
 import { IMessageListProps } from '../../interfaces';
 import MessageList from '../MessageList';
+import { initStore } from '../../store';
+
+const { store } = initStore();
 
 const mockData: IMessageListProps = {
   messages: [
@@ -24,11 +28,16 @@ const mockData: IMessageListProps = {
       authorAccess: 'bot',
     },
   ],
+  chatId: '0',
 };
 
 describe('<MessageList />', () => {
   it('Component should render', () => {
-    const { container } = render(<MessageList messages={mockData.messages} />);
+    const { container } = render(
+      <Provider store={store}>
+        <MessageList messages={mockData.messages} chatId={mockData.chatId} />
+      </Provider>
+    );
 
     expect(container).toMatchSnapshot();
   });

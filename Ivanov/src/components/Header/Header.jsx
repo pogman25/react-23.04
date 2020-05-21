@@ -1,6 +1,6 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
     AppBar,
     Button,
@@ -8,35 +8,30 @@ import {
     Toolbar,
     Typography
 } from '@material-ui/core'
+import { getProfileFromStore } from '../../reducers/profileReducer';
 import styles from './Header.css'
 
-class Header extends Component {
-    render() {
-        const { name, lastname } = this.props;
-        return (
-            <AppBar>
-                <Toolbar>
-                    <Typography
-                        component="h2"
-                        variant="h6"
-                        color="inherit"
-                        noWrap
-                        className={styles.title}
-                    >
-                        Hello, {name} {lastname||''}
-                    </Typography>
-                    <Button color="inherit">
-                        <Link to='/profile'>Profile</Link>
-                    </Button>
-                </Toolbar>
-            </AppBar>
-        )
-    }
-}
-
-Header.propTypes = {
-    name: PropTypes.string.isRequired,
-    lastName: PropTypes.string,
+const Header = () => {
+    const { name, lastname } = useSelector(getProfileFromStore);
+    
+    return (
+        <AppBar>
+            <Toolbar>
+                <Typography
+                    component="h2"
+                    variant="h6"
+                    color="inherit"
+                    noWrap
+                    className={styles.title}
+                >
+                    Hello, {name} {lastname||''}
+                </Typography>
+                <Button color="inherit">
+                    <Link to='/profile'>Profile</Link>
+                </Button>
+            </Toolbar>
+        </AppBar>
+    )
 }
 
 export default Header;

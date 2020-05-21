@@ -1,23 +1,34 @@
-import React, { Component } from 'react';
-import { Container } from '@material-ui/core';
-import MessageField from '../MessageField';
-import ChatList from '../ChatList';
-import Header from '../Header';
-import FormMessage from '../FormMessage';
-import styles from './index.css';
+import React, { PureComponent } from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core';
+import Header from '../Header/Header';
+import ChatList from '../ChatList/ChatList';
 
-class Layout extends Component {
+const muiStyles = theme => ({
+  root: {
+    display: 'flex',
+    marginTop: theme.spacing(8),
+  },
+});
+
+class Layout extends PureComponent {
   render() {
+    const { children, classes } = this.props;
+
     return (
-      <Container maxWidth="md" component="div">
+      <>
         <Header />
-        <div className={styles.bottomContainer}>
+        <main className={classes.root}>
           <ChatList />
-          <MessageField />
-        </div>
-      </Container>
+          {children}
+        </main>
+      </>
     );
   }
-}
+};
 
-export default Layout;
+Layout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default withStyles(muiStyles)(Layout);

@@ -1,10 +1,14 @@
 export interface IMessage {
-  id?: string;
+  id: string;
   author?: string;
   text: string;
   authorAccess?: string;
   isSelf?: boolean;
   date?: number;
+}
+
+export interface IMessageWithHandler extends IMessage {
+  handleDelete: () => void;
 }
 
 export interface IChatListItem {
@@ -15,6 +19,7 @@ export interface IChatListItem {
 
 export interface IChatListProps {
   items: IChatListItem[];
+  blinkingIds: string[];
 }
 
 export interface IChatContainerProps {
@@ -45,9 +50,8 @@ export interface IChatContainerState {
 
 export interface IMessageListProps {
   messages: IMessage[];
+  chatId: string;
 }
-
-export interface IMessageProps extends IMessage {}
 
 export interface IChatFormProps {
   handleSubmit: (text: string, author?: string) => void;

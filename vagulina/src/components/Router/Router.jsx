@@ -7,7 +7,11 @@ class Router extends React.Component {
     return (
       <Switch>
         <Route exact path="/" component={Layout} />
-        <Route exact path="/chat/:chatId" render={() => <Layout chatId={Number(obj.match.params.chatId)} />} />
+        <Route
+          exact
+          path="/chat/:chatId"
+          render={(obj) => <Layout chatId={Number(obj.match.params.chatId)} />}
+        />
       </Switch>
     );
   }

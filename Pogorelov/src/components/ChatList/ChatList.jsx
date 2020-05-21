@@ -16,7 +16,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Link, useHistory } from 'react-router-dom';
-import pageLinks from './page-links';
+import { getAllChats } from '../../selectors/chatsSelectors';
 
 const drawerWidth = 240;
 
@@ -76,7 +76,6 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const ChatList = props => {
-  console.log(props);
   const classes = useStyles();
   const history = useHistory();
 
@@ -170,7 +169,7 @@ const ChatList = props => {
 };
 
 const mapStateToProps = store => ({
-  chats: store.chats,
+  chats: getAllChats(store),
 });
 
 export default compose(connect(mapStateToProps), memo)(ChatList);

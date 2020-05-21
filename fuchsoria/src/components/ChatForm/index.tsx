@@ -5,7 +5,7 @@ import styles from './styles.module.scss';
 
 export default function ChatForm({ handleSubmit }: IChatFormProps) {
   const [message, setMessage] = useState('');
-  let messageRef = useRef<Input | null>(null);
+  const messageRef = useRef<Input | null>(null);
 
   const sendMessage = (e: React.SyntheticEvent) => {
     e.preventDefault();

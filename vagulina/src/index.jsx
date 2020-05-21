@@ -1,15 +1,18 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import MessageField from "./components/MessageField";
+import { Provider } from "react-redux";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import { BrowserRouter } from "react-router-dom";
 import Router from "./components/Router";
+import initStore from "./utils/store";
 
 ReactDOM.render(
-  <BrowserRouter>
-    <MuiThemeProvider>
-      <Router name="REACT" />
-    </MuiThemeProvider>
-  </BrowserRouter>,
+  <Provider store={initStore()}>
+    <BrowserRouter>
+      <MuiThemeProvider>
+        <Router name="REACT" />
+      </MuiThemeProvider>
+    </BrowserRouter>
+  </Provider>,
   document.getElementById("root")
 );

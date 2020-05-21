@@ -1,24 +1,23 @@
 import React, {Component} from 'react';
+import { connect } from 'react-redux';
 import MenuList from '@material-ui/core/MenuList';
 import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Typography from '@material-ui/core/Typography';
-import EmailIcon from '@material-ui/icons/Email';
+//import EmailIcon from '@material-ui/icons/Email';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SendIcon from '@material-ui/icons/Send';
 import HomeIcon from '@material-ui/icons/Home';
 import InfoIcon from '@material-ui/icons/Info';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import pageLinks from './page-links';
 import styles from './index.css';
 
 class ChatList extends Component {
 
     render() {
-        const logout = () => {
-            history.push('/chat/1');
-          };
+
         return (
             <Paper className={styles.chatListContainer}>
                 <MenuList >
@@ -30,7 +29,7 @@ class ChatList extends Component {
                         <Typography variant="inherit">HOME</Typography>
                     </MenuItem>
                     </Link>
-                    {Object.values(pageLinks).map(({ title, to }) => (
+                    {this.props.chats.map(({ title, to }) => (
                          <Link to={to} key={title}>
                           <MenuItem button>
                            <ListItemIcon>
@@ -52,7 +51,6 @@ class ChatList extends Component {
                     </Link>
                     <MenuItem key="logout-btn"
                               button
-                              onClick={logout}
                               >
                         <ListItemIcon>
                             <ExitToAppIcon  fontSize="small" />
@@ -66,4 +64,9 @@ class ChatList extends Component {
         );
     }
 }
-export default ChatList;
+
+const mapStateToProps = store => ({
+    chats: store.chats,
+  });
+  
+  export default connect(mapStateToProps)(ChatList);
