@@ -1,7 +1,20 @@
 import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
+import { createLogger } from 'redux-logger';
+import thunk from 'redux-thunk';
 import rootReducer from '../reducers';
+import { loadState, saveState } from './loadStore';
 
-const store = createStore(rootReducer, applyMiddleware(logger));
+const logger = createLogger({ collapsed: true });
 
-export default store;
+const storeConfig = () => {
+    const persistedState = loadState();
+
+    const store = createStore(rootReducer, persistedState, applyMiddleware(thunk, logger));
+
+    store.subscribe(() => {
+        saveState(store.getState());
+    });
+    return store;
+};
+
+export default storeConfig();
