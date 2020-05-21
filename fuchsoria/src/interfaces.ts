@@ -19,7 +19,7 @@ export interface IChatListItem {
 
 export interface IChatListProps {
   items: IChatListItem[];
-  blinkingIds: string[];
+  blinkingIds?: string[];
 }
 
 export interface IChatContainerProps {
