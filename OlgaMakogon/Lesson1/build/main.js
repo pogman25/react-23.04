@@ -159,12 +159,13 @@
 /*!*******************************************!*\
   !*** ./src/actions/chatsActions/index.js ***!
   \*******************************************/
-/*! exports provided: setChats, addMessage */
+/*! exports provided: setChats, addNewMessage, addMessage */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setChats", function() { return setChats; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addNewMessage", function() { return addNewMessage; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "addMessage", function() { return addMessage; });
 /* harmony import */ var redux_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux-actions */ "./node_modules/redux-actions/es/index.js");
 /* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! uuid */ "./node_modules/uuid/dist/esm-browser/index.js");
@@ -186,11 +187,30 @@ var setChats = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["createAction"]
     chatsIds: []
   });
 });
-var addMessage = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["createAction"])('chats/ADD_MESSAGE', function (data) {
-  return _objectSpread({}, data, {
-    id: Object(uuid__WEBPACK_IMPORTED_MODULE_1__["v4"])()
-  });
-});
+var addNewMessage = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["createAction"])('chats/ADD_MESSAGE');
+var addMessage = function addMessage(data) {
+  return function (dispatch, getState) {
+    var author = data.author,
+        chatId = data.chatId;
+
+    if (author !== 'Bot') {
+      var messagesIds = getState().messages.messagesIds;
+      var lastId = messagesIds[messagesIds.length - 1];
+      setTimeout(function () {
+        dispatch(addNewMessage({
+          author: 'Bot',
+          text: "I'm bot",
+          chatId: chatId,
+          id: lastId + 1
+        }));
+      }, 1000);
+    }
+
+    dispatch(addNewMessage(_objectSpread({}, data, {
+      id: Object(uuid__WEBPACK_IMPORTED_MODULE_1__["v4"])()
+    })));
+  };
+};
 
 /***/ }),
 
@@ -284,7 +304,6 @@ var useStyles = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__["ma
 });
 
 var ChatList = function ChatList(props) {
-  console.log(props);
   var classes = useStyles();
   var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_10__["useHistory"])();
 
@@ -1242,8 +1261,7 @@ var RootRouter = /*#__PURE__*/function (_Component) {
     key: "componentDidMount",
     value: function componentDidMount() {
       var setChats = this.props.setChats;
-      setTimeout(function () {
-        setChats(_mockPageLinks__WEBPACK_IMPORTED_MODULE_9__["default"]);
+      setTimeout(function () {// setChats(mockPageLinks);
       }, 1000);
     }
   }, {
@@ -1362,14 +1380,22 @@ var initialState = {
 };
 var reducer = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["handleActions"])((_handleActions = {}, _defineProperty(_handleActions, _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__["setChats"], function (state, action) {
   return action.payload;
-}), _defineProperty(_handleActions, _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__["addMessage"], function (state, _ref) {
+}), _defineProperty(_handleActions, _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__["addNewMessage"], function (state, _ref) {
   var payload = _ref.payload;
   return _objectSpread({}, state, {
     chatsByIds: _objectSpread({}, state.chatsByIds, _defineProperty({}, payload.chatId, _objectSpread({}, state.chatsByIds[payload.chatId], {
       messages: [].concat(_toConsumableArray(state.chatsByIds[payload.chatId].messages), [payload.id])
     })))
   });
-}), _handleActions), initialState);
+}), _handleActions), initialState); // const reducer = (state = initialState, action) => {
+//   switch (action.type) {
+//     case setChats:
+//       return action.payload;
+//     default:
+//       return state;
+//   }
+// };
+
 /* harmony default export */ __webpack_exports__["default"] = (reducer);
 
 /***/ }),
@@ -1446,7 +1472,7 @@ var initialReducer = {
   },
   messagesIds: [1, 2]
 };
-var reducer = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["handleActions"])(_defineProperty({}, _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__["addMessage"], function (state, _ref) {
+var reducer = Object(redux_actions__WEBPACK_IMPORTED_MODULE_0__["handleActions"])(_defineProperty({}, _actions_chatsActions__WEBPACK_IMPORTED_MODULE_1__["addNewMessage"], function (state, _ref) {
   var payload = _ref.payload;
   return {
     messagesByIds: _objectSpread({}, state.messagesByIds, _defineProperty({}, payload.id, payload)),
@@ -1541,12 +1567,62 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! redux-logger */ "./node_modules/redux-logger/dist/redux-logger.js");
 /* harmony import */ var redux_logger__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(redux_logger__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../reducers */ "./src/reducers/index.js");
+/* harmony import */ var redux_thunk__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! redux-thunk */ "./node_modules/redux-thunk/es/index.js");
+/* harmony import */ var _reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers */ "./src/reducers/index.js");
+/* harmony import */ var _loadStore__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./loadStore */ "./src/store/loadStore.js");
 
 
 
-var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_2__["default"], Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_logger__WEBPACK_IMPORTED_MODULE_1___default.a));
-/* harmony default export */ __webpack_exports__["default"] = (store);
+
+
+var logger = Object(redux_logger__WEBPACK_IMPORTED_MODULE_1__["createLogger"])({
+  collapsed: true
+});
+
+var storeConfig = function storeConfig() {
+  var persistedState = Object(_loadStore__WEBPACK_IMPORTED_MODULE_4__["loadState"])();
+  var store = Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers__WEBPACK_IMPORTED_MODULE_3__["default"], persistedState, Object(redux__WEBPACK_IMPORTED_MODULE_0__["applyMiddleware"])(redux_thunk__WEBPACK_IMPORTED_MODULE_2__["default"], logger));
+  store.subscribe(function () {
+    Object(_loadStore__WEBPACK_IMPORTED_MODULE_4__["saveState"])(store.getState());
+  });
+  return store;
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (storeConfig());
+
+/***/ }),
+
+/***/ "./src/store/loadStore.js":
+/*!********************************!*\
+  !*** ./src/store/loadStore.js ***!
+  \********************************/
+/*! exports provided: loadState, saveState */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "loadState", function() { return loadState; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveState", function() { return saveState; });
+var loadState = function loadState() {
+  try {
+    var serializeState = localStorage.getItem('guestStore');
+
+    if (serializeState === null) {
+      return undefined;
+    }
+
+    return JSON.parse(serializeState);
+  } catch (err) {
+    return undefined;
+  }
+};
+var saveState = function saveState(state) {
+  try {
+    var serializeState = JSON.stringify(state);
+    localStorage.setItem('guestStore', serializeState);
+  } catch (err) {//ignore that
+  }
+};
 
 /***/ })
 

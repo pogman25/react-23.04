@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { addMessage } from '../../actions/chatsActions';
+import { addNewMessage } from '../../actions/chatsActions';
 
 const initialReducer = {
   messagesByIds: {
@@ -19,7 +19,7 @@ const initialReducer = {
 
 const reducer = handleActions(
   {
-    [addMessage]: (state, { payload }) => ({
+    [addNewMessage]: (state, { payload }) => ({
       messagesByIds: { ...state.messagesByIds, [payload.id]: payload },
       messagesIds: [...state.messagesIds, payload.id],
     }),
