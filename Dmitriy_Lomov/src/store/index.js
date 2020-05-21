@@ -8,15 +8,13 @@ import { loadState, saveState } from './loadStore';
 
 const logger = createLogger({ collapsed: true });
 
-const notificationCheck = store => next => action => {
-  if (action.type !== 'chats/HANDLE_NOTIFICATION') {
-    return next(action);
-  }
+// const notificationCheck = store => next => action => {
+//   if (action.type !== 'chats/ADD_MESSAGE') {
+//     return next(action);
+//   }
 
-  const result = next(action);
-
-  return result;
-};
+//   return next(action);
+// };
 
 // store
 
@@ -26,7 +24,7 @@ const storeConfig = () => {
   const store = createStore(
     rootReducer,
     persistedState,
-    applyMiddleware(thunk, logger, notificationCheck),
+    applyMiddleware(thunk, logger),
   );
 
   store.subscribe(() => {
