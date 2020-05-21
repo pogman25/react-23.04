@@ -1,6 +1,7 @@
 import { addMessage } from "../actions/chatsActions"
 
 
+
 export const botAnswer = store => next => action => {
     if(action.type == addMessage.toString()) {
         const { author, chatId } = action.payload;
@@ -12,8 +13,16 @@ export const botAnswer = store => next => action => {
                     )
                 )
             }, 1000);
-        } else {
-            
+        };
+        if(author === 'Bot') {
+            const chat_class = 'chat-list-item' + chatId;
+            const el = document.getElementById(chat_class);
+            el.style.backgroundColor="#ccc";
+            console.log('gray')
+            setTimeout(() => {
+                el.style.backgroundColor="#fff";
+                console.log('white')
+            },500);
         }
     }
     return next(action);

@@ -68,7 +68,6 @@ class Chats extends Component {
             match: { params }
         } = this.props;
         const { chatId } = params;
-        console.log('addnewmessage', chatId);
         addMessage({...data, chatId});
     };
 
