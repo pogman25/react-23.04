@@ -1,59 +1,31 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import FormMessage from '../FormMessage';
-import ChatList from '../ChatList';
+import { makeStyles } from '@material-ui/core';
+import Header from '../Header/Header';
+import ChatList from '../ChatList/ChatList';
 
-const muiStyles = theme => {
-  console.log(theme);
-  return {
-    paper: {
-      marginTop: theme.spacing(3),
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-    },
-  };
-};
+const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    marginTop: theme.spacing(8),
+  },
+}));
 
-class Layout extends Component {
-  state = {
-    messages: [{text: 'Привет!', author: 'Я'},{text: 'Привет, я БОТ', author: 'Bot'},{text: 'Как дела?', author: 'Я'},{text: 'Нормально', author: 'Bot'}],
-  };
-
-  componentDidUpdate() {
-    const { messages } = this.state;
-
-    if (messages[messages.length - 1].author !== 'Bot') {
-      setTimeout(() => {
-        this.setState({ messages: [...messages, { text: 'Привет, я БОТ', author: 'Bot' }] });
-      }, 1000);
-    }
-  }
-
-  addNewMessage = data => {
-    this.setState(({ messages }) => ({ messages: [...messages, data] }));
-  };
-
-  render() {
-    const { classes } = this.props;
-    const { messages } = this.state;
-
-    return (
-      <div className={classes.paper}>
-        <ChatList messages={messages} />
-        <FormMessage addNewMessage={this.addNewMessage} />
-      </div>
-    );
-  }
-}
-
-Layout.defaultProps = {
-  classes: {},
+const Layout = ({ children }) => {
+  const classes = useStyles();
+  return (
+    <>
+      <Header />
+      <main className={classes.root}>
+        <ChatList ownProps="мой собственный проп" />
+        {children}
+      </main>
+    </>
+  );
 };
 
 Layout.propTypes = {
-  classes: PropTypes.shape(PropTypes.any),
+  children: PropTypes.node.isRequired,
 };
 
-export default withStyles(muiStyles)(Layout);
+export default Layout;

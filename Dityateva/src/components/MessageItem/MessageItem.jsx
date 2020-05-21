@@ -1,73 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import cx from 'classnames';
 import { makeStyles } from '@material-ui/core/styles';
-import Avatar from '@material-ui/core/Avatar';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Typography from '@material-ui/core/Typography';
-import deepOrange from '@material-ui/core/colors/deepOrange';
+import { ListItem, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => {
   return {
     item: {
-      background: 'LightCyan',
+      
+    },
+    message: {
+      backgroundColor: 'LightCyan',
+      color: 'rgba(0, 0, 0, 0.7)',
       border: 0,
       borderRadius: '0 25px 25px 25px',
-      boxShadow: theme.shadows[2],
+      //borderRadius: 12,
+      boxShadow: theme.shadows[3],
       minHeight: 48,
-      maxWidth: '30%',
-      padding: '0 30px',
+      maxWidth: '75%',
+      minWidth: '20%',
+      padding: '5px 30px',
+      //padding: theme.spacing(1, 2),
+      overflowWrap: 'anywhere'
     },
     itemRight: {
       borderRadius: '25px 0 25px 25px',
     },
     left: {
       justifyContent: 'flex-start',
-      alignItems: 'end',
-      padding: 0
     },
     right: {
       justifyContent: 'flex-end',
-      padding: 0 
-    },
-    avatar: {
-      //color: theme.palette.getContrastText(deepOrange[500]),
-      //backgroundColor: deepOrange[500],
-    },
-    hidden: {
-      display: 'none'
-    },
-    inline: {
-      display: 'inline',
-      overflowWrap: 'anywhere'
     },
   };
 });
 
 const MessageItem = ({ author, text }) => {
   const classes = useStyles();
-  return ( 
-    <ListItem className={author == 'Bot' ? classes.left : classes.right}> 
-      <ListItemAvatar>
-        <Avatar className={author == 'Bot' ? classes.avatar : classes.hidden} />
-      </ListItemAvatar>
-      <ListItemText 
-        primary={author}
-        className={`${classes.item} ${author == 'Bot' ? classes.item : classes.itemRight}`}
-        secondary={
-          <React.Fragment>
-            <Typography
-              component="span"
-              variant="body2"
-              className={classes.inline}
-              color="textPrimary"
-            >
-              {text}
-            </Typography>
-          </React.Fragment>
-        }
-      />
+
+  return (
+    <ListItem
+      color="primary"
+      className={cx(classes.item, {
+        [classes.right]: author !== 'Bot',
+        [classes.left]: author === 'Bot',
+      })}
+    >
+      <Typography
+        component="p"
+        variant="body1"
+        color="textPrimary"
+        className={`${classes.message} ${author == 'Bot' ? classes.message : classes.itemRight}`}
+      >
+        {text}
+        <Typography variant="caption" display="block">
+          {author}
+        </Typography>
+      </Typography>
     </ListItem>
   );
 };
