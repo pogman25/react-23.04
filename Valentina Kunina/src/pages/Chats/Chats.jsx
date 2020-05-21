@@ -1,7 +1,7 @@
 import React, { PureComponent } from "react";
 import PropTypes from "prop-types";
-import FormMessage from "../FormMessage";
-import Messages from "../Messages";
+import FormMessage from "../../components/FormMessage";
+import Messages from "../../components/Messages";
 import { withStyles } from "@material-ui/core/styles";
 
 // import Example from "../Example";
@@ -17,7 +17,7 @@ const muiStyles = ({ theme }) => ({
     },
 });
 
-class HelloMessage extends PureComponent {
+class Chats extends PureComponent {
     state = {
         messages: [
             { text: "Привет!", author: "User" },
@@ -39,18 +39,20 @@ class HelloMessage extends PureComponent {
 
     timer;
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps, prevState) {
         const { messages } = this.state;
         clearTimeout(this.timer);
 
-        if (messages[messages.length - 1].author !== "Bot") {
-            this.timer = setTimeout(() => {
-                this.setState({
-                    messages: [...messages, { text: "Привет, я Бот!", author: "Bot" }],
-                    name: "Bot",
-                });
-                this.formInput.current.focusInput();
-            }, 500);
+        if (prevState.messages.length !== messages.length) {
+            if (messages[messages.length - 1].author !== "Bot") {
+                this.timer = setTimeout(() => {
+                    this.setState({
+                        messages: [...messages, { text: "Привет, я Бот!", author: "Bot" }],
+                        name: "Bot",
+                    });
+                    this.formInput.current.focusInput();
+                }, 500);
+            }
         }
     }
 
@@ -87,13 +89,13 @@ class HelloMessage extends PureComponent {
     }
 }
 
-HelloMessage.defaultProps = {
+Chats.defaultProps = {
     lastname: "Ivanov",
 };
 
-HelloMessage.propTypes = {
+Chats.propTypes = {
     // name: PropTypes.string.isRequired,
     lastname: PropTypes.string.isRequired,
 };
 
-export default withStyles(muiStyles)(HelloMessage);
+export default withStyles(muiStyles)(Chats);
