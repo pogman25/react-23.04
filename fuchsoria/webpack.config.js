@@ -6,6 +6,8 @@ const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const CompressionPlugin = require('compression-webpack-plugin');
+const chats = require('./src/mocks/api/chats.json');
+const profile = require('./src/mocks/api/profile.json');
 
 const isAnalyze = process.env.NODE_ENV === 'analyze';
 
@@ -126,5 +128,13 @@ module.exports = {
   },
   devServer: {
     historyApiFallback: true,
+    setup: function(app) {
+      app.get('/api/chats.json', function(req, res) {
+        res.json(chats);
+      });
+      app.get('/api/profile.json', function(req, res) {
+        res.json(profile);
+      });
+    }
   },
 };
