@@ -175,7 +175,7 @@ const ChatList = props => {
 
 const mapStateToProps = store => ({
   chats: getAllChats(store),
-  chatUpdatedIds: [],
+  chatUpdatedIds: getChatUpdatedIds(store),
 });
 
 export default compose(connect(mapStateToProps), memo)(ChatList);
