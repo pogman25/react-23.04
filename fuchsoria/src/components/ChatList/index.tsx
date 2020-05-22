@@ -1,15 +1,16 @@
 import React from 'react';
 import { List, Avatar } from 'antd';
 import { useHistory } from 'react-router-dom';
-import { connect, useStore } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IChatListProps } from '../../interfaces';
 import { State } from '../../store/reducers/reducerTypes';
 import { deleteChat } from '../../store/actions/chatsActions';
 import styles from './styles.module.scss';
 
-function ChatList({ items, blinkingIds }: IChatListProps) {
+export default function ChatList({ items }: IChatListProps) {
+  const blinkingIds = useSelector((store: State) => store.chatlist.blinkingIds);
   const history = useHistory();
-  const store = useStore();
+  const dispatch = useDispatch();
 
   const switchChat = (chatId: string) => () => {
     history.push(`/chats/${chatId}`);
@@ -19,7 +20,7 @@ function ChatList({ items, blinkingIds }: IChatListProps) {
     const isConfirmed = confirm('Remove chat?');
 
     if (isConfirmed) {
-      store.dispatch(deleteChat(chatId));
+      dispatch(deleteChat(chatId));
 
       setTimeout(() => history.push('/chats/'), 300);
     }
@@ -46,13 +47,3 @@ function ChatList({ items, blinkingIds }: IChatListProps) {
     />
   );
 }
-
-const mapStateToProps = (store: State) => {
-  const {
-    chatlist: { blinkingIds },
-  } = store;
-
-  return { blinkingIds };
-};
-
-export default connect(mapStateToProps)(ChatList);
