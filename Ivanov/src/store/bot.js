@@ -1,6 +1,5 @@
+import { v4 } from 'uuid';
 import { addMessage } from "../actions/chatsActions"
-
-
 
 export const botAnswer = store => next => action => {
     if(action.type == addMessage.toString()) {
@@ -9,7 +8,7 @@ export const botAnswer = store => next => action => {
             setTimeout(() => {
                 store.dispatch(
                     addMessage(
-                        { author:'Bot', text: 'I am Bot!!!', chatId}
+                        { author:'Bot', text: 'I am Bot!!!', chatId, id: v4()}
                     )
                 )
             }, 1000);
@@ -18,10 +17,8 @@ export const botAnswer = store => next => action => {
             const chat_class = 'chat-list-item' + chatId;
             const el = document.getElementById(chat_class);
             el.style.backgroundColor="#ccc";
-            console.log('gray')
             setTimeout(() => {
                 el.style.backgroundColor="#fff";
-                console.log('white')
             },500);
         }
     }

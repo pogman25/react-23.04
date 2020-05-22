@@ -1,5 +1,4 @@
 import { handleActions } from 'redux-actions';
-import update from 'immutability-helper';
 import { setChats, addMessage } from '../../actions/chatsActions';
 
 const initialStore = {

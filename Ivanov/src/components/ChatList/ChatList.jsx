@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-    CssBaseline,
-    Divider,
     Drawer,
     List,
     ListItem,
@@ -39,9 +37,9 @@ class ChatList extends Component {
     }
 }
 
-// ChatList.propTypes = {
-//     chatList: PropTypes.arrayOf( PropTypes.string ).isRequired,
-// }
+ChatList.propTypes = {
+    chats: PropTypes.array.isRequired,
+}
 
 const mapStateToProps = store => ({
     chats: getAllChats(store),

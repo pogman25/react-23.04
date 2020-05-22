@@ -9,58 +9,8 @@ import styles from './Chats.css'
 
 class Chats extends Component {
      state = {
-    //     chats: {
-    //         1: {
-    //             title: 'chat_1',
-    //             messages: [
-    //                 {
-    //                     text: 'Hi from first chat',
-    //                     author: 'Bot'
-    //                 },
-    //             ]
-    //         },
-    //         2: {
-    //             title: 'chat_2',
-    //             messages: [
-    //                 {
-    //                     text: 'Hi from second chat',
-    //                     author: 'Bot'
-    //                 },
-    //             ]
-    //         },
-    //         3: {
-    //             title: 'chat_3',
-    //             messages: [
-    //                 {
-    //                     text: 'Hi from third chat',
-    //                     author: 'Bot'
-    //                 },
-    //             ]
-    //         }
-    //     },
         messages: [ { text: 'Hello', author: 'Bot'}],
     };    
-
-    // timer;
-
-    // componentDidUpdate(prevProps, prevState) {
-    //     const {
-    //         match: { params }
-    //     } = this.props;
-    //     const { chatId } = params;
-    //     const { chats } = this.props;
-    //     const messages = chats[chatId-1].messages;
-        
-    //     clearTimeout(this.timer);
-    //     if(prevState.chats[chatId].messages.length !== messages.length) {
-    //         if (messages[messages.length - 1].author !== "Bot") {
-    //                 this.timer = setTimeout(() => {
-    //                     this.addNewMessage({ text: "привет, я Бот", author: "Bot" });
-    //                     }, 1000);
-                
-    //         }
-    //     }
-    // }
     
     addNewMessage = data => {  
         const {
@@ -87,29 +37,19 @@ class Chats extends Component {
         this.setState({'text':''});
     }
 
-    // onKeyUP = (event) => {
-    //     if(event.keyCode === 13) {
-    //         this.sendMessage();
-    //     }
-    // }
-
-    // get messages() {
-    //     const { chats } = this.props;
-    //     const {
-    //       match: { params },
-    //     } = this.props;
-    //     const { chatId } = params;
-    //     return chats[chatId-1].messages;
-    // }
+    onKeyUP = (event) => {
+        if(event.keyCode === 13) {
+            this.sendMessage();
+        }
+    }
     
     render() {
         const { text } = this.state;
-        const { messages, addMessage } = this.props;
+        const { messages } = this.props;
         
         return (
-            <div className={styles.container}>
-                
-                <Messages messages={messages} />
+            <div className={styles.container}>             
+                <Messages messages={ messages } />
                 <form className={styles.form} onSubmit={this.onSubmit} onKeyUp={this.onKeyUP}>
                     <textarea
                         className={styles.messageField}
@@ -132,9 +72,9 @@ class Chats extends Component {
     }
 }
 
-// MessageField.propTypes = {
-//     addNewMessage: PropTypes.func.isRequired,
-// }
+Chats.propTypes = {
+    messages: PropTypes.array.isRequired,
+}
 
 const mapStateToProps = (store, ownProps) => ({
     messages: getChatsMessages(store, ownProps),

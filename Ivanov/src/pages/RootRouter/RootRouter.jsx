@@ -5,17 +5,9 @@ import Layout from '../../components/Layout';
 import Home from '../Home';
 import Chats from '../Chats';
 import Profile from '../Profile';
-import { setChats, updateChats } from '../../actions/chatsActions';
-import mockPageLinks from './mockPageLinks'
+import { setChats } from '../../actions/chatsActions';
 
 class RootRouter extends Component {
-    componentDidMount() {
-        const { setChats } = this.props;
-        setTimeout(() => {
-            setChats(mockPageLinks);
-        }, 1000);
-    }
-
     render() {
         const {profile} = this.props;
         return (
