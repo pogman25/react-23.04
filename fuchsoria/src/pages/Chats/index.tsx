@@ -1,17 +1,19 @@
 import React, { Component } from 'react';
 import { v4 as uuid } from 'uuid';
 import { connect } from 'react-redux';
-import { IChatContainerProps, IChatContainerState, IChats, IProfileState } from '../../interfaces';
+import { IChatContainerProps, IChatContainerState } from '../../interfaces';
 import NotFound from '../../pages/NotFound';
 import MessageList from '../../components/MessageList';
 import ChatForm from '../../components/ChatForm';
 import ChatList from '../../components/ChatList';
 import ChatListForm from '../../components/ChatListForm';
 import { addChat, addMessage } from '../../store/actions/chatsActions';
+import { selectChats, selectProfile } from '../../store/selectors';
 import styles from './styles.module.scss';
+import { State } from '../../store/reducers/reducerTypes';
+import { StateType } from 'typesafe-actions';
 
 class ChatsContainer extends Component<IChatContainerProps, IChatContainerState> {
-  robotTimeouts: { [key: string]: number } = {};
   state = {
     chatList: [{ id: '', title: 'Loading', description: 'Loading' }],
   };
@@ -49,7 +51,7 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
     }));
   }
 
-  addNewMessage = (text: string, author?: string, authorAccess: string = 'user', chatId: string = this.chatId) => {
+  addNewMessage = (text: string, author?: string, authorAccess = 'user', chatId: string = this.chatId) => {
     const message = {
       id: uuid(),
       author: author ? author : this.props.profile.nickName,
@@ -57,35 +59,15 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
       text,
       date: new Date().getTime(),
     };
-    const robotAnswer = () => {
-      if (authorAccess === 'user') {
-        this.sendRobotMessage(message.author);
-      }
-    };
 
-    this.props.addMessage(message, chatId, robotAnswer);
+    this.props.addMessage(message, chatId);
   };
 
   addNewChat = (chatName: string) => {
     this.props.addChat(chatName, uuid().split('-')[0]);
   };
 
-  sendRobotMessage(author: string) {
-    const cachedChatId = this.chatId;
-    const prevMessage = this.messages[this.messages.length - 2];
-    const lastMessage = this.messages[this.messages.length - 1];
-
-    if (prevMessage?.author === lastMessage?.author) {
-      clearTimeout(this.robotTimeouts[this.chatId]);
-    }
-
-    this.robotTimeouts[cachedChatId] = window.setTimeout(
-      () => this.addNewMessage(`Hi ${author}, i am your personal assistant`, 'Robot', 'bot', cachedChatId),
-      3000
-    );
-  }
-
-  componentDidUpdate(prevProps: IChatContainerProps, prevState: IChatContainerState) {
+  componentDidUpdate(prevProps: IChatContainerProps) {
     if (JSON.stringify(prevProps.chats) !== JSON.stringify(this.props.chats)) {
       this.updateChatList();
     }
@@ -108,7 +90,7 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
         </div>
         {this.state.chatList.length > 0 && (
           <div className={styles.chatContent}>
-            <MessageList messages={this.messages} />
+            <MessageList messages={this.messages} chatId={this.chatId} />
             <ChatForm handleSubmit={this.addNewMessage} />
           </div>
         )}
@@ -117,10 +99,8 @@ class ChatsContainer extends Component<IChatContainerProps, IChatContainerState>
   }
 }
 
-const mapStateToProps = (store: { chats: IChats; profile: IProfileState }) => {
-  const { chats, profile } = store;
-
-  return { chats, profile };
+const mapStateToProps = (state: StateType<State>) => {
+  return { chats: selectChats(state), profile: selectProfile(state) };
 };
 
 const mapDispatchToProps = {

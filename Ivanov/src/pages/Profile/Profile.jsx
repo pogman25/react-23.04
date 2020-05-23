@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import {
     Avatar,
     Typography
-} from '@material-ui/core'
-import PropTypes from 'prop-types'
-import styles from './Profile.css'
+} from '@material-ui/core';
+import PropTypes from 'prop-types';
+import styles from './Profile.css';
 
 export class Profile extends Component {
     static propTypes = {

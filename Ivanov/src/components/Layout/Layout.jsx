@@ -6,20 +6,14 @@ import Header from '../Header'
 import styles from './Layout.css'
 
 class Layout extends React.Component {
-    state = {
-        user: {
-            name: 'Nick',
-            lastName: 'Johnson'
-        }
-    };
 
     render() {
         const { children } = this.props;
-        const { name, lastName } = this.state.user;
+        
         return (
             <div className={styles.root}>
                 <CssBaseline />
-                <Header name={name} lastname={lastName}/>
+                <Header />
                 <ChatList />
                 <main className={styles.wrapper}>    
                     { children }

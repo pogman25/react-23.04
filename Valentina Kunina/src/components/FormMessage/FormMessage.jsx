@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Icon from "@material-ui/core/Icon";
+import SendIcon from "@material-ui/icons/Send";
 import styles from "./index.css";
 // import Input from "@material-ui/core/Input";
 
@@ -13,9 +14,6 @@ const classes = () => {
             "& .MuiTextField-root": {
                 margin: theme.spacing(1),
                 width: 300,
-            },
-            "& > *": {
-                margin: theme.spacing(1),
             },
         },
         button: {
@@ -115,12 +113,7 @@ class FormMessage extends PureComponent {
                     ref={(input) => (this.inputRef = input)}
                     onKeyDown={this.handleKeyPress}
                 /> */}
-                <Button
-                    type="submit"
-                    variant="outlined"
-                    color="primary"
-                    endIcon={<Icon color="primary"></Icon>}
-                >
+                <Button type="submit" variant="outlined" color="primary" endIcon={<SendIcon />}>
                     Add message
                 </Button>
             </form>

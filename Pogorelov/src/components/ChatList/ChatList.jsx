@@ -16,7 +16,7 @@ import MailIcon from '@material-ui/icons/Mail';
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import { Link, useHistory } from 'react-router-dom';
-import { getAllChats } from '../../selectors/chatsSelectors';
+import { getAllChats, getChatUpdatedIds } from '../../selectors/chatsSelectors';
 
 const drawerWidth = 240;
 
@@ -73,6 +73,10 @@ const useStyles = makeStyles(theme => ({
     marginTop: 'auto',
     marginBottom: theme.spacing(5),
   },
+
+  active: {
+    color: 'red',
+  },
 }));
 
 const ChatList = props => {
@@ -108,12 +112,13 @@ const ChatList = props => {
         </ListItem>
       </Link>
       <List disablePadding>
-        {props.chats.map(({ title, to }) => (
+        {props.chats.map(({ id, title, to }) => (
           <Link to={to} key={title}>
             <ListItem
               classes={{
                 root: classes.itemRoot,
               }}
+              className={cx({ [classes.active]: props.chatUpdatedIds.includes(id) })}
               button
             >
               <ListItemIcon>
@@ -170,6 +175,7 @@ const ChatList = props => {
 
 const mapStateToProps = store => ({
   chats: getAllChats(store),
+  chatUpdatedIds: getChatUpdatedIds(store),
 });
 
 export default compose(connect(mapStateToProps), memo)(ChatList);

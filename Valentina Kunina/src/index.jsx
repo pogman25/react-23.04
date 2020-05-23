@@ -4,10 +4,10 @@ import ReactDOM from "react-dom";
 // import HelloMessage from "./components/Archive/HelloMessage/HelloMessage";
 import { BrowserRouter } from "react-router-dom";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
+import Layout from "./components/Layout";
+import RootRouter from "./pages/RootRouter";
+import Chat from "./pages/Chats";
 import "./index.css";
-import Menu from './components/Menu';
-// import Layout from './components/Layout'
 
 const theme = createMuiTheme({
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -15,10 +15,13 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
     <BrowserRouter>
-        <Menu open={true}/>
         <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {/* <Layout /> */}
+            <RootRouter />
+            {/* <Layout>
+                <Chat />
+            </Layout> */}
+            {/* <Menu open={true} /> */}
+            {/* <CssBaseline /> */}
             {/* <HelloMessage name="Taylor" /> */}
         </ThemeProvider>
     </BrowserRouter>,
