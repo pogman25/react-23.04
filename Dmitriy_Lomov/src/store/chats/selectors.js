@@ -20,3 +20,6 @@ export const getChatMessages = (store, ownProps) => {
   }
   return [];
 };
+
+export const getChatUpdatedIds = store => store.chats.updatedChatsIds;
+

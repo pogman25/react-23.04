@@ -2,20 +2,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 
-import { setChats } from '../../store/chats/actions';
+import { fetchChatsData } from '../../store/chats/actions';
 
 import Home from '../Home';
 import Chats from '../Chats';
 import Layout from '../../components/Layout';
 import EmptyPage from '../EmptyPage';
-import mockPageLinks from './mockPageLinks';
 
 class RootRouter extends Component {
   componentDidMount() {
-    const { setChats } = this.props;
-    setTimeout(() => {
-      setChats(mockPageLinks);
-    }, 1000);
+    const { fetchChatsData } = this.props;
+
+    fetchChatsData();
   }
 
   render() {
@@ -34,7 +32,7 @@ class RootRouter extends Component {
 }
 
 const mapDispatchToProps = {
-  setChats,
+  fetchChatsData,
 };
 
 export default connect(null, mapDispatchToProps)(RootRouter);

@@ -1,11 +1,18 @@
 import { handleActions } from 'redux-actions';
-import { setChats, addNewMessage, handleNotification } from './actions';
+import {
+  getChatsSuccess,
+  addNewMessage,
+  setUpdateChatsIds,
+  deleteUpdatedId,
+  sendRequest,
+} from './actions';
 
-const initialState = { chatsByIds: {}, chatsIds: [] };
+const initialState = { isFetching: false, chatsByIds: {}, chatsIds: [], updatedChatsIds: [] };
 
-const chatsReducer = handleActions(
+const reducer = handleActions(
   {
-    [setChats]: (state, action) => action.payload,
+    [sendRequest]: state => ({ ...state, isFetching: true }),
+    [getChatsSuccess]: (state, action) => ({ ...state, ...action.payload, isFetching: false }),
     [addNewMessage]: (state, { payload }) => ({
       ...state,
       chatsByIds: {
@@ -16,18 +23,16 @@ const chatsReducer = handleActions(
         },
       },
     }),
-    [handleNotification]: (state, { payload }) => ({
+    [setUpdateChatsIds]: (state, { payload }) => ({
       ...state,
-      chatsByIds: {
-        ...state.chatsByIds,
-        [payload.chatId]: {
-          ...state.chatsByIds[payload.chatId],
-          notification: payload.notification,
-        },
-      },
+      updatedChatsIds: [...state.updatedChatsIds, payload],
+    }),
+    [deleteUpdatedId]: (state, { payload }) => ({
+      ...state,
+      updatedChatsIds: state.updatedChatsIds.filter(i => i !== payload),
     }),
   },
   initialState,
 );
 
-export default chatsReducer;
+export default reducer;
