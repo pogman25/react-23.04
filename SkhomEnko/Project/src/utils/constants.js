@@ -1,1 +1,1 @@
-export const BOT_NAME = 'Bot' //unused
+export const BOT_NAME = 'Bot'; // unused
