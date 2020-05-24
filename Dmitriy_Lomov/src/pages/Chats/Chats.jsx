@@ -9,7 +9,7 @@ import { Box } from '@material-ui/core';
 import FormMessage from '../../components/FormMessage';
 import Messages from '../../components/Messages';
 import { getChatMessages } from '../../store/chats/selectors';
-import { addMessage } from '../../store/chats/actions';
+import { addMessage } from '../../store/messages/actions';
 
 const muiStyles = theme => {
   return {

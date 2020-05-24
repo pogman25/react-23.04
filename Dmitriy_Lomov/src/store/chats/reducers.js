@@ -1,11 +1,11 @@
 import { handleActions } from 'redux-actions';
 import {
   getChatsSuccess,
-  addNewMessage,
   setUpdateChatsIds,
   deleteUpdatedId,
   sendRequest,
 } from './actions';
+import { addNewMessage } from '../messages/actions'
 
 const initialState = { isFetching: false, chatsByIds: {}, chatsIds: [], updatedChatsIds: [] };
 

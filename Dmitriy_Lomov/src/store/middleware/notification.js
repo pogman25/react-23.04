@@ -1,4 +1,5 @@
-import { setUpdateChatsIds, addNewMessage, deleteUpdatedId } from '../chats/actions';
+import { setUpdateChatsIds, deleteUpdatedId } from '../chats/actions';
+import { addNewMessage } from '../messages/actions';
 
 const notification = store => next => action => {
   if (action.type === addNewMessage.toString()) {
