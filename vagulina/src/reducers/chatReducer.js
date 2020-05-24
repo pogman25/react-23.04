@@ -1,8 +1,9 @@
 import update from "react-addons-update";
+import { handleActions } from "redux-actions";
 import { SEND_MESSAGE } from "../actions/messageActions";
 import { ADD_CHAT } from "../actions/chatActions";
 
-const initialStore = {
+const initialState = {
   chats: {
     1: { title: "Chat1", messageList: [1, 2] },
     2: { title: "Chat2", messageList: [] },
@@ -11,33 +12,33 @@ const initialStore = {
   },
 };
 
-function chatReducers(store = initialStore, action) {
-  switch (action.type) {
-    case SEND_MESSAGE:
-      return update(store, {
+const chatReducers = handleActions(
+  {
+    [ADD_CHAT]: (state, action) => {
+      const chatId = Object.keys(state.chats).length + 1;
+      return update(state, {
+        chats: {
+          $merge: { [chatId]: { title: action.title, messageList: [] } },
+        },
+      });
+    },
+    [SEND_MESSAGE]: (state, action) => {
+      return update(state, {
         chats: {
           $merge: {
             [action.chatId]: {
-              title: store.chats[action.chatId].title,
+              title: state.chats[action.chatId].title,
               messageList: [
-                ...store.chats[action.chatId].messageList,
+                ...state.chats[action.chatId].messageList,
                 action.messageId,
               ],
             },
           },
         },
       });
-    case ADD_CHAT: {
-      const chatId = Object.keys(store.chats).length + 1;
-      return update(store, {
-        chats: {
-          $merge: { [chatId]: { title: action.title, messageList: [] } },
-        },
-      });
-    }
-    default:
-      return store;
-  }
-}
+    },
+  },
+  initialState
+);
 
 export default chatReducers;
