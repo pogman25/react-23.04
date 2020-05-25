@@ -15,8 +15,8 @@ class MessageItem extends Component {
   render() {
     const { author, text } = this.props;
     const classes = classNames(styles.message, {
-        [styles.left]: author !== 'Бот',
-        [styles.right]: author === 'Бот',
+        [styles.left]: author !== 'Bot',
+        [styles.right]: author === 'Bot',
       });
   
 

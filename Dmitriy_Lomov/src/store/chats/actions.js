@@ -1,45 +1,36 @@
 import { createAction } from 'redux-actions';
-import { v4 as uuidv4 } from 'uuid';
 
-export const setChats = createAction('chats/SET_CHATS', data => {
-  return data.reduce(
-    (all, item) => {
-      all.chatsByIds[item.id] = item;
-      all.chatsIds.push(item.id);
+export const sendRequest = createAction('chat/SEND_REQUEST');
+export const getChatsSuccess = createAction('chats/GET_CHATS_SUCCESS');
+export const getChatsReject = createAction('chats/GET_CHATS_REJECT');
+export const setUpdateChatsIds = createAction('chat/SET_UPDATED_CHATS_IDS');
+export const deleteUpdatedId = createAction('chat/DELETE_UPDATED_ID');
 
-      return all;
-    },
-    {
-      chatsByIds: {},
-      chatsIds: [],
-    },
-  );
-});
+export const fetchChatsData = () => dispatch => {
+  dispatch(sendRequest());
+  fetch('/api/chats.json')
+    .then(res => {
+      return res.json();
+    })
+    .then(res => {
+      const data = res.reduce(
+        (all, item) => {
+          all.chatsByIds[item.id] = item;
+          all.chatsIds.push(item.id);
 
-export const addNewMessage = createAction('chats/ADD_MESSAGE');
-
-export const addMessage = data => dispatch => {
-  const { author, chatId } = data;
-  if (author !== 'Bot') {
-    setTimeout(() => {
-      dispatch(
-        addNewMessage({
-          author: 'Bot',
-          text: 'Прекрати, я просто робот!',
-          chatId,
-          id: uuidv4(),
-        }),
+          return all;
+        },
+        {
+          chatsByIds: {},
+          chatsIds: [],
+        },
       );
-    }, 1000);
-  }
-  dispatch(addNewMessage({ ...data, id: uuidv4() }));
-};
-
-export const handleNotification = createAction('chats/HANDLE_NOTIFICATION');
-
-export const putNotification = data => dispatch => {
-  dispatch(handleNotification({ ...data, notification: true }));
-  setTimeout(() => {
-    dispatch(handleNotification({ ...data, notification: false }));
-  }, 1000);
+      dispatch(getChatsSuccess(data));
+      return true;
+    })
+    .catch(e => {
+      dispatch(getChatsReject());
+      return false;
+    })
+    .finally(() => {});
 };

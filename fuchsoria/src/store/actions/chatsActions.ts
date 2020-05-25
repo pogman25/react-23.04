@@ -1,4 +1,5 @@
 import { createAction } from 'typesafe-actions';
+import { createAction as createFetchAction } from 'redux-api-middleware';
 import { IChats, IMessage } from './../../interfaces';
 
 export const setChats = createAction('SET_CHATS', (chats: IChats) => chats)();
@@ -12,3 +13,14 @@ export const deleteMessage = createAction('DELETE_MESSAGE', (messageId: string, 
   messageId,
   chatId,
 }))();
+
+export const CHATS_REQUEST = '@@chats/CHATS_REQUEST';
+export const CHATS_SUCCESS = '@@chats/CHATS_SUCCESS';
+export const CHATS_FAILURE = '@@chats/CHATS_FAILURE';
+
+export const fetchChats = () =>
+  createFetchAction({
+    endpoint: '/api/chats.json',
+    method: 'GET',
+    types: [CHATS_REQUEST, CHATS_SUCCESS, CHATS_FAILURE],
+  });

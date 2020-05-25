@@ -1,8 +1,12 @@
-import React, { Component } from 'react';
+import React, { memo } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
 import FormMessage from '../../components/FormMessage';
 import Messages from '../../components/Messages/Messages';
+import { getChatMessages } from '../../selectors/chatsSelectors';
+import { addMessage } from '../../actions/chatsActions';
 
 const muiStyles = theme => {
   return {
@@ -15,95 +19,26 @@ const muiStyles = theme => {
   };
 };
 
-class Chats extends Component {
-  state = {
-    chats: {
-      1: {
-        title: 'chats_1',
-        messages: [
-          {
-            text: 'привет, я бот из 1 чата',
-            author: 'Bot',
-          },
-        ],
-      },
-      2: {
-        title: 'chats_1',
-        messages: [
-          {
-            text: 'привет, я бот из второго чата',
-            author: 'Bot',
-          },
-        ],
-      },
-    },
-    messages: [
-      { text: 'привет, я бОТ', author: 'Bot' },
-      { text: 'привет, я Человек', author: 'Pog' },
-    ],
+const Chats = () => {
+  const params = useParams();
+  const messages = useSelector(store => getChatMessages(store, params));
+  const dispatch = useDispatch();
+
+  const addNewMessage = data => {
+    const { chatId } = params;
+    dispatch(addMessage({ ...data, chatId }));
   };
 
-  timer;
+  return (
+    <Box p={3} mt={2} flexGrow={1}>
+      <Messages messages={messages} />
+      <FormMessage addNewMessage={addNewMessage} />
+    </Box>
+  );
+};
 
-  componentDidUpdate(prevProps, prevState) {
-    const {
-      match: { params },
-    } = this.props;
-    const { chatId } = params;
-    const { chats } = this.state;
-    const messages = chats[chatId].messages;
-    clearTimeout(this.timer);
-    if (prevState.chats[chatId].messages.length !== messages.length) {
-      if (messages[messages.length - 1].author !== 'Bot') {
-        this.timer = setTimeout(() => {
-          this.setState(({ chats }) => ({
-            chats: {
-              ...chats,
-              [chatId]: {
-                ...chats[chatId],
-                messages: [
-                  ...chats[chatId].messages,
-                  { text: 'привет, я БОТ, ответ на сообщение', author: 'Bot' },
-                ],
-              },
-            },
-          }));
-        }, 1000);
-      }
-    }
-  }
+Chats.defaultProps = {
+  messages: [],
+};
 
-  get messages() {
-    const { chats } = this.state;
-    const {
-      match: { params },
-    } = this.props;
-    const { chatId } = params;
-
-    return chats[chatId].messages;
-  }
-
-  addNewMessage = data => {
-    const {
-      match: { params },
-    } = this.props;
-    const { chatId } = params;
-    this.setState(({ chats }) => ({
-      chats: {
-        ...chats,
-        [chatId]: { ...chats[chatId], messages: [...chats[chatId].messages, data] },
-      },
-    }));
-  };
-
-  render() {
-    return (
-      <Box p={3} mt={2} flexGrow={1}>
-        <Messages messages={this.messages} />
-        <FormMessage addNewMessage={this.addNewMessage} />
-      </Box>
-    );
-  }
-}
-
-export default withStyles(muiStyles)(Chats);
+export default memo(withStyles(muiStyles)(Chats));

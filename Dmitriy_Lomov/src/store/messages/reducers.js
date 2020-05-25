@@ -1,21 +1,21 @@
 import { handleActions } from 'redux-actions';
-import { addNewMessage } from '../chats/actions';
+import { addNewMessage } from './actions';
 
 const initialState = {
   messagesByIds: {
-    1: {
+    "1": {
       id: 1,
       text: 'Приветствую тебя, человек, в первом чате!',
       author: 'Bot',
     },
 
-    2: {
+    "2": {
       id: 2,
       text: 'Здарова, кожанный, тут второй чат!',
       author: 'Bot',
     },
   },
-  messagesIds: [1, 2],
+  messagesIds: ["1", "2"],
 };
 
 const messageReducer = handleActions(

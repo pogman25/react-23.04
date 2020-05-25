@@ -4,14 +4,18 @@ const mockPageLinks = [
     to: '/chats/1',
     title: 'Чат_1',
     messages: [1],
-    notification: false,
   },
   {
     id: 2,
     to: '/chats/2',
     title: 'Чат_2',
     messages: [2],
-    notification: false,
+  },
+  {
+    id: 3,
+    to: '/chats/3',
+    title: 'Чат_3',
+    messages: [],
   },
 ];
 
