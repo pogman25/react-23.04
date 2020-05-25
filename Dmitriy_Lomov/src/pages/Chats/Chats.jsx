@@ -9,7 +9,7 @@ import { Box } from '@material-ui/core';
 import FormMessage from '../../components/FormMessage';
 import Messages from '../../components/Messages';
 import { getChatMessages } from '../../store/chats/selectors';
-import { addMessage, putNotification } from '../../store/chats/actions';
+import { addMessage } from '../../store/messages/actions';
 
 const muiStyles = theme => {
   return {
@@ -26,13 +26,11 @@ class Chats extends Component {
   addNewMessage = data => {
     const {
       addMessage,
-      putNotification,
       match: { params },
     } = this.props;
     const { chatId } = params;
 
     addMessage({ ...data, chatId });
-    putNotification({ ...data, chatId });
   };
 
   render() {
@@ -57,7 +55,6 @@ const mapStateToProps = (store, ownProps) => ({
 
 const mapDispatchToProps = {
   addMessage,
-  putNotification,
 };
 
 export default compose(
