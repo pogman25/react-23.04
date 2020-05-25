@@ -8,6 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "build"),
     filename: "index[hash].js",
+    publicPath: "/",
   },
   resolve: {
     extensions: [".js", ".jsx"],
@@ -52,9 +53,7 @@ module.exports = {
     contentBase: path.join(__dirname, "build"),
     compress: true,
     port: 9000,
-    historyApiFallback: {
-      index: "index.html",
-    },
+    historyApiFallback: true,
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -64,5 +63,5 @@ module.exports = {
     new CleanWebpackPlugin(),
     new MiniCssExtractPlugin(),
   ],
-  devtool: 'cheap-inline-module-source-map',
+  devtool: "cheap-inline-module-source-map",
 };
