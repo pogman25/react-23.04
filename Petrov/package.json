@@ -13,6 +13,7 @@
     "@babel/plugin-proposal-class-properties": "^7.8.3",
     "@material-ui/core": "^4.9.12",
     "@material-ui/icons": "^4.9.1",
+    "@types/redux-api-middleware": "^3.2.1",
     "classnames": "^2.2.6",
     "react": "^16.13.1",
     "react-addons-update": "^15.6.2",
@@ -21,7 +22,11 @@
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
-    "redux-logger": "^3.0.6"
+    "redux-api-middleware": "^3.2.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "typesafe-actions": "^5.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
