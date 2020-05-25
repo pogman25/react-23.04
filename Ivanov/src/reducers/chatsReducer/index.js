@@ -1,24 +1,23 @@
 import { handleActions } from 'redux-actions';
-import update from 'immutability-helper';
-import { setChats, updateChats } from '../../actions/chatsActions';
+import { setChats, addMessage } from '../../actions/chatsActions';
 
-const initialStore = [];
+const initialStore = {
+    chatsByIds: {},
+    chatsIds: []
+};
 
 const reducer = handleActions({
     [setChats]: (state, action) => action.payload,
-    [updateChats]: (state, action) => { 
-        //console.log(state);
-        const {text, author, chatId} = action.payload;
-        const newState = update(state,
-            {   
-                [chatId]: 
-                    { 
-                        messages:{$push:[{text:text, author:author}]}
-                    }       
-            }
-        );
-        return newState;
-    }
+    [addMessage]: (state, { payload }) => ({
+        ...state,
+        chatsByIds: {
+          ...state.chatsByIds,
+          [payload.chatId]: {
+            ...state.chatsByIds[payload.chatId],
+            messages: [...state.chatsByIds[payload.chatId].messages, payload.id],
+          },
+        },
+      }),
 },initialStore);
 
 export default reducer;
