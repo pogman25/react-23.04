@@ -5,20 +5,18 @@ import PropTypes from "prop-types";
 import MessageField from "../MessageField";
 import ChatList from "../ChatList";
 import Header from "../Header";
-import { addNewMessage } from "../../actions/messageActions";
 import css from "./index.css";
 
 class Layout extends React.Component {
-
   addNewMessage = (message) => {
     const { chatId, messages } = this.props;
     const newMessageId = Object.keys(messages).length + 1;
-    this.props.addNewMessage(
+    /* this.props.addNewMessage(
       Object.keys(messages).length + 1,
       message.text,
       message.author,
       chatId
-    );
+    ); */
   };
 
   render() {
@@ -30,10 +28,7 @@ class Layout extends React.Component {
             <ChatList />
           </div>
           <div className="layout-right-side">
-            <MessageField
-              chatId={this.props.chatId}
-              addNewMessage={this.addNewMessage}
-            />
+            <MessageField chatId={this.props.chatId} />
           </div>
         </div>
       </div>
@@ -43,7 +38,6 @@ class Layout extends React.Component {
 
 Layout.propTypes = {
   chatId: PropTypes.number,
-  addNewMessage: PropTypes.func.isRequired,
 };
 
 Layout.defaultProps = {
@@ -52,7 +46,6 @@ Layout.defaultProps = {
 
 const mapStateToProps = ({ chatReducer }) => ({ chats: chatReducer.chats });
 
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators({ addNewMessage }, dispatch);
+const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Layout);

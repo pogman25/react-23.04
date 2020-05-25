@@ -1,6 +1,9 @@
 import update from "react-addons-update";
 import { handleActions } from "redux-actions";
-import { SEND_MESSAGE } from "../actions/messageActions";
+import {
+  SEND_MESSAGE,
+  SUCCESS_MESSAGES_LOADING,
+} from "../actions/messageActions";
 import { ADD_CHAT } from "../actions/chatActions";
 
 const initialState = {
@@ -35,6 +38,17 @@ const chatReducers = handleActions(
             },
           },
         },
+      });
+    },
+    [SUCCESS_MESSAGES_LOADING]: (state, action) => {
+      const chats = { ...state.chats };
+      action.payload.forEach((msg) => {
+        const { id, chatId } = msg;
+        chats[chatId].messageList.push(id);
+      });
+      return update(state, {
+        chats: { $set: chats },
+        isLoading: { $set: false },
       });
     },
   },
