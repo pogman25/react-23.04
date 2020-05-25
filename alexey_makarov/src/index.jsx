@@ -4,6 +4,8 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import {createMuiTheme, ThemeProvider} from '@material-ui/core/styles';
 import {BrowserRouter} from 'react-router-dom';
 import RootRouter from "./components/router";
+import {Provider} from 'react-redux'
+import store from "./store";
 
 //Note: Обязательно необходимо задать темы в рамках которой будет работать Материал
 const theme = createMuiTheme({
@@ -11,11 +13,13 @@ const theme = createMuiTheme({
 });
 
 ReactDOM.render(
-    <BrowserRouter>
+    <Provider store={store}>
         <ThemeProvider theme={theme}>
-            <RootRouter/>
-            <CssBaseline/>
+            <BrowserRouter>
+                <RootRouter/>
+                <CssBaseline/>
+            </BrowserRouter>
         </ThemeProvider>
-    </BrowserRouter>,
+    </Provider>,
     document.getElementById("msg")
 );

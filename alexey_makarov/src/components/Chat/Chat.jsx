@@ -1,8 +1,12 @@
 import React from "react";
+import {compose} from 'redux';
 import MessageForm from "../MessageForm/MessageForm";
 import Messages from "../Messages/Messages";
 import {withStyles} from '@material-ui/core/styles';
 import Box from "@material-ui/core/Box";
+import {connect} from "react-redux";
+import {getChatMessages} from "../../selectors/messagesSelector";
+import {addMessage} from "../../actions/chatActions";
 
 const muiStyles = theme => {
     console.log(theme);
@@ -19,53 +23,52 @@ const muiStyles = theme => {
 class Chat extends React.Component {
 
     //Note:Благодаря Proposal не требуется конструктор.
-    state = {
-        messages:[{text:"Hello", author:"Bot"}],
-        isVisible:false,
+    // state = {
+    //     messages:[{text:"Hello", author:"Bot"}],
+    //     isVisible:false,
+    // }
+    //
+    // toggle = () =>{
+    //     this.setState((prev)=>({
+    //         isVisible:!prev.isVisible
+    //     }));
+    // }
+    //
+    // addMessage_Deprecated = () => {
+    //     //Note:Устаревашая версия отправки сообщения, работает без формы
+    //     this.setState((prev)=>({
+    //         messages:[...prev.messages, {text:"add",author:"I'm"}]
+    //     }));
+    //     console.log("Send Message v.1")
+    // }
+    //
+    addNewMessage = (data) => {
+        const {
+            addMessage,
+            match: {params},
+        } = this.props;
+        const {chatId} = params;
+        addMessage({...data, chatId});
     }
-
-    toggle = () =>{
-        this.setState((prev)=>({
-            isVisible:!prev.isVisible
-        }));
-    }
-
-    addMessage_Deprecated = () => {
-        //Note:Устаревашая версия отправки сообщения, работает без формы
-        this.setState((prev)=>({
-            messages:[...prev.messages, {text:"add",author:"I'm"}]
-        }));
-        console.log("Send Message v.1")
-    }
-
-    addMessage = (eventData) =>{
-        //Note: Новая версия сообщения работает при помощи формы
-        console.log(`${eventData.text}`)
-        this.setState(({messages})=>({messages:[...messages,eventData]}));
-        console.log("Send Message v.2")
-    }
-
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const {messages} = this.state;
-        if(messages.length%2 === 0){
-            setTimeout(()=>{
-                this.setState(({messages})=>({
-                    messages:[...messages,{text:"Hello", author:"Bot"}]
-                }));
-            },1000);
-        }
-    }
+    //
+    //
+    // componentDidUpdate(prevProps, prevState, snapshot) {
+    //     const {messages} = this.state;
+    //     if(messages.length%2 === 0){
+    //         setTimeout(()=>{
+    //             this.setState(({messages})=>({
+    //                 messages:[...messages,{text:"Hello", author:"Bot"}]
+    //             }));
+    //         },1000);
+    //     }
+    // }
 
     render() {
-        //TODO:Замечание Замечание 1.1 (Исправлено) . переменные из this.state и this.props лучше объявлять перед return,
-        // так код будет элегантнее смотреться и форматирование по приятнее будет
-        const {messages,isVisible} = this.state;
-        const {name, classes} = this.props;
+        const {messages} = this.props;
 
         return (<Box /*className={classes.paper}*/ /*className={styles.container}*/>
             <Messages messages={messages}/>
-            <MessageForm addMessage={this.addMessage}/>
+            <MessageForm addMessage={this.addNewMessage}/>
             {/*<MessageButton run={this.addMessage_Deprecated}/>*/}
             {/*<button onClick={this.toggle}>Visible</button>*/}
             {/*    {isVisible && <Counter/>}*/}
@@ -75,7 +78,17 @@ class Chat extends React.Component {
 
 }
 
-Chat.defaultProps={}
+const mapStateToProps = (store, ownProps) => ({
+    messages: getChatMessages(store, ownProps),
+});
+
+const mapDispatchToProps = {
+    addMessage,
+}
+
+Chat.defaultProps = {
+    messages: []
+};
 
 //Note: Обертывание компонента стилями, которые полетят через Props
-export default withStyles(muiStyles)(Chat);
+export default compose(connect(mapStateToProps, mapDispatchToProps), withStyles(muiStyles))(Chat);
