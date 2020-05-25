@@ -1,12 +1,17 @@
-import { handleAction } from 'redux-actions';
+import { handleActions } from 'redux-actions';
+import {
+  profileSuccess,
+  profileSend,
+} from '../../actions/profileActions';
 
-const initialStore = {
-  name: 'Alex',
-  lastName: 'Pet',
-};
+const initialState = { };
 
-const reducer = handleAction('', store => store, initialStore);
+const reducer = handleActions(
+  {
+    [profileSend]: state => ({ ...state}),
+    [profileSuccess]: (state, action) => ({ ...state, ...action.payload}),
+  },
+  initialState,
+);
 
 export default reducer;
-
-export const getProfileFromStore = store => store.profile;
