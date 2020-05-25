@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import Home from "../Home";
 import About from "../About";
 import Chat from "../Chat";
+import EmptyPage from "../EmptyPage";
 import Layout from "../../components/Layout";
 
 const RootRouter = () => {
@@ -18,6 +19,9 @@ const RootRouter = () => {
             </Route>
             <Route exact path="/chat">
                 <Chat />
+            </Route>
+            <Route>
+                <EmptyPage />
             </Route>
         </Switch>
     </Layout>
