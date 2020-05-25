@@ -1,11 +1,18 @@
 import { handleActions } from 'redux-actions';
-import { setChats, updateChats } from '../../actions/chatsActions';
+import {
+    getChatsSuccess,
+    addNewMessage,
+    setUpdatChatsIds,
+    deleteUpdatedId,
+    sendRequest,
+} from '../../actions/chatsActions';
 
-const initialState = { chatsByIds: {}, chatsIds: [] };
+const initialState = { isFetching: false, chatsByIds: {}, chatsIds: [], updatedChatsIds: [] };
 
 const reducer = handleActions(
     {
-        [setChats]: (state, action) => action.payload,
+        [sendRequest]: state => ({ ...state, isFetching: true }),
+        [getChatsSuccess]: (state, action) => ({ ...state, ...action.payload, isFetching: false }),
         [addNewMessage]: (state, { payload }) => ({
             ...state,
             chatsByIds: {
@@ -16,17 +23,16 @@ const reducer = handleActions(
                 },
             },
         }),
+        [setUpdatChatsIds]: (state, { payload }) => ({
+            ...state,
+            updatedChatsIds: [...state.updatedChatsIds, payload],
+        }),
+        [deleteUpdatedId]: (state, { payload }) => ({
+            ...state,
+            updatedChatsIds: state.updatedChatsIds.filter(i => i !== payload),
+        }),
     },
     initialState,
 );
-
-// const reducer = (state = initialState, action) => {
-//   switch (action.type) {
-//     case setChats:
-//       return action.payload;
-//     default:
-//       return state;
-//   }
-// };
 
 export default reducer;
