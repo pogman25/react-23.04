@@ -15,6 +15,6 @@ export const loadState = () => {
       const serializeState = JSON.stringify(state);
       localStorage.setItem('guestStore', serializeState);
     } catch (err) {
-      //ignore that
+      
     }
   };
