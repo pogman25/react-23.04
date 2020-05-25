@@ -1,8 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import HelloMessage from "./components/HelloMessage";
+import { BrowserRouter } from "react-router-dom";
+
+import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+
+import RootRouter from "./pages/RootRouter";
+
+const theme = createMuiTheme({
+   background: "black",
+});
 
 ReactDOM.render(
-  <HelloMessage name="world" />,
+    <ThemeProvider theme={theme}>
+        <BrowserRouter>
+            <CssBaseline />
+            <RootRouter />
+        </BrowserRouter>
+    </ThemeProvider>,
   document.getElementById("app")
 );
