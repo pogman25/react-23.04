@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
-    CssBaseline,
-    Divider,
     Drawer,
     List,
     ListItem,
@@ -11,6 +9,7 @@ import {
     Toolbar,
 } from '@material-ui/core';
 import { Link, useHistory } from 'react-router-dom';
+import { getAllChats } from '../../selectors/chatSelectors'
 import styles from './ChatList.css';
 
 class ChatList extends Component {
@@ -27,7 +26,7 @@ class ChatList extends Component {
                 <List>
                     { chats.map(({id, title}) => (
                         <Link to={"/chats/"+id} key={title} className={styles.chatlink}>
-                            <ListItem button>
+                            <ListItem id={"chat-list-item"+id} button>
                                 <ListItemText primary={title} className={styles.chatname}/>
                             </ListItem>
                         </Link>
@@ -38,12 +37,12 @@ class ChatList extends Component {
     }
 }
 
-// ChatList.propTypes = {
-//     chatList: PropTypes.arrayOf( PropTypes.string ).isRequired,
-// }
+ChatList.propTypes = {
+    chats: PropTypes.array.isRequired,
+}
 
 const mapStateToProps = store => ({
-    chats: store.chats,
+    chats: getAllChats(store),
 });
 
 export default connect(mapStateToProps)(ChatList);

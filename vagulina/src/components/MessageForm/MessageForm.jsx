@@ -7,14 +7,6 @@ import SendIcon from "material-ui/svg-icons/content/send";
 class MessageForm extends PureComponent {
   state = { text: "", author: "Me" };
 
-  componentDidMount() {
-//    console.log(`"MessageForm did mount" ${this.textRef.current}`);
-  }
-
-  componentDidUpdate() {
-//    console.log("MessageForm did update");
-  }
-
   onChangeText = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -34,7 +26,6 @@ class MessageForm extends PureComponent {
   };
 
   render() {
-//    console.log("MessageForm render");
     const { text, author } = this.state;
     return (
       <form onSubmit={this.onSubmit} className={css.form}>

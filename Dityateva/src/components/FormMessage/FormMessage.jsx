@@ -7,7 +7,7 @@ import styles from './index.css';
 class FormMessage extends Component {
   state = {
     text: '',
-    author: 'Я',
+    author: '',
   };
 
   onChange = event => {
@@ -40,20 +40,23 @@ class FormMessage extends Component {
     const { text, author } = this.state;
 
     return (
-      <form className={styles.container} noValidate autoComplete="off" onSubmit={this.onSubmit}>
+      <form className={styles.container} onSubmit={this.onSubmit}>
+        <TextField
+          id="standard-basic"
+          label="Автор"
+          name="author"
+          onChange={this.onChange}
+          value={author}
+        />
         <TextField
           id="standard-multiline-flexible"
-          //label="Текст сообщения"
-          //multiline
-          rowsMax={4}
-          placeholder="Напишите сообщение..." 
-          inputProps={{ 'aria-label': 'description' }} 
+          label="Текст сообщения"
           name="text"
+          multiline
+          rowsMax={4}
           onChange={this.onChange}
           onKeyDown={this.onKeyDown}
           value={text}
-          className={styles.input}
-          autoFocus
         />
         <IconButton type="submit" color="primary">
           <SendIcon />
