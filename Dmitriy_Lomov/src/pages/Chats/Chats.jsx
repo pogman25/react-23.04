@@ -9,7 +9,7 @@ import { Box } from '@material-ui/core';
 import FormMessage from '../../components/FormMessage';
 import Messages from '../../components/Messages';
 import { getChatMessages } from '../../store/chats/selectors';
-import { addMessage } from '../../store/messages/actions';
+import { addMessage, fetchMessagesData } from '../../store/messages/actions';
 
 const muiStyles = theme => {
   return {
@@ -23,6 +23,11 @@ const muiStyles = theme => {
 };
 
 class Chats extends Component {
+  componentDidMount() {
+    const { fetchMessagesData } = this.props;
+    fetchMessagesData();
+  }
+
   addNewMessage = data => {
     const {
       addMessage,
@@ -55,6 +60,7 @@ const mapStateToProps = (store, ownProps) => ({
 
 const mapDispatchToProps = {
   addMessage,
+  fetchMessagesData,
 };
 
 export default compose(

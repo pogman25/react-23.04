@@ -3,15 +3,15 @@ import {
   getChatsSuccess,
   setUpdateChatsIds,
   deleteUpdatedId,
-  sendRequest,
+  sendChatsRequest,
 } from './actions';
-import { addNewMessage } from '../messages/actions'
+import { addNewMessage } from '../messages/actions';
 
 const initialState = { isFetching: false, chatsByIds: {}, chatsIds: [], updatedChatsIds: [] };
 
 const reducer = handleActions(
   {
-    [sendRequest]: state => ({ ...state, isFetching: true }),
+    [sendChatsRequest]: state => ({ ...state, isFetching: true }),
     [getChatsSuccess]: (state, action) => ({ ...state, ...action.payload, isFetching: false }),
     [addNewMessage]: (state, { payload }) => ({
       ...state,
