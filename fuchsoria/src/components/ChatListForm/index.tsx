@@ -13,8 +13,8 @@ export default function ChatListForm({ handleCreate }: { handleCreate: (title: s
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
-      <Input type="text" placeholder="Введите название" onChange={(event) => setTitle(event.target.value)} />
-      <Button htmlType="submit">Создать чат</Button>
+      <Input type="text" placeholder="Enter chat name" onChange={(event) => setTitle(event.target.value)} />
+      <Button htmlType="submit">Create Chat</Button>
     </form>
   );
 }

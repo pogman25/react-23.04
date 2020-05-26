@@ -7,7 +7,7 @@ exports[`<ChatListForm /> Component should render 1`] = `
   >
     <input
       class="ant-input"
-      placeholder="Введите название"
+      placeholder="Enter chat name"
       type="text"
       value=""
     />
@@ -16,7 +16,7 @@ exports[`<ChatListForm /> Component should render 1`] = `
       type="submit"
     >
       <span>
-        Создать чат
+        Create Chat
       </span>
     </button>
   </form>
