@@ -11,23 +11,23 @@ import EmptyPage from '../EmptyPage';
 import { fetchChatsData } from '../../actions/chatsActions';
 
 class RootRouter extends Component {
-  componentDidMount() {
-    const { fetchChatsData } = this.props;
+  // componentDidMount() {
+  //   const { fetchChatsData } = this.props;
 
-    // пример заворачивания промиса в таймаут
-    new Promise(resolve => {
-      setTimeout(() => {
-        resolve(true);
-      }, 1000);
-    }).then(res => {
-      console.log(res);
-    });
+  //   // пример заворачивания промиса в таймаут
+  //   new Promise(resolve => {
+  //     setTimeout(() => {
+  //       resolve(true);
+  //     }, 1000);
+  //   }).then(res => {
+  //     console.log(res);
+  //   });
 
-    // вариант постобработки запроса, полезно при работе с формами, что бы не хранить в редаксе флаг формы, но при этом работать через action
-    fetchChatsData().then(i => {
-      console.log(i);
-    });
-  }
+  //   // вариант постобработки запроса, полезно при работе с формами, что бы не хранить в редаксе флаг формы, но при этом работать через action
+  //   fetchChatsData().then(i => {
+  //     console.log(i);
+  //   });
+  // }
 
   render() {
     const { open } = this.props;

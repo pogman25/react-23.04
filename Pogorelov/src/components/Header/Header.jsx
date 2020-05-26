@@ -5,6 +5,7 @@ import { AppBar, Toolbar, IconButton, Typography, Badge, makeStyles } from '@mat
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { DRAWER_WIDTH } from '../utils/constants';
+import useChatData from './useChatData';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -37,8 +38,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = ({ chatName }) => {
+  const { state, dispatch } = useChatData();
+  const { photo } = state;
   const classes = useStyles();
-  return (
+  return useMemo(() => 
     <AppBar position="absolute" className={cx(classes.appBar, classes.appBarShift)}>
       <Toolbar className={classes.toolbar}>
         <IconButton
@@ -50,6 +53,7 @@ const Header = ({ chatName }) => {
           <MenuIcon />
         </IconButton>
         <Typography
+          photo={photo}
           component="h1"
           variant="h6"
           color="inherit"
@@ -64,8 +68,8 @@ const Header = ({ chatName }) => {
           </Badge>
         </IconButton>
       </Toolbar>
-    </AppBar>
-  );
+    </AppBar>,
+  , [photo, chatName]);
 };
 
 Header.defaultProps = {
