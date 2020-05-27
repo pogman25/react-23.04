@@ -1,5 +1,5 @@
 import { handleActions } from 'redux-actions';
-import { getChatsSuccess, addMessage, sendRequest, getChatsReject, SUCCESS } from '../../actions/chatsActions';
+import { getChatsSuccess, addMessage, sendRequest, getChatsReject } from '../../actions/chatsActions';
 
 const initialState = {
     // isError: false,

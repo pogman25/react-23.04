@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import Messages from '../../components/Messages';
 import { addMessage } from '../../actions/chatsActions';
+import getMessagesData from '../../actions/messagesActions';
 import { getChatsMessages } from '../../selectors/chatSelectors';
 import styles from './Chats.css'
 
@@ -11,6 +12,11 @@ class Chats extends Component {
      state = {
         messages: [ { text: 'Hello', author: 'Bot'}],
     };    
+
+    componentDidMount() {
+        const { getMessagesData } = this.props;
+        getMessagesData();
+    }
     
     addNewMessage = data => {  
         const {
@@ -85,7 +91,7 @@ Chats.defaultProps = {
 }
 
 const mapDispatchToProps = {
-    addMessage,
+    addMessage, getMessagesData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chats);

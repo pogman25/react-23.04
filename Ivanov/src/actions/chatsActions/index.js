@@ -10,8 +10,6 @@ export const addMessage = createAction('chats/ADD_MESSAGE',
     return { ...data, id: v4() };
 });
 
-export const SUCCESS = 'chats/success';
-
 export const getChatsData = () => 
     createActionRSAA( {
         endpoint: '/api/chats_data.json',
