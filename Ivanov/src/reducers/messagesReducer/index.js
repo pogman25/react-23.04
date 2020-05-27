@@ -24,6 +24,7 @@ const initialStore = {
     },
     messagesIds: [1,2,3]
 };
+//const initialStore = [];
 const reducer = handleActions({
     [addMessage]: (state, { payload })=> ({
         messagesByIds: {...state.messagesByIds,[payload.id]: payload },
