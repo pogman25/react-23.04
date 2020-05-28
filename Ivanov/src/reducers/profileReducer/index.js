@@ -1,11 +1,16 @@
-import { handleAction } from 'redux-actions';
+import { handleActions } from 'redux-actions';
+import { getProfileSuccess, sendProfileRequest } from '../../actions/profileActions/profileActions';
 
 const initialStore = {
-    name: 'Nick',
-    lastname: 'Johnson',
+    name: '',
+    lastname: '',
 };
 
-const reducer = handleAction ('', store => store, initialStore);
+const reducer = handleActions ({
+    [getProfileSuccess]: (state, action) => ({
+        state
+    })    
+}, initialStore);
 
 export default reducer;
 

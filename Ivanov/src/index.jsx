@@ -8,11 +8,11 @@ import {store, persistor} from './store';
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    {/* <PersistGate loading={null} persistor={persistor}> */}
       <BrowserRouter>
         <RootRouter />
       </BrowserRouter>
-    </PersistGate>
+    {/* </PersistGate> */}
   </Provider>,
   document.getElementById('root')
 );

@@ -1,15 +1,14 @@
-import { createStore, applyMiddleware } from 'redux';
-import { persistStore, persistReducer } from 'redux-persist';
-import storage from 'redux-persist/lib/storage';
+import { createStore, applyMiddleware, compose } from 'redux';
 import logger from 'redux-logger';
+import thunk from 'redux-thunk';
+import { apiMiddleware } from 'redux-api-middleware';
 import rootReducer from '../reducers';
 import { botAnswer } from './bot';
 
-const persistConfig = {
-  key: 'root',
-  storage,
-}; 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-
-export const store = createStore(persistedReducer, applyMiddleware(logger, botAnswer));
-export let persistor = persistStore(store);
+export const store = createStore(rootReducer, 
+    compose(
+        applyMiddleware(thunk,apiMiddleware, logger,botAnswer),
+        window.__REDUX_DEVTOOLS_EXTENSION__
+          ? window.__REDUX_DEVTOOLS_EXTENSION__()
+          : () => {}
+      ));
