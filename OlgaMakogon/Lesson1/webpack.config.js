@@ -76,6 +76,7 @@ module.exports = {
       template: 'src/index.html',
     }),
     new MiniCssExtractPlugin(),
+    new GenerateSW,
     new InjectManifest({
       swSrc: './src/sw.js',
     }),

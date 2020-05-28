@@ -25,4 +25,4 @@ ReactDOM.render(
   document.getElementById('hello-example'),
 );
 
-serviceWorker.register();
+// serviceWorker.register();
