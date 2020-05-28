@@ -10,8 +10,8 @@ export const addMessage = createAction('chats/ADD_MESSAGE',
     return { ...data, id: v4() };
 });
 
-export const getChatsData = () => 
-    createActionRSAA( {
+export const getChatsData = () => {
+    return createActionRSAA( {
         endpoint: '/api/chats_data.json',
         method: 'GET',
         types: [
@@ -37,7 +37,7 @@ export const getChatsData = () =>
             getChatsReject,
         ]
     });
-
+}
 // export const fetchChatsData = () => dispatch => {
 //     dispatch(sendRequest());
 //     fetch('/api/chats_data.json')

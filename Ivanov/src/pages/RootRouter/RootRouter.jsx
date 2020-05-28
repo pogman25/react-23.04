@@ -9,14 +9,13 @@ import Chats from '../Chats';
 import Profile from '../Profile';
 import { getChatsData } from '../../actions/chatsActions';
 import mockPageLinks from './mockPageLinks';
+import { getProfileData } from '../../actions/profileActions/profileActions';
 
 class RootRouter extends Component {
     componentDidMount() {
         const { getChatsData } = this.props;
         getChatsData();
-        //fetchChatsData();
-        // setTimeout(() => {
-        // }, 1000);
+        getProfileData();
     }
     render() {
         const {profile, open} = this.props;

@@ -9,11 +9,13 @@ import {
     Typography
 } from '@material-ui/core'
 import { getProfileFromStore } from '../../reducers/profileReducer';
+import getProfileData from '../../actions/profileActions/profileActions';
 import styles from './Header.css'
 
 const Header = () => {
+    // getProfileData();
     const { name, lastname } = useSelector(getProfileFromStore);
-    
+   
     return (
         <AppBar>
             <Toolbar>
