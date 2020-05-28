@@ -1,20 +1,20 @@
 export const loadState = () => {
   try {
-    const serializeState = localStorage.getItem('myChat')
+    const serializeState = localStorage.getItem('myChat');
     if (serializeState === null) {
-      return undefined
+      return undefined;
     }
-    return JSON.parse(serializeState)
+    return JSON.parse(serializeState);
   } catch (err) {
-    return undefined
+    return undefined;
   }
-}
+};
 
 export const saveState = state => {
   try {
-    const serializeState = JSON.stringify(state)
-    localStorage.setItem('myChat', serializeState)
+    const serializeState = JSON.stringify(state);
+    localStorage.setItem('myChat', serializeState);
   } catch (err) {
-    console.log(err)
+    console.log(err);
   }
-}
+};

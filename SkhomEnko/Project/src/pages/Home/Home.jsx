@@ -1,8 +1,8 @@
-import React from 'react'
-import { Box } from '@material-ui/core'
+import React from 'react';
+import { Box } from '@material-ui/core';
 
 const Home = props => {
-  return <Box m={2}>Стартовая страница</Box>
-}
+  return <Box m={2}>Стартовая страница</Box>;
+};
 
-export default Home
+export default Home;

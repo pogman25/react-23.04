@@ -1,23 +1,27 @@
-import { handleActions } from 'redux-actions'
-import { setChats, addNewChat, addNewMessage } from '../../actions/chatsActions'
+import { handleActions } from 'redux-actions';
+import { setChats, addNewChat, addNewMessage } from '../../actions/chatsActions';
 
-const initialState = { chatsByIds: {}, chatsIds: [] }
+const initialState = { chatsByIds: {}, chatsIds: [] };
 
 const reducer = handleActions(
   {
     [setChats]: (state, action) => action.payload,
-    [addNewChat]: (state) => {
-      const id = Object.keys(state.chatsByIds).length + 1
+    [addNewChat]: state => {
+      const id = Object.keys(state.chatsByIds).length + 1;
       return {
         ...state,
         chatsByIds: {
           ...state.chatsByIds,
           [id]: {
-            id, to: `/chats/${id}`, title: `Чат ${id}`, messages: Array(0) 
-          }
+            id,
+            to: `/chats/${id}`,
+            title: `Чат ${id}`,
+            messages: Array(0),
+          },
         },
-        chatsIds: [...state.chatsIds, id]
-    }},
+        chatsIds: [...state.chatsIds, id],
+      };
+    },
     [addNewMessage]: (state, { payload }) => ({
       ...state,
       chatsByIds: {
@@ -25,13 +29,13 @@ const reducer = handleActions(
         [payload.chatId]: {
           ...state.chatsByIds[payload.chatId],
           messages: [...state.chatsByIds[payload.chatId].messages, payload.id],
-          lastTimestamp: payload.timestamp // ~~(Math.random() * 10)
+          lastTimestamp: payload.timestamp, // ~~(Math.random() * 10)
         },
       },
     }),
   },
-  initialState
-)
+  initialState,
+);
 
 // const reducer = (state = initialState, action) => {
 //   switch (action.type) {
@@ -42,4 +46,4 @@ const reducer = handleActions(
 //   }
 // }
 
-export default reducer
+export default reducer;

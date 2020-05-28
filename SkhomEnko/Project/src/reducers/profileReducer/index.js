@@ -1,16 +1,16 @@
-import { handleActions } from 'redux-actions'
-import { updateProfile } from '../../actions/chatsActions'
+import { handleActions } from 'redux-actions';
+import { updateProfile } from '../../actions/chatsActions';
 
 const initialStore = {
   name: 'Алексей',
-  lastName: 'Схоменко'
-}
+  lastName: 'Схоменко',
+};
 
 const reducer = handleActions(
   {
-    [updateProfile]: (state, action) => action.payload
+    [updateProfile]: (state, action) => action.payload,
   },
-  initialStore
-)
+  initialStore,
+);
 
-export default reducer
+export default reducer;
