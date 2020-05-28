@@ -1,12 +1,12 @@
-import React, { Component } from 'react'
-import { compose } from 'redux'
-import { connect } from 'react-redux'
-import { withStyles } from '@material-ui/core/styles'
-import { Box } from '@material-ui/core'
-import FormMessage from '../../components/FormMessage'
-import { getChatMessages, getCurrentUser } from '../../selectors/chatsSelectors'
-import { addMessage } from '../../actions/chatsActions'
-import MessageList from '../../components/MessageList'
+import React, { Component } from 'react';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core/styles';
+import { Box } from '@material-ui/core';
+import FormMessage from '../../components/FormMessage';
+import { getChatMessages, getCurrentUser } from '../../selectors/chatsSelectors';
+import { addMessage } from '../../actions/chatsActions';
+import MessageList from '../../components/MessageList';
 
 const muiStyles = theme => {
   return {
@@ -15,10 +15,10 @@ const muiStyles = theme => {
       marginTop: theme.spacing(7),
       display: 'flex',
       flexDirection: 'column',
-      alignItems: 'center'
-    }
-  }
-}
+      alignItems: 'center',
+    },
+  };
+};
 
 class Chats extends Component {
   componentDidMount() {}
@@ -27,36 +27,36 @@ class Chats extends Component {
     const {
       addMessage,
       match: { params },
-    } = this.props
-    const { chatId } = params
-    addMessage({ ...data, chatId })
-  }
+    } = this.props;
+    const { chatId } = params;
+    addMessage({ ...data, chatId });
+  };
 
   render() {
-    const { messages, user } = this.props
+    const { messages, user } = this.props;
     return (
       <Box flexGrow={1}>
         <MessageList messages={messages} user={user} />
         <FormMessage addNewMessage={this.addNewMessage} user={user} />
       </Box>
-    )
+    );
   }
 }
 
 const mapStateToProps = (store, ownProps) => ({
   messages: getChatMessages(store, ownProps),
-  user: getCurrentUser(store)
-})
+  user: getCurrentUser(store),
+});
 
 const mapDispatchToProps = {
-  addMessage
-}
+  addMessage,
+};
 
 Chats.defaultProps = {
-  messages: []
-}
+  messages: [],
+};
 
 export default compose(
   connect(mapStateToProps, mapDispatchToProps),
-  withStyles(muiStyles)
-)(Chats)
+  withStyles(muiStyles),
+)(Chats);
