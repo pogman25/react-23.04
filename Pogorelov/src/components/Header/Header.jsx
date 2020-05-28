@@ -38,10 +38,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Header = ({ chatName }) => {
-  const { state, dispatch } = useChatData();
-  const { photo } = state;
+  const isFetching = useChatData();
+  console.log(isFetching);
   const classes = useStyles();
-  return useMemo(() => 
+  return (
     <AppBar position="absolute" className={cx(classes.appBar, classes.appBarShift)}>
       <Toolbar className={classes.toolbar}>
         <IconButton
@@ -53,7 +53,6 @@ const Header = ({ chatName }) => {
           <MenuIcon />
         </IconButton>
         <Typography
-          photo={photo}
           component="h1"
           variant="h6"
           color="inherit"
@@ -68,8 +67,8 @@ const Header = ({ chatName }) => {
           </Badge>
         </IconButton>
       </Toolbar>
-    </AppBar>,
-  , [photo, chatName]);
+    </AppBar>
+  );
 };
 
 Header.defaultProps = {
