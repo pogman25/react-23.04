@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core';
 import Header from '../Header';
 import ChatList from '../ChatList';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
   },
@@ -16,7 +16,7 @@ const Layout = ({ children }) => {
     <>
       <Header />
       <main className={classes.root}>
-        <ChatList ownProps="мой собственный проп" />
+        <ChatList ownProps="myprop" />
         {children}
       </main>
     </>
