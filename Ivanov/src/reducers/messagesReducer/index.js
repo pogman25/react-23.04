@@ -1,6 +1,6 @@
 import { handleActions } from "redux-actions";
 import { addMessage } from "../../actions/chatsActions";
-import { getMessagesSuccess } from "../../actions/messagesActions/messagesActions";
+import { getMessagesSuccess, sendMessagesRequest } from "../../actions/messagesActions/messagesActions";
 
 // const initialStore = {
 //     messagesByIds: {
@@ -26,6 +26,7 @@ import { getMessagesSuccess } from "../../actions/messagesActions/messagesAction
 //     messagesIds: [1,2,3]
 // };
 const initialState = {
+    isFetching: false,
     messagesByIds: {},
     messagesIds: []
 };
@@ -34,8 +35,9 @@ const reducer = handleActions({
         messagesByIds: {...state.messagesByIds,[payload.id]: payload },
         messagesIds: [...state.messagesIds, payload.id]
     }),
+    [sendMessagesRequest]: (state, action) => ({ ...state, isFetching: true }),
     [getMessagesSuccess]: (state, action) => ({
-        ...state, ...action.payload
+        ...state, ...action.payload, isFetching: false
     })
 }, initialState);
 

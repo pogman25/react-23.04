@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import Button from '@material-ui/core/Button';
 import Messages from '../../components/Messages';
 import { addMessage } from '../../actions/chatsActions';
@@ -51,8 +52,8 @@ class Chats extends Component {
     
     render() {
         const { text } = this.state;
-        const { messages } = this.props;
-        
+        const { messages, isFetching } = this.props;
+        if(isFetching) return (<CircularProgress />)
         return (
             <div className={styles.container}>             
                 <Messages messages={ messages } />
@@ -84,11 +85,13 @@ Chats.propTypes = {
 
 const mapStateToProps = (store, ownProps) => ({
     messages: getChatsMessages(store, ownProps),
+    isFetching: store.messages.isFetching
 });
 
-Chats.defaultProps = {
-    messages: []
-}
+// Chats.defaultProps = {
+//     messages: [],
+//     isFetching: false
+// }
 
 const mapDispatchToProps = {
     addMessage, getMessagesData

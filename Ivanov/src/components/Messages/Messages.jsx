@@ -6,7 +6,10 @@ import styles from './Messages.css'
 class Messages extends Component {
     render() {
         const { messages } = this.props;
-       
+        
+        if(messages.length === 0) return (
+            <div></div>
+        );
         return (
             <ul className={styles.list}>
                 { messages.map(({author,text}, index) => (
