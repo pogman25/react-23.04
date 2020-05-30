@@ -14,8 +14,8 @@ const RootRouter = () => {
                 <Route exact path="/">
                     <Home />
                 </Route>
-                <Route path="/chat/:id">
-                    <Chats />
+                <Route path="/chat/:id" component={Chats}>
+                    {/* <Chats /> */}
                 </Route>
                 <Route path="/settings" component={Settings}>
                     {/* <Settings /> */}

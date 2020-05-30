@@ -72,6 +72,8 @@ class Chats extends PureComponent {
     render() {
         const { messages, name, visible } = this.state;
         const { lastname, classes } = this.props;
+        const { match: { params } } = this.props;
+        console.log(params);
 
         return (
             <div className={classes.paper}>
