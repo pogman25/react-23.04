@@ -1,4 +1,3 @@
-  
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -6,6 +5,7 @@ import { Provider } from 'react-redux';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import RootRouter from './pages/RootRouter';
+import * as serviceWorker from './serviceWorker';
 import './index.css';
 import store from './store';
 
@@ -24,3 +24,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('hello-example'),
 );
+
+// serviceWorker.register();
