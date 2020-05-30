@@ -1,6 +1,6 @@
-// ЭТОТ MIDDLEWARE устарел. В проекте не используется Просто для примера.
+// ЭТОТ MIDDLEWARE устарел. В проекте не используется. Оставил для примера.
 
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import { addMessage } from '../actions/chatsActions';
 
 const botAnswers = [

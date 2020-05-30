@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core/styles';
@@ -54,6 +55,17 @@ const mapDispatchToProps = {
 
 Chats.defaultProps = {
   messages: [],
+};
+
+Chats.propTypes = {
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      author: PropTypes.string,
+      text: PropTypes.string,
+      Timestamp: PropTypes.number,
+    }),
+  ),
 };
 
 export default compose(

@@ -22,11 +22,9 @@ const MessageItem = ({ data }) => {
 
       <div className="bubble-container">
         <div className="bubble" title={formatedTimestamp}>
-          <b>{author}</b> 
-{' '}
-<span className="time">{fromTimestamp}</span> 
-{' '}
-<br />
+          <b>{author}</b>
+          <span className="time">{fromTimestamp}</span>
+          <br />
           {text}
         </div>
       </div>
@@ -39,7 +37,7 @@ MessageItem.propTypes = {
     // id прилетает, но в самом (данном) компоненте он не задействован, используется только снаружи для итерирования
     // id: PropTypes.number,
     author: PropTypes.string,
-    message: PropTypes.string,
+    text: PropTypes.string,
     showTimestamp: PropTypes.bool,
     timestamp: PropTypes.number,
     isMine: PropTypes.bool,

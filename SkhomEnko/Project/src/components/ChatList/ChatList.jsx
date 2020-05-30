@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
@@ -80,7 +81,8 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const ChatList = props => {
+// eslint-disable-next-line no-shadow
+const ChatList = ({ chats, addNewChat }) => {
   const classes = useStyles();
   const history = useHistory();
 
@@ -97,7 +99,7 @@ const ChatList = props => {
       }}
     >
       <List disablePadding>
-        {props.chats.map(({ title, to, lastTimestamp }) => (
+        {chats.map(({ title, to, lastTimestamp }) => (
           <Link
             to={to}
             key={title}
@@ -134,7 +136,7 @@ const ChatList = props => {
             root: cx(classes.itemRoot),
           }}
           button
-          onClick={props.addNewChat}
+          onClick={addNewChat}
         >
           <ListItemIcon>
             <AddIcon />
@@ -186,6 +188,19 @@ const ChatList = props => {
       </List>
     </Drawer>
   );
+};
+
+ChatList.propTypes = {
+  addNewChat: PropTypes.func.isRequired,
+  chats: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number,
+      to: PropTypes.string,
+      title: PropTypes.string,
+      messages: PropTypes.arrayOf(PropTypes.number),
+      lastTimestamp: PropTypes.number,
+    }),
+  ).isRequired,
 };
 
 const mapDispatchToProps = {

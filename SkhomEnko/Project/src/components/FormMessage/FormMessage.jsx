@@ -8,7 +8,7 @@ class FormMessage extends Component {
     text: '',
     showEmojis: false,
     emojis: [
-      ...'😀😁😂🤣😃😄😅😆😉😊😋😎😍😘🥰😗😙😚🙂🤗🤩🤔🤨😐😑😶🙄😏😣😥😮🤐😯😪😫😴😌😛😜😝🤤😒😓😔😕🙃🤑😲😞😟😤😢😭😦😧😨😩🤯😬😰😱🥵🥶🤪😵😡😠🤬😷🤒🤕🤢🤮🤧😇🤠🤡🥳🥴🥺🤥🤫🤭🧐🤓😈👿👹👺💩😺😸😹😻😼😽🙀😿😾👍👎👊✊🤛🤜🤞✌️🤟🤘👌👈👉👆👇☝️✋🤚🖐🖖',
+      ...'😀😁😂🤣😃😄😅😆😉😊😋😎😍😘🥰😗😙😚🙂🤗🤩🤔🤨😐😑😶🙄😏😣😥😮🤐😯😪😫😴😌😛😜😝🤤😒😓😔😕🙃🤑😲😞😟😤😢😭😦😧😨😩🤯😬😰😱🥵🥶🤪😵😡😠🤬😷🤒🤕🤢🤮🤧😇🤠🤡🥳🥴🥺🤥🤫🤭🧐🤓😈👿👹👺💩😺😸😹😻😼😽🙀😿😾👍👎👊✊🤛🤜🤞✌🤟🤘👌👈👉👆👇☝✋🤚🖐🖖',
     ],
   };
 
@@ -41,7 +41,7 @@ class FormMessage extends Component {
       showEmojis: !showEmojis,
       text: text + emojik,
     }));
-    console.log('selected emoji:', emojik);
+    // console.log('selected emoji:', emojik);
   };
 
   render() {
@@ -53,23 +53,28 @@ class FormMessage extends Component {
             name="text"
             onChange={this.onChange}
             onKeyDown={e => {
-              if (!e.shiftKey && e.key == 'Enter') this.onSubmit(e);
+              if (!e.shiftKey && e.key === 'Enter') this.onSubmit(e);
             }}
             value={text}
             autoFocus
           />
           <div className="emoji-selector" style={{ display: 'inline-block' }}>
             <div
+              role="navigation"
               className={`emoji-list${showEmojis ? '' : ' hide'}`}
               onClick={this.onEmojiSelect}
             >
-              {emojis.map((char, index) => (
-                <a href="" key={index}>
-                  {char}
+              {emojis.map(emoji => (
+                <a href="\" key={`${emoji.codePointAt(0)}`}>
+                  {emoji}
                 </a>
               ))}
             </div>
-            <button className="emoji-list-toggle" onClick={this.onEmojiListToggle} />
+            <button
+              type="button"
+              className="emoji-list-toggle"
+              onClick={this.onEmojiListToggle}
+            />
           </div>
           <button type="submit">
             <SendIcon />
@@ -83,7 +88,10 @@ class FormMessage extends Component {
 
 FormMessage.propTypes = {
   addNewMessage: PropTypes.func.isRequired,
-  user: PropTypes.object.isRequired, // описать
+  user: PropTypes.shape({
+    name: PropTypes.string,
+    lastName: PropTypes.string,
+  }).isRequired,
 };
 
 export default FormMessage;

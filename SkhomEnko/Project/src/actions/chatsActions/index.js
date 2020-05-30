@@ -16,22 +16,7 @@ const getBotText = () => botAnswers[Math.floor(Math.random() * botAnswers.length
 
 let botTimeout = 0;
 
-const botAnswer = (chatId, dispatch, getState) => {
-  const { messagesIds } = getState().messages;
-  let lastId = messagesIds[messagesIds.length - 1];
-  dispatch(
-    addNewMessage({
-      author: 'Bot',
-      text: getBotText(),
-      chatId,
-      id: ++lastId,
-      timestamp: new Date().getTime(),
-    }),
-  );
-};
-
 export const setChats = createAction('chats/SET_CHATS', data => {
-  console.log(data);
   return data.reduce(
     (all, item) => {
       all.chatsByIds[item.id] = item;
@@ -49,6 +34,20 @@ export const setChats = createAction('chats/SET_CHATS', data => {
 export const addNewChat = createAction('chats/ADD_CHAT');
 
 export const addNewMessage = createAction('chats/ADD_MESSAGE');
+
+const botAnswer = (chatId, dispatch, getState) => {
+  const { messagesIds } = getState().messages;
+  let lastId = messagesIds[messagesIds.length - 1];
+  dispatch(
+    addNewMessage({
+      author: 'Bot',
+      text: getBotText(),
+      chatId,
+      id: ++lastId,
+      timestamp: new Date().getTime(),
+    }),
+  );
+};
 
 export const addMessage = data => (dispatch, getState) => {
   const { author, chatId } = data;
