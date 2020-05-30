@@ -9,6 +9,7 @@ import styles from './index.css';
 const Layout = ({ children }) => {
     return (
         <div className={styles.layout}>
+           
         <Header />
             <div className={styles.body}>
             <ChatList />

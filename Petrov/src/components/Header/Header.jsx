@@ -5,6 +5,7 @@ import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import PushToggle from '../PushToggle';
 import { Link} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -17,6 +18,7 @@ class Header extends Component {
     render() {
         return (
             <div className={styles.divhead}>
+                <PushToggle />
             <Paper component="form" className={styles.lheaderContainer}>
                 <Link to="/profile" key="profile-page">
                 <IconButton className={styles.liconButton} aria-label="menu">
