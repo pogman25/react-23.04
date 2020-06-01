@@ -8,14 +8,14 @@ import botAnswer from './botAnswer';
 const logger = createLogger({ collapsed: true });
 
 const storeConfig = () => {
-    const persistedState = loadState();
+  const persistedState = loadState();
 
-    const store = createStore(rootReducer, applyMiddleware(thunk, botAnswer, logger));
+  const store = createStore(rootReducer, applyMiddleware(thunk, botAnswer, logger));
 
-    store.subscribe(() => {
-        saveState(store.getState());
-    });
-    return store;
+  store.subscribe(() => {
+    saveState(store.getState());
+  });
+  return store;
 };
 
 export default storeConfig();

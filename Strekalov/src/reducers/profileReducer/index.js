@@ -1,8 +1,8 @@
 import { handleAction } from 'redux-actions';
 
 const initialStore = {
-    name: 'Sergei',
-    lastName: 'Str',
+  name: 'Alex',
+  lastName: 'Pog',
 };
 
 const reducer = handleAction('', store => store, initialStore);

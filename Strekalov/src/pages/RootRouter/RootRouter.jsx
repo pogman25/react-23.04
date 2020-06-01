@@ -11,51 +11,53 @@ import EmptyPage from '../EmptyPage';
 import { fetchChatsData } from '../../actions/chatsActions';
 
 class RootRouter extends Component {
-    componentDidMount() {
-        const { fetchChatsData } = this.props;
+  componentDidMount() {
+    const { fetchChatsData } = this.props;
 
-        new Promise(resolve => {
-            setTimeout(() => {
-                resolve(true);
-            }, 1000);
-        }).then(res => {
-            console.log(res);
-        });
+   
+    new Promise(resolve => {
+      setTimeout(() => {
+        resolve(true);
+      }, 1000);
+    }).then(res => {
+      console.log(res);
+    });
 
-        fetchChatsData().then(i => {
-            console.log(i);
-        });
-    }
+    
+    fetchChatsData().then(i => {
+      console.log(i);
+    });
+  }
 
-    render() {
-        const { open } = this.props;
-        return (
-            <Layout>
-                <Backdrop open={open}>
-                    <CircularProgress color="inherit" />
-                </Backdrop>
-                <Switch>
-                    <Route exact path="/" component={Home} />
-                    <Route path="/about">
-                        <About />
-                    </Route>
-                    <Route path="/chats/:chatId" component={Chat} />
-                    <Route>
-                        <EmptyPage />
-                    </Route>
-                </Switch>
-            </Layout>
-        );
-    }
+  render() {
+    const { open } = this.props;
+    return (
+      <Layout>
+        <Backdrop open={open}>
+          <CircularProgress color="inherit" />
+        </Backdrop>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/about">
+            <About />
+          </Route>
+          <Route path="/chats/:chatId" component={Chat} />
+          <Route>
+            <EmptyPage />
+          </Route>
+        </Switch>
+      </Layout>
+    );
+  }
 }
 
 const mapStateToProps = store => ({
-    chats: store.chats,
-    open: store.chats.isFetching,
+  chats: store.chats,
+  open: store.chats.isFetching,
 });
 
 const mapDispatchToProps = {
-    fetchChatsData,
+  fetchChatsData,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootRouter);
