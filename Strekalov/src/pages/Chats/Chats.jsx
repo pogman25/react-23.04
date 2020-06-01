@@ -9,36 +9,36 @@ import { getChatMessages } from '../../selectors/chatsSelectors';
 import { addMessage } from '../../actions/chatsActions';
 
 const muiStyles = theme => {
-    return {
-        paper: {
-            marginTop: theme.spacing(7),
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-        },
-    };
+  return {
+    paper: {
+      marginTop: theme.spacing(7),
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  };
 };
 
 const Chats = () => {
-    const params = useParams();
-    const messages = useSelector(store => getChatMessages(store, params));
-    const dispatch = useDispatch();
+  const params = useParams();
+  const messages = useSelector(store => getChatMessages(store, params));
+  const dispatch = useDispatch();
 
-    const addNewMessage = data => {
-        const { chatId } = params;
-        dispatch(addMessage({ ...data, chatId }));
-    };
+  const addNewMessage = data => {
+    const { chatId } = params;
+    dispatch(addMessage({ ...data, chatId }));
+  };
 
-    return (
-        <Box p={3} mt={2} flexGrow={1}>
-            <Messages messages={messages} />
-            <FormMessage addNewMessage={addNewMessage} />
-        </Box>
-    );
+  return (
+    <Box p={3} mt={2} flexGrow={1}>
+      <Messages messages={messages} />
+      <FormMessage addNewMessage={addNewMessage} />
+    </Box>
+  );
 };
 
 Chats.defaultProps = {
-    messages: [],
+  messages: [],
 };
 
 export default memo(withStyles(muiStyles)(Chats));
