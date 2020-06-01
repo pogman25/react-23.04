@@ -1,11 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 import cx from 'classnames';
 import { AppBar, Toolbar, IconButton, Typography, Badge, makeStyles } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { DRAWER_WIDTH } from '../utils/constants';
-import { getProfileFromStore } from '../../reducers/profileReducer';
+import useChatData from './useChatData';
 
 const useStyles = makeStyles(theme => ({
   toolbar: {
@@ -37,11 +37,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const Header = () => {
-  const profile = useSelector(getProfileFromStore);
-
+const Header = ({ chatName }) => {
+  const { state, dispatch } = useChatData();
+  const { photo } = state;
   const classes = useStyles();
-  return (
+  return useMemo(() => 
     <AppBar position="absolute" className={cx(classes.appBar, classes.appBarShift)}>
       <Toolbar className={classes.toolbar}>
         <IconButton
@@ -53,13 +53,14 @@ const Header = () => {
           <MenuIcon />
         </IconButton>
         <Typography
+          photo={photo}
           component="h1"
           variant="h6"
           color="inherit"
           noWrap
           className={classes.title}
         >
-          Chat1
+          {chatName}
         </Typography>
         <IconButton color="inherit">
           <Badge badgeContent={4} color="secondary">
@@ -67,8 +68,16 @@ const Header = () => {
           </Badge>
         </IconButton>
       </Toolbar>
-    </AppBar>
-  );
+    </AppBar>,
+    [photo, chatName]);
+};
+
+Header.defaultProps = {
+  chatName: 'Чат номер 1',
+};
+
+Header.propTypes = {
+  chatName: PropTypes.string,
 };
 
 export default Header;
