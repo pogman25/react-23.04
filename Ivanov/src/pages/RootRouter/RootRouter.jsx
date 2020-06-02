@@ -13,7 +13,7 @@ import { getProfileData } from '../../actions/profileActions/profileActions';
 
 class RootRouter extends Component {
     componentDidMount() {
-        const { getChatsData } = this.props;
+        const { getChatsData, getProfileData } = this.props;
         getChatsData();
         getProfileData();
     }
@@ -42,7 +42,7 @@ const mapStateToProps = store => ({
     open: store.chats.isFetching
 });
 const mapDispatchToProps = {
-    getChatsData,
+    getChatsData, getProfileData
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RootRouter);

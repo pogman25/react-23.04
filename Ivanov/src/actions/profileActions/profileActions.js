@@ -10,14 +10,17 @@ export const getProfileData = () => {
     endpoint: '/api/users.json',
     method: 'GET',
     types: [
-        ['SEND'],
+        sendProfileRequest,
         {
-            type: ['SUCCESS'],
+            type: getProfileSuccess,
             payload: (action, type, res) => {
-                return res.json();
+                return res.json()
+                .then(json =>(
+                    
+               ));
             }
         },
-        ['REJECT'],
+        getProfileReject,
     ]
 })
 
