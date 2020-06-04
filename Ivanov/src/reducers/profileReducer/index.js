@@ -7,9 +7,10 @@ const initialStore = {
 };
 
 const reducer = handleActions ({
-    [getProfileSuccess]: (state, action) => ({
-        state
-    })    
+    [getProfileSuccess]: (state, { payload }) => ({
+        name:payload.name, 
+        lastname: payload.lastname
+    }),   
 }, initialStore);
 
 export default reducer;

@@ -5,25 +5,18 @@ export const getProfileSuccess = 'profile/GET_PROFILE_SUCCESS';
 export const getProfileReject = 'profile/GET_PROFILE_REJECT';
 
 export const getProfileData = () => { 
-    console.log("getProfileData")
     return createAction({
-    endpoint: '/api/users.json',
-    method: 'GET',
-    types: [
-        sendProfileRequest,
-        {
-            type: getProfileSuccess,
-            payload: (action, type, res) => {
-                return res.json()
-                .then(json =>(
-                    
-               ));
-            }
-        },
-        getProfileReject,
-    ]
-})
-
+        endpoint: '/api/users.json',
+        method: 'GET',
+        types: [
+            sendProfileRequest,
+            {
+                type: getProfileSuccess,
+                payload: (action, type, res) => {
+                    return res.json();
+                }
+            },
+            getProfileReject,
+        ]
+    })
 }
-
-// export default getProfileData;
