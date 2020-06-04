@@ -4,7 +4,7 @@ export const sendProfileRequest = 'profile/SEND_PROFILE_REQUEST';
 export const getProfileSuccess = 'profile/GET_PROFILE_SUCCESS';
 export const getProfileReject = 'profile/GET_PROFILE_REJECT';
 
-export const getProfileData = () => { 
+const getProfileData = () => { 
     return createAction({
         endpoint: '/api/users.json',
         method: 'GET',
@@ -20,3 +20,4 @@ export const getProfileData = () => {
         ]
     })
 }
+export default getProfileData;

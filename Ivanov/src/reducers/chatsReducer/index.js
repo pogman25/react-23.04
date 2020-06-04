@@ -1,8 +1,7 @@
 import { handleActions } from 'redux-actions';
-import { getChatsSuccess, addMessage, sendRequest, getChatsReject } from '../../actions/chatsActions';
+import { getChatsSuccess, addMessage, sendRequest } from '../../actions/chatsActions';
 
 const initialState = {
-    // isError: false,
     isFetching: false,
     chatsByIds: {},
     chatsIds: []
@@ -11,7 +10,6 @@ const initialState = {
 const reducer = handleActions({
   [sendRequest]: (state, action) => ({ ...state, isFetching: true }),
   [getChatsSuccess]: (state, action) => ({ ...state,  ...action.payload, isFetching: false }),
-  // [getChatsReject]: (state, action) => ({ ...state, isError: true}),
   [addMessage]: (state, { payload }) => ({
       ...state,
       chatsByIds: {

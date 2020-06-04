@@ -8,8 +8,7 @@ import Home from '../Home';
 import Chats from '../Chats';
 import Profile from '../Profile';
 import { getChatsData } from '../../actions/chatsActions';
-import mockPageLinks from './mockPageLinks';
-import { getProfileData } from '../../actions/profileActions/profileActions';
+import getProfileData from '../../actions/profileActions';
 
 class RootRouter extends Component {
     componentDidMount() {

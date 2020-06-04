@@ -88,11 +88,6 @@ const mapStateToProps = (store, ownProps) => ({
     isFetching: store.messages.isFetching
 });
 
-// Chats.defaultProps = {
-//     messages: [],
-//     isFetching: false
-// }
-
 const mapDispatchToProps = {
     addMessage, getMessagesData
 };

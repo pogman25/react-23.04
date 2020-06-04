@@ -38,24 +38,3 @@ export const getChatsData = () => {
         ]
     });
 }
-// export const fetchChatsData = () => dispatch => {
-//     dispatch(sendRequest());
-//     fetch('/api/chats_data.json')
-//         .then(res => {
-//             return res.json();
-//         })
-//         .then(res => {
-//             const data = res.reduce((all, item) => {
-//                     all.chatsByIds[item.id] = item;
-//                     all.chatsIds.push(item.id);
-//                     return all;
-//                 },{
-//                     chatsByIds: {},
-//                     chatsIds: []
-//                 });
-//             dispatch(getChatsSuccess(data));
-//         })
-//         .catch(e => {
-//             dispatch(getChatsReject(e));
-//         })
-// }
